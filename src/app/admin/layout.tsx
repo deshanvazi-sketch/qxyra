@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { Logo } from '@/components/layout/Logo';
 
 export const metadata = {
   title: 'Qxyra Admin & Dropship Hub',
@@ -17,14 +18,8 @@ export default function AdminLayout({
       <aside className="w-full md:w-64 bg-[#12151B] border-r border-gray-800/80 flex flex-col shrink-0">
         {/* Brand Header */}
         <div className="p-6 border-b border-gray-800/80 flex items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-brand-gold-dark to-brand-gold flex items-center justify-center text-brand-black font-heading font-black text-xl shadow-lg shadow-brand-gold/10">
-              Q
-            </div>
-            <div>
-              <div className="font-heading font-bold text-lg tracking-wider text-white">QXYRA</div>
-              <div className="text-[10px] uppercase tracking-widest text-brand-gold font-semibold">Admin Center</div>
-            </div>
+          <Link href="/admin" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+            <Logo size="sm" theme="dark" />
           </Link>
         </div>
 

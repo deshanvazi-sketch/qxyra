@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_NAME, BRAND_TAGLINE, FOOTER_LINKS, SOCIAL_LINKS } from '@/lib/constants';
+import { Logo } from './Logo';
 
 export function Footer() {
   return (
@@ -9,10 +10,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           {/* Brand Info */}
           <div className="space-y-6">
-            <Link href="/" className="inline-block">
-              <span className="font-heading font-bold text-3xl tracking-tighter text-white uppercase">
-                {BRAND_NAME}
-              </span>
+            <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+              <Logo size="md" theme="dark" />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               {BRAND_TAGLINE} We curate the finest products for those who appreciate quality and design.

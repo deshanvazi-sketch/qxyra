@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { BRAND_NAME, NAV_LINKS } from '@/lib/constants';
+import { Logo } from './Logo';
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -54,8 +55,8 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
         )}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <Link href="/" className="font-heading font-bold text-xl tracking-tighter text-brand-black uppercase" onClick={onClose}>
-            {BRAND_NAME}
+          <Link href="/" onClick={onClose} className="hover:opacity-90 transition-opacity">
+            <Logo size="sm" />
           </Link>
           <button 
             onClick={onClose} 

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { BRAND_NAME, NAV_LINKS } from '@/lib/constants';
 import { MobileNav } from './MobileNav';
+import { Logo } from './Logo';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -88,10 +89,8 @@ export function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <span className="font-heading font-bold text-2xl tracking-tighter text-brand-black uppercase">
-                {BRAND_NAME}
-              </span>
+            <Link href="/" className="flex-shrink-0 flex items-center hover:opacity-90 transition-opacity">
+              <Logo size="md" />
             </Link>
 
             {/* Desktop Navigation */}
