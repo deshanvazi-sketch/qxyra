@@ -74,7 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Product Details */}
       <div className="p-4 flex flex-col flex-grow">
         <p className="text-xs text-brand-gray-500 mb-1">{categoryName}</p>
-        <Link href={`/product/${product.slug}`} className="block mb-2 flex-grow">
+        <Link href={`/shop/${product.slug}`} className="block mb-2 flex-grow">
           <h3 className="font-heading font-medium text-brand-black line-clamp-2 hover:text-brand-gold transition-colors">
             {product.name}
           </h3>
