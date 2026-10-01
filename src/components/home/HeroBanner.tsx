@@ -18,7 +18,7 @@ export function HeroBanner() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
           <Link 
-            href="/products" 
+            href="/shop" 
             className="px-8 py-4 bg-brand-gold text-brand-black font-semibold rounded hover:bg-brand-gold/90 transition-colors shadow-[0_0_20px_rgba(201,168,76,0.3)]"
           >
             Shop Now
