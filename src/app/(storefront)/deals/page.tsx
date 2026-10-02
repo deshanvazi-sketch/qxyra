@@ -1,15 +1,26 @@
-import { Metadata } from 'next';
-import { products } from '@/lib/mock-data';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { products as defaultProducts } from '@/lib/mock-data';
 import { ProductCard } from '@/components/product/ProductCard';
+import { Product } from '@/types';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-  title: 'Deals & Offers | Qxyra',
-  description: 'Shop hot deals and special offers on premium products at Qxyra.',
-};
-
 export default function DealsPage() {
-  const saleProducts = products.filter(p => p.salePrice && p.salePrice < p.basePrice);
+  const [productsList, setProductsList] = useState<Product[]>(defaultProducts);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_products_list');
+      if (saved) {
+        setProductsList(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const saleProducts = productsList.filter(p => p.isActive && p.salePrice && p.salePrice < p.basePrice);
 
   return (
     <div className="bg-white pb-20">
@@ -21,7 +32,7 @@ export default function DealsPage() {
             Hot Deals
           </h1>
           <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Discover exceptional savings on our curated collection of premium products. Limited time offers.
+            Discover exceptional savings on curated collections. Limited time offers and seasonal promotions.
           </p>
           
           {/* Static Timer */}
@@ -32,7 +43,7 @@ export default function DealsPage() {
               { label: 'Mins', val: '45' },
               { label: 'Secs', val: '30' },
             ].map((unit, i) => (
-              <div key={i} className="bg-gray-900 border border-gray-800 rounded-lg p-4 w-24">
+              <div key={i} className="bg-gray-900 border border-gray-800 rounded-xl p-4 w-24">
                 <div className="text-3xl font-bold text-brand-gold mb-1">{unit.val}</div>
                 <div className="text-xs uppercase text-gray-400 tracking-wider">{unit.label}</div>
               </div>
@@ -45,16 +56,32 @@ export default function DealsPage() {
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-10">
           <div>
-            <h2 className="text-3xl font-heading font-bold">Flash Sale</h2>
-            <p className="text-gray-500 mt-2">Up to 40% off selected items</p>
+            <h2 className="text-3xl font-heading font-bold">Flash Sale & Promotions</h2>
+            <p className="text-gray-500 mt-2">Special promotional pricing on selected items</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {saleProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {saleProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {saleProducts.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200 p-8">
+            <span className="text-4xl block mb-3">🏷️</span>
+            <h3 className="font-heading text-lg font-medium text-brand-black mb-1">No Active Flash Deals</h3>
+            <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
+              Exclusive promotional items and discounts will appear here once added to inventory.
+            </p>
+            <Link
+              href="/shop"
+              className="inline-block px-6 py-2.5 bg-brand-gold text-brand-black font-semibold text-xs rounded-xl hover:opacity-90 transition-all"
+            >
+              Browse Catalog
+            </Link>
+          </div>
+        )}
       </section>
 
       {/* Promotional Banner */}

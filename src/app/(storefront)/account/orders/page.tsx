@@ -1,24 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { formatPrice, formatDate } from '@/lib/utils';
 import { OrderStatus } from '@/types';
 
 export default function OrdersPage() {
   const [activeTab, setActiveTab] = useState<string>('All');
+  const [orders, setOrders] = useState<any[]>([]);
   
   const filters = ['All', 'Pending', 'Processing', 'Shipped', 'Delivered'];
-  
-  const mockOrders = [
-    { id: 'QXY-231015-ABCD', date: '2023-10-15T10:00:00Z', status: OrderStatus.DELIVERED, items: 3, total: 245.00 },
-    { id: 'QXY-230928-EFGH', date: '2023-09-28T14:30:00Z', status: OrderStatus.SHIPPED, items: 1, total: 120.50 },
-    { id: 'QXY-230812-IJKL', date: '2023-08-12T09:15:00Z', status: OrderStatus.PROCESSING, items: 2, total: 85.00 },
-    { id: 'QXY-230705-MNOP', date: '2023-07-05T11:45:00Z', status: OrderStatus.PENDING, items: 5, total: 430.25 },
-    { id: 'QXY-230620-QRST', date: '2023-06-20T16:20:00Z', status: OrderStatus.DELIVERED, items: 1, total: 55.00 },
-  ];
 
-  const filteredOrders = mockOrders.filter(order => 
-    activeTab === 'All' || order.status.toLowerCase() === activeTab.toLowerCase()
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_customer_orders');
+      if (saved) {
+        setOrders(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const filteredOrders = orders.filter(order => 
+    activeTab === 'All' || (order.status && order.status.toLowerCase() === activeTab.toLowerCase())
   );
 
   const getStatusColor = (status: OrderStatus) => {
@@ -33,14 +38,22 @@ export default function OrdersPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-heading text-2xl md:text-3xl border-b border-gray-200 pb-4">My Orders</h1>
+      <div className="flex justify-between items-center border-b border-gray-200 pb-4">
+        <h1 className="font-heading text-2xl md:text-3xl">My Orders</h1>
+        <Link 
+          href="/shop"
+          className="text-xs font-semibold text-brand-gold hover:underline"
+        >
+          Explore Shop →
+        </Link>
+      </div>
       
       <div className="flex overflow-x-auto space-x-2 pb-2">
         {filters.map((filter) => (
           <button
             key={filter}
             onClick={() => setActiveTab(filter)}
-            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === filter 
                 ? 'bg-brand-black text-brand-gold' 
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -52,17 +65,31 @@ export default function OrdersPage() {
       </div>
 
       {filteredOrders.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-          <p className="text-gray-500 mb-4">No orders found for {activeTab}.</p>
+        <div className="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-200 p-8">
+          <span className="text-4xl block mb-3">🛍️</span>
+          <h3 className="font-heading text-lg font-medium text-brand-black mb-1">
+            {orders.length === 0 ? 'No orders yet' : `No ${activeTab} orders`}
+          </h3>
+          <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
+            {orders.length === 0
+              ? 'When you place an order at Qxyra, your receipt, fulfillment progress, and tracking details will be displayed here.'
+              : `There are currently no orders in ${activeTab.toLowerCase()} status.`}
+          </p>
+          <Link
+            href="/shop"
+            className="inline-block px-6 py-2.5 bg-brand-gold text-brand-black font-semibold text-xs rounded-xl hover:opacity-90 transition-all"
+          >
+            Start Shopping
+          </Link>
         </div>
       ) : (
         <div className="space-y-4">
           {filteredOrders.map((order) => (
-            <div key={order.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow bg-white">
+            <div key={order.id} className="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow bg-white">
               <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
                 <div>
-                  <h3 className="font-heading text-lg">Order {order.id}</h3>
-                  <p className="text-sm text-gray-500">Placed on {formatDate(order.date)}</p>
+                  <h3 className="font-heading text-lg">Order #{order.orderNumber || order.id}</h3>
+                  <p className="text-sm text-gray-500">Placed on {formatDate(order.createdAt || order.date)}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(order.status)}`}>
@@ -70,18 +97,21 @@ export default function OrdersPage() {
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-brand-black">{formatPrice(order.total)}</p>
-                    <p className="text-sm text-gray-500">{order.items} {order.items === 1 ? 'item' : 'items'}</p>
+                    <p className="text-sm text-gray-500">{order.items?.length || 1} item(s)</p>
                   </div>
                 </div>
               </div>
               
               <div className="pt-4 border-t border-gray-100 flex gap-3">
-                <button className="flex-1 md:flex-none px-4 py-2 bg-white border border-brand-black text-brand-black rounded hover:bg-gray-50 transition-colors text-sm font-medium">
+                <Link 
+                  href={`/order/${order.id}`}
+                  className="px-4 py-2 bg-white border border-brand-black text-brand-black rounded-lg hover:bg-gray-50 transition-colors text-xs font-medium"
+                >
                   View Details
-                </button>
-                {order.status !== OrderStatus.DELIVERED && order.status !== OrderStatus.PENDING && (
-                  <button className="flex-1 md:flex-none px-4 py-2 bg-brand-black text-white rounded hover:bg-brand-gold hover:text-brand-black transition-colors text-sm font-medium">
-                    Track Order
+                </Link>
+                {order.trackingNumber && (
+                  <button className="px-4 py-2 bg-brand-black text-white rounded-lg hover:bg-brand-gold hover:text-brand-black transition-colors text-xs font-medium">
+                    Track Package
                   </button>
                 )}
               </div>

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { products, categories } from '@/lib/mock-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://qxyra.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://qxyra.com';
   const currentDate = new Date().toISOString();
 
   // Static core routes

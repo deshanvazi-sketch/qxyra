@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { formatPrice, formatDate } from '@/lib/utils';
 import { useWishlistStore } from '@/store/wishlistStore';
@@ -8,34 +8,32 @@ import { OrderStatus } from '@/types';
 
 export default function AccountOverviewPage() {
   const wishlistItems = useWishlistStore((state) => state.items);
+  const [orders, setOrders] = useState<any[]>([]);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_customer_orders');
+      if (saved) {
+        setOrders(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const totalSpent = orders.reduce((sum, o) => sum + (o.total || 0), 0);
   
   const stats = [
-    { label: 'Total Orders', value: '12' },
+    { label: 'Total Orders', value: orders.length.toString() },
     { label: 'Wishlist Items', value: wishlistItems.length.toString() },
-    { label: 'Total Spent', value: formatPrice(1234.50) },
+    { label: 'Total Spent', value: formatPrice(totalSpent) },
   ];
-
-  const recentOrders = [
-    { id: 'ORD-12345', date: '2023-10-15T10:00:00Z', status: OrderStatus.DELIVERED, total: 245.00 },
-    { id: 'ORD-12346', date: '2023-09-28T14:30:00Z', status: OrderStatus.SHIPPED, total: 120.50 },
-    { id: 'ORD-12347', date: '2023-08-12T09:15:00Z', status: OrderStatus.PROCESSING, total: 85.00 },
-  ];
-
-  const getStatusColor = (status: OrderStatus) => {
-    switch (status) {
-      case OrderStatus.PENDING: return 'bg-yellow-100 text-yellow-800';
-      case OrderStatus.PROCESSING: return 'bg-blue-100 text-blue-800';
-      case OrderStatus.SHIPPED: return 'bg-purple-100 text-purple-800';
-      case OrderStatus.DELIVERED: return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-heading text-3xl mb-2">Welcome back, John!</h1>
-        <p className="text-gray-600">Here's a quick overview of your account.</p>
+        <h1 className="font-heading text-3xl mb-2">Welcome to your Qxyra Account</h1>
+        <p className="text-gray-600">Here is a quick overview of your orders and profile.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -70,36 +68,49 @@ export default function AccountOverviewPage() {
           </Link>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-sm">
-                <th className="p-4 font-medium">Order #</th>
-                <th className="p-4 font-medium">Date</th>
-                <th className="p-4 font-medium">Status</th>
-                <th className="p-4 font-medium">Total</th>
-                <th className="p-4 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentOrders.map((order) => (
-                <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="p-4 font-medium">{order.id}</td>
-                  <td className="p-4 text-gray-600">{formatDate(order.date)}</td>
-                  <td className="p-4">
-                    <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${getStatusColor(order.status)}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="p-4">{formatPrice(order.total)}</td>
-                  <td className="p-4 text-right">
-                    <Link href={`/account/orders`} className="text-sm font-medium hover:text-brand-gold">
-                      View
-                    </Link>
-                  </td>
+          {orders.length === 0 ? (
+            <div className="text-center py-12 px-4">
+              <span className="text-3xl block mb-2">🛍️</span>
+              <p className="text-gray-500 mb-4">You haven&apos;t placed any orders yet.</p>
+              <Link
+                href="/shop"
+                className="inline-block px-5 py-2.5 bg-brand-gold text-brand-black font-semibold text-xs rounded-xl hover:opacity-90 transition-all"
+              >
+                Start Shopping
+              </Link>
+            </div>
+          ) : (
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-200 text-gray-500 text-sm">
+                  <th className="p-4 font-medium">Order #</th>
+                  <th className="p-4 font-medium">Date</th>
+                  <th className="p-4 font-medium">Status</th>
+                  <th className="p-4 font-medium">Total</th>
+                  <th className="p-4 text-right font-medium">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.slice(0, 5).map((order) => (
+                  <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="p-4 font-medium">#{order.orderNumber || order.id}</td>
+                    <td className="p-4 text-gray-600">{formatDate(order.createdAt || order.date)}</td>
+                    <td className="p-4">
+                      <span className="px-2.5 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="p-4">{formatPrice(order.total)}</td>
+                    <td className="p-4 text-right">
+                      <Link href={`/account/orders`} className="text-sm font-medium hover:text-brand-gold">
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

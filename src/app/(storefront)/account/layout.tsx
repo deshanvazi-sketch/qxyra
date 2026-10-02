@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn, getInitials } from '@/lib/utils';
@@ -12,10 +12,21 @@ export default function AccountLayout({
 }) {
   const pathname = usePathname();
   
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-  };
+  const [user, setUser] = useState({
+    name: 'Client Account',
+    email: 'client@qxyra.com',
+  });
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_auth_user');
+      if (saved) {
+        setUser(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const navItems = [
     { name: 'Overview', href: '/account', icon: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z' },
@@ -30,12 +41,12 @@ export default function AccountLayout({
       <div className="flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
         <div className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-brand-black/5 rounded-lg p-6 mb-6 flex flex-col items-center border border-gray-100">
+          <div className="bg-brand-black/5 rounded-2xl p-6 mb-6 flex flex-col items-center border border-gray-100">
             <div className="w-20 h-20 rounded-full bg-brand-black text-brand-gold flex items-center justify-center text-2xl font-heading mb-4">
               {getInitials(user.name)}
             </div>
-            <h2 className="font-heading text-lg text-brand-black text-center">{user.name}</h2>
-            <p className="text-sm text-gray-500 text-center">{user.email}</p>
+            <h2 className="font-heading text-lg text-brand-black text-center font-medium">{user.name}</h2>
+            <p className="text-xs text-gray-500 text-center font-mono mt-0.5">{user.email}</p>
           </div>
 
           <nav className="flex flex-row md:flex-col overflow-x-auto md:overflow-visible gap-2 pb-4 md:pb-0">
@@ -46,9 +57,9 @@ export default function AccountLayout({
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-md transition-colors whitespace-nowrap",
+                    "flex items-center gap-3 px-4 py-3 rounded-xl transition-colors whitespace-nowrap text-sm font-medium",
                     isActive 
-                      ? "bg-brand-black text-brand-gold" 
+                      ? "bg-brand-black text-brand-gold font-semibold" 
                       : "text-gray-600 hover:bg-gray-100 hover:text-brand-black"
                   )}
                 >
@@ -66,19 +77,6 @@ export default function AccountLayout({
                 </Link>
               );
             })}
-            <button className="flex items-center gap-3 px-4 py-3 rounded-md transition-colors text-red-500 hover:bg-red-50 hover:text-red-600 text-left w-full mt-auto">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                strokeWidth={1.5} 
-                stroke="currentColor" 
-                className="w-5 h-5"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-              </svg>
-              <span>Logout</span>
-            </button>
           </nav>
         </div>
 

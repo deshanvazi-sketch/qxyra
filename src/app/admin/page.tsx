@@ -1,12 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
-import { mockAnalytics, mockOrders } from '@/lib/mock-admin-data';
+import { mockOrders } from '@/lib/mock-admin-data';
+import { products as defaultProducts } from '@/lib/mock-data';
+import { Order, Product } from '@/types';
 
 export default function AdminDashboardPage() {
-  const maxSale = Math.max(...mockAnalytics.dailySales.map(s => s.amount));
+  const [orders, setOrders] = useState<Order[]>(mockOrders);
+  const [productsList, setProductsList] = useState<Product[]>(defaultProducts);
+
+  useEffect(() => {
+    try {
+      const savedOrders = localStorage.getItem('qxyra_admin_orders');
+      if (savedOrders) {
+        setOrders(JSON.parse(savedOrders));
+      }
+      const savedProducts = localStorage.getItem('qxyra_products_list');
+      if (savedProducts) {
+        setProductsList(JSON.parse(savedProducts));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
+  const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+  const ordersCount = orders.length;
+  const aov = ordersCount > 0 ? totalRevenue / ordersCount : 0;
+  const recentOrders = orders.slice(0, 5);
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
@@ -17,63 +40,79 @@ export default function AdminDashboardPage() {
             Executive Overview
           </h1>
           <p className="text-gray-400 text-sm mt-1">
-            Real-time store performance, fulfillment metrics, and CJ Dropshipping pipeline.
+            Real-time store performance, fulfillment metrics, and catalog status.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link
-            href="/admin/cj-sync"
+            href="/admin/products"
             className="px-4 py-2 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold text-xs rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 transition-all flex items-center gap-2"
           >
-            <span>🔄</span>
-            <span>Source CJ Products</span>
+            <span>➕</span>
+            <span>Add Products ({productsList.length})</span>
           </Link>
           <Link
             href="/admin/orders"
             className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-xs font-medium rounded-xl transition-all"
           >
-            View All Orders
+            Manage Orders ({ordersCount})
           </Link>
         </div>
       </div>
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {/* Revenue */}
+        {/* Total Revenue */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-3">
-            <span>Monthly Revenue</span>
-            <span className="text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              +{mockAnalytics.revenueGrowthPercent}%
+            <span>Total Sales Revenue</span>
+            <span className="text-brand-gold font-semibold bg-brand-gold/10 px-2 py-0.5 rounded-full border border-brand-gold/20">
+              USD
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
-            {formatPrice(mockAnalytics.revenueThisMonth)}
+            {formatPrice(totalRevenue)}
           </div>
           <div className="text-xs text-gray-500 mt-2 flex items-center justify-between">
-            <span>Today: {formatPrice(mockAnalytics.revenueToday)}</span>
-            <span className="text-brand-gold">USD Currency</span>
+            <span>{ordersCount} total orders recorded</span>
+            <span className="text-emerald-400">Live</span>
           </div>
         </div>
 
-        {/* Orders */}
+        {/* Total Orders */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-3">
-            <span>Orders This Month</span>
-            <span className="text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              +{mockAnalytics.ordersGrowthPercent}%
+            <span>Customer Orders</span>
+            <span className="text-brand-gold font-semibold bg-brand-gold/10 px-2 py-0.5 rounded-full border border-brand-gold/20">
+              Queue
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
-            {mockAnalytics.ordersThisMonth}
+            {ordersCount}
           </div>
           <div className="text-xs text-gray-500 mt-2">
-            <span>{mockAnalytics.ordersToday} placed today</span>
+            <span>{orders.filter(o => o.status === 'PENDING').length} pending dispatch</span>
           </div>
         </div>
 
-        {/* AOV */}
+        {/* Active Products */}
+        <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
+          <div className="flex items-center justify-between text-gray-400 text-xs mb-3">
+            <span>Catalog Inventory</span>
+            <span className="text-brand-gold font-semibold bg-brand-gold/10 px-2 py-0.5 rounded-full border border-brand-gold/20">
+              Store
+            </span>
+          </div>
+          <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
+            {productsList.length} Items
+          </div>
+          <div className="text-xs text-gray-500 mt-2">
+            <span>{productsList.filter(p => p.isActive).length} published live</span>
+          </div>
+        </div>
+
+        {/* Average Order Value */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-3">
             <span>Average Order Value</span>
@@ -82,26 +121,10 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
-            {formatPrice(mockAnalytics.averageOrderValue)}
+            {formatPrice(aov)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
-            <span>Conversion Rate: {mockAnalytics.conversionRate}%</span>
-          </div>
-        </div>
-
-        {/* CJ Fulfillment */}
-        <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
-          <div className="flex items-center justify-between text-gray-400 text-xs mb-3">
-            <span>CJ Fulfillment Rate</span>
-            <span className="text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-              Auto-Sync
-            </span>
-          </div>
-          <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
-            {mockAnalytics.cjFulfillmentRate}%
-          </div>
-          <div className="text-xs text-gray-500 mt-2">
-            <span>Average transit: 6.8 days</span>
+            <span>Calculated from active orders</span>
           </div>
         </div>
       </div>
@@ -112,70 +135,86 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-2 p-6 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-heading font-medium text-white">Weekly Sales Velocity</h2>
-              <p className="text-xs text-gray-400 mt-0.5">Daily generated revenue and order volume</p>
+              <h2 className="text-lg font-heading font-medium text-white">Sales Velocity & Activity</h2>
+              <p className="text-xs text-gray-400 mt-0.5">Real-time daily generated revenue</p>
             </div>
             <span className="text-xs px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300">
-              Last 7 Days
+              Store Status
             </span>
           </div>
 
-          {/* Bar Chart Visual */}
-          <div className="h-56 flex items-end justify-between gap-3 sm:gap-6 pt-6 pb-2 border-b border-gray-800">
-            {mockAnalytics.dailySales.map((day, idx) => {
-              const heightPercent = Math.round((day.amount / maxSale) * 100);
-              return (
+          {/* Clean State When No Orders */}
+          {ordersCount === 0 ? (
+            <div className="h-56 flex flex-col items-center justify-center text-center p-6 border border-dashed border-gray-800 rounded-xl">
+              <span className="text-3xl mb-2">📊</span>
+              <h3 className="text-sm font-heading text-white font-medium">Sales Chart Ready</h3>
+              <p className="text-xs text-gray-400 mt-1 max-w-sm">
+                No orders recorded yet. As customers begin making purchases on your storefront at qxyra.com, daily sales will graph here automatically.
+              </p>
+            </div>
+          ) : (
+            <div className="h-56 flex items-end justify-between gap-3 sm:gap-6 pt-6 pb-2 border-b border-gray-800">
+              {orders.slice(0, 7).map((order, idx) => (
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2 group h-full justify-end">
-                  <div className="text-[10px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                    {formatPrice(day.amount)}
+                  <div className="text-[10px] text-gray-400 whitespace-nowrap">
+                    {formatPrice(order.total)}
                   </div>
-                  <div className="w-full max-w-[42px] bg-gray-800/80 rounded-t-lg group-hover:bg-brand-gold transition-all duration-300 relative overflow-hidden flex items-end"
-                       style={{ height: `${heightPercent}%` }}>
-                    <div className="w-full bg-gradient-to-t from-brand-gold-dark/40 to-brand-gold h-full opacity-60 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <span className="text-[11px] text-gray-400 mt-2">{day.date}</span>
+                  <div className="w-full max-w-[42px] bg-brand-gold rounded-t-lg h-32" />
+                  <span className="text-[11px] text-gray-400 mt-2 font-mono">#{order.orderNumber}</span>
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex items-center justify-between text-xs text-gray-400 mt-4 pt-1">
-            <span>Peak Day: Sep 30 ($1,890.00 / 15 orders)</span>
-            <span className="text-emerald-400 font-medium">Trending +32% higher than prev week</span>
+            <span>Storefront: qxyra.com</span>
+            <span className="text-emerald-400 font-medium">● Operational</span>
           </div>
         </div>
 
-        {/* Live CJ Dropshipping Feed */}
+        {/* Live Activity Feed */}
         <div className="p-6 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm flex flex-col">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h2 className="text-lg font-heading font-medium text-white">Fulfillment Stream</h2>
-              <p className="text-xs text-gray-400 mt-0.5">Automated CJ sync events</p>
+              <h2 className="text-lg font-heading font-medium text-white">System Feed</h2>
+              <p className="text-xs text-gray-400 mt-0.5">Automated storefront events</p>
             </div>
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           </div>
 
           <div className="space-y-4 flex-1">
-            {mockAnalytics.recentActivity.map(act => (
-              <div key={act.id} className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-gray-700 transition-all">
-                <div className="flex items-center justify-between text-[11px] text-gray-400 mb-1">
-                  <span>{act.time}</span>
-                  {act.badge && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-md bg-brand-gold/10 text-brand-gold font-medium border border-brand-gold/20">
-                      {act.badge}
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-gray-200 leading-relaxed font-body">{act.title}</p>
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="flex items-center justify-between text-[11px] text-gray-400 mb-1">
+                <span>Active</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 font-medium border border-emerald-500/20">
+                  Online
+                </span>
               </div>
-            ))}
+              <p className="text-xs text-gray-200 leading-relaxed font-body">
+                Official domain qxyra.com connected and secured with SSL encryption.
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+              <div className="flex items-center justify-between text-[11px] text-gray-400 mb-1">
+                <span>Inventory</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-md bg-brand-gold/10 text-brand-gold font-medium border border-brand-gold/20">
+                  Catalog
+                </span>
+              </div>
+              <p className="text-xs text-gray-200 leading-relaxed font-body">
+                {productsList.length > 0
+                  ? `${productsList.length} products published in store inventory.`
+                  : 'Demo items cleared. Ready for your authentic product listings.'}
+              </p>
+            </div>
           </div>
 
           <Link
-            href="/admin/cj-sync"
+            href="/admin/products"
             className="mt-4 pt-4 border-t border-gray-800 text-xs text-center text-brand-gold hover:underline block"
           >
-            Open CJ Dropshipping Center →
+            Manage Product Catalog →
           </Link>
         </div>
       </div>
@@ -185,81 +224,75 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-lg font-heading font-medium text-white">Recent Customer Orders</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Direct fulfillment pipeline & shipping status</p>
+            <p className="text-xs text-gray-400 mt-0.5">Real customer purchases & shipment pipeline</p>
           </div>
           <Link
             href="/admin/orders"
             className="text-xs text-brand-gold hover:underline font-medium"
           >
-            View Complete Order History ({mockOrders.length}) →
+            View Complete Orders ({ordersCount}) →
           </Link>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="text-xs text-gray-400 border-b border-gray-800 pb-3">
-                <th className="pb-3 font-medium">Order Number</th>
-                <th className="pb-3 font-medium">Customer</th>
-                <th className="pb-3 font-medium">Date</th>
-                <th className="pb-3 font-medium">Items</th>
-                <th className="pb-3 font-medium">Total</th>
-                <th className="pb-3 font-medium">Status</th>
-                <th className="pb-3 font-medium">CJ Order ID</th>
-                <th className="pb-3 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-800/60">
-              {mockOrders.map(order => (
-                <tr key={order.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-4 font-mono text-xs font-semibold text-white">
-                    {order.orderNumber}
-                  </td>
-                  <td className="py-4">
-                    <div className="font-medium text-gray-200 text-xs">{order.shippingAddress.fullName}</div>
-                    <div className="text-[11px] text-gray-500">{order.shippingAddress.country}</div>
-                  </td>
-                  <td className="py-4 text-xs text-gray-400">
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="py-4 text-xs text-gray-300">
-                    {order.items.length} item(s)
-                  </td>
-                  <td className="py-4 font-semibold text-xs text-white">
-                    {formatPrice(order.total)}
-                  </td>
-                  <td className="py-4">
-                    <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase ${
-                      order.status === 'DELIVERED'
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                        : order.status === 'SHIPPED'
-                        ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                        : order.status === 'PROCESSING'
-                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                        : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-4 font-mono text-xs text-gray-400">
-                    {order.cjOrderId ? (
-                      <span className="text-brand-gold">{order.cjOrderId}</span>
-                    ) : (
-                      <span className="text-gray-600 italic">Not Synced</span>
-                    )}
-                  </td>
-                  <td className="py-4 text-right">
-                    <Link
-                      href="/admin/orders"
-                      className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-brand-gold hover:text-brand-black text-gray-300 transition-all text-xs font-medium"
-                    >
-                      Manage
-                    </Link>
-                  </td>
+          {recentOrders.length === 0 ? (
+            <div className="text-center py-12">
+              <span className="text-3xl block mb-2">📦</span>
+              <h3 className="text-sm font-heading text-white font-medium">No Customer Orders Yet</h3>
+              <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1">
+                As real customers browse and purchase items from your storefront at qxyra.com, their orders and shipping details will appear here automatically.
+              </p>
+            </div>
+          ) : (
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="text-xs text-gray-400 border-b border-gray-800 pb-3">
+                  <th className="pb-3 font-medium">Order Number</th>
+                  <th className="pb-3 font-medium">Customer</th>
+                  <th className="pb-3 font-medium">Date</th>
+                  <th className="pb-3 font-medium">Items</th>
+                  <th className="pb-3 font-medium">Total</th>
+                  <th className="pb-3 font-medium">Status</th>
+                  <th className="pb-3 font-medium text-right">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-800/60">
+                {recentOrders.map(order => (
+                  <tr key={order.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-4 font-mono text-xs font-semibold text-white">
+                      #{order.orderNumber}
+                    </td>
+                    <td className="py-4">
+                      <div className="font-medium text-gray-200 text-xs">{order.shippingAddress.fullName}</div>
+                      <div className="text-[11px] text-gray-500">{order.shippingAddress.country}</div>
+                    </td>
+                    <td className="py-4 text-xs text-gray-400">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="py-4 text-xs text-gray-300">
+                      {order.items.length} item(s)
+                    </td>
+                    <td className="py-4 font-semibold text-xs text-white">
+                      {formatPrice(order.total)}
+                    </td>
+                    <td className="py-4">
+                      <span className="inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-4 text-right">
+                      <Link
+                        href="/admin/orders"
+                        className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-brand-gold hover:text-brand-black text-gray-300 transition-all text-xs font-medium"
+                      >
+                        Manage
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

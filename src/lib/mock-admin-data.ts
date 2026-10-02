@@ -1,5 +1,4 @@
 import { Order, OrderStatus, User, UserRole, Product } from '@/types';
-import { products } from './mock-data';
 
 export interface CJProductCatalogItem {
   id: string;
@@ -126,191 +125,7 @@ export const mockCJCatalog: CJProductCatalogItem[] = [
   }
 ];
 
-export const mockOrders: Order[] = [
-  {
-    id: 'ord-1001',
-    orderNumber: 'QX-98241',
-    userId: 'u1',
-    status: OrderStatus.DELIVERED,
-    subtotal: 249.99,
-    shippingCost: 0,
-    discount: 0,
-    total: 249.99,
-    cjOrderId: 'CJ-ORD-771829',
-    trackingNumber: 'CJTRK982314092US',
-    createdAt: '2026-09-18T14:22:00Z',
-    shippingAddress: {
-      id: 'addr-1',
-      userId: 'u1',
-      fullName: 'Alexander Vance',
-      phone: '+1 (555) 234-5678',
-      street: '742 Evergreen Terrace',
-      city: 'Springfield',
-      state: 'OR',
-      country: 'United States',
-      zipCode: '97477',
-      isDefault: true
-    },
-    items: [
-      {
-        id: 'oi-1',
-        orderId: 'ord-1001',
-        product: products[0],
-        variant: products[0].variants[0],
-        quantity: 1,
-        price: 249.99
-      }
-    ]
-  },
-  {
-    id: 'ord-1002',
-    orderNumber: 'QX-98242',
-    userId: 'u2',
-    status: OrderStatus.SHIPPED,
-    subtotal: 159.00,
-    shippingCost: 0,
-    discount: 15.90,
-    total: 143.10,
-    cjOrderId: 'CJ-ORD-771835',
-    trackingNumber: 'CJTRK982314991US',
-    createdAt: '2026-09-22T09:15:00Z',
-    shippingAddress: {
-      id: 'addr-2',
-      userId: 'u2',
-      fullName: 'Sophia Elena Chen',
-      phone: '+1 (555) 890-1234',
-      street: '450 Sutter St Suite 1200',
-      city: 'San Francisco',
-      state: 'CA',
-      country: 'United States',
-      zipCode: '94108',
-      isDefault: true
-    },
-    items: [
-      {
-        id: 'oi-2',
-        orderId: 'ord-1002',
-        product: products[1],
-        variant: products[1].variants[0],
-        quantity: 1,
-        price: 159.00
-      }
-    ]
-  },
-  {
-    id: 'ord-1003',
-    orderNumber: 'QX-98243',
-    userId: 'u3',
-    status: OrderStatus.PROCESSING,
-    subtotal: 334.99,
-    shippingCost: 0,
-    discount: 0,
-    total: 334.99,
-    cjOrderId: 'CJ-ORD-771842',
-    trackingNumber: 'CJTRK982315882CN',
-    createdAt: '2026-09-26T18:40:00Z',
-    shippingAddress: {
-      id: 'addr-3',
-      userId: 'u3',
-      fullName: 'Marcus Aurelius Sterling',
-      phone: '+44 20 7946 0912',
-      street: '18 Kensington Palace Gardens',
-      city: 'London',
-      state: 'Greater London',
-      country: 'United Kingdom',
-      zipCode: 'W8 4QP',
-      isDefault: true
-    },
-    items: [
-      {
-        id: 'oi-3',
-        orderId: 'ord-1003',
-        product: products[0],
-        variant: products[0].variants[1],
-        quantity: 1,
-        price: 249.99
-      },
-      {
-        id: 'oi-4',
-        orderId: 'ord-1003',
-        product: products[11],
-        variant: products[11].variants[0],
-        quantity: 1,
-        price: 85.00
-      }
-    ]
-  },
-  {
-    id: 'ord-1004',
-    orderNumber: 'QX-98244',
-    userId: 'u4',
-    status: OrderStatus.PENDING,
-    subtotal: 85.00,
-    shippingCost: 0,
-    discount: 0,
-    total: 85.00,
-    cjOrderId: undefined,
-    trackingNumber: undefined,
-    createdAt: '2026-09-29T11:05:00Z',
-    shippingAddress: {
-      id: 'addr-4',
-      userId: 'u4',
-      fullName: 'Niroshan Perera',
-      phone: '+94 77 123 4567',
-      street: '42 Galle Road, Kollupitiya',
-      city: 'Colombo',
-      state: 'Western Province',
-      country: 'Sri Lanka',
-      zipCode: '00300',
-      isDefault: true
-    },
-    items: [
-      {
-        id: 'oi-5',
-        orderId: 'ord-1004',
-        product: products[11],
-        variant: products[11].variants[0],
-        quantity: 1,
-        price: 85.00
-      }
-    ]
-  },
-  {
-    id: 'ord-1005',
-    orderNumber: 'QX-98245',
-    userId: 'u5',
-    status: OrderStatus.PENDING,
-    subtotal: 159.00,
-    shippingCost: 0,
-    discount: 0,
-    total: 159.00,
-    cjOrderId: undefined,
-    trackingNumber: undefined,
-    createdAt: '2026-09-30T07:30:00Z',
-    shippingAddress: {
-      id: 'addr-5',
-      userId: 'u5',
-      fullName: 'Emma Watson',
-      phone: '+1 (555) 432-8765',
-      street: '124 Ocean Avenue',
-      city: 'Santa Monica',
-      state: 'CA',
-      country: 'United States',
-      zipCode: '90401',
-      isDefault: true
-    },
-    items: [
-      {
-        id: 'oi-6',
-        orderId: 'ord-1005',
-        product: products[1],
-        variant: products[1].variants[1],
-        quantity: 1,
-        price: 159.00
-      }
-    ]
-  }
-];
+export const mockOrders: Order[] = [];
 
 export interface AdminCustomer {
   id: string;
@@ -325,68 +140,7 @@ export interface AdminCustomer {
   lastOrderDate: string;
 }
 
-export const mockCustomers: AdminCustomer[] = [
-  {
-    id: 'cust-1',
-    name: 'Alexander Vance',
-    email: 'alex.vance@example.com',
-    avatar: 'AV',
-    country: 'United States',
-    totalOrders: 6,
-    totalSpent: 1480.50,
-    status: 'vip',
-    joinedAt: '2025-11-12',
-    lastOrderDate: '2026-09-18'
-  },
-  {
-    id: 'cust-2',
-    name: 'Sophia Elena Chen',
-    email: 'sophia.chen@designlab.io',
-    avatar: 'SC',
-    country: 'United States',
-    totalOrders: 4,
-    totalSpent: 820.00,
-    status: 'active',
-    joinedAt: '2026-01-05',
-    lastOrderDate: '2026-09-22'
-  },
-  {
-    id: 'cust-3',
-    name: 'Marcus Aurelius Sterling',
-    email: 'marcus.sterling@londonlux.co.uk',
-    avatar: 'MS',
-    country: 'United Kingdom',
-    totalOrders: 8,
-    totalSpent: 2750.00,
-    status: 'vip',
-    joinedAt: '2025-08-20',
-    lastOrderDate: '2026-09-26'
-  },
-  {
-    id: 'cust-4',
-    name: 'Niroshan Perera',
-    email: 'niroshan.p@lankaweb.lk',
-    avatar: 'NP',
-    country: 'Sri Lanka',
-    totalOrders: 2,
-    totalSpent: 210.00,
-    status: 'active',
-    joinedAt: '2026-06-14',
-    lastOrderDate: '2026-09-29'
-  },
-  {
-    id: 'cust-5',
-    name: 'Emma Watson',
-    email: 'emma.watson@pacific.org',
-    avatar: 'EW',
-    country: 'United States',
-    totalOrders: 1,
-    totalSpent: 159.00,
-    status: 'active',
-    joinedAt: '2026-09-30',
-    lastOrderDate: '2026-09-30'
-  }
-];
+export const mockCustomers: AdminCustomer[] = [];
 
 export interface StoreAnalytics {
   revenueToday: number;
@@ -409,52 +163,23 @@ export interface StoreAnalytics {
 }
 
 export const mockAnalytics: StoreAnalytics = {
-  revenueToday: 244.00,
-  revenueThisMonth: 18450.00,
-  revenueGrowthPercent: 24.8,
-  ordersToday: 2,
-  ordersThisMonth: 142,
-  ordersGrowthPercent: 18.2,
-  averageOrderValue: 129.92,
-  conversionRate: 3.42,
-  cjFulfillmentRate: 98.6,
+  revenueToday: 0,
+  revenueThisMonth: 0,
+  revenueGrowthPercent: 0,
+  ordersToday: 0,
+  ordersThisMonth: 0,
+  ordersGrowthPercent: 0,
+  averageOrderValue: 0,
+  conversionRate: 0,
+  cjFulfillmentRate: 100,
   recentActivity: [
     {
       id: 'act-1',
-      type: 'order',
-      title: 'New Order #QX-98245 placed by Emma Watson ($159.00)',
-      time: '1 hour ago',
-      badge: 'Pending CJ Sync'
-    },
-    {
-      id: 'act-2',
       type: 'cj_sync',
-      title: 'Order #QX-98243 forwarded to CJ Dropshipping (CJ-ORD-771842)',
-      time: '3 hours ago',
-      badge: 'Fulfillment Active'
-    },
-    {
-      id: 'act-3',
-      type: 'tracking_update',
-      title: 'Tracking CJTRK982314991US updated: Departed international sort facility',
-      time: '6 hours ago',
-      badge: 'In Transit'
-    },
-    {
-      id: 'act-4',
-      type: 'product_import',
-      title: 'Imported "Smart Ambient RGB Desk Lamp" from CJ Dropshipping',
-      time: 'Yesterday',
-      badge: 'Catalog'
+      title: 'Storefront and Admin active at qxyra.com. Ready for authentic inventory.',
+      time: 'Just now',
+      badge: 'Live'
     }
   ],
-  dailySales: [
-    { date: 'Sep 24', amount: 820, orders: 7 },
-    { date: 'Sep 25', amount: 1140, orders: 9 },
-    { date: 'Sep 26', amount: 1450, orders: 12 },
-    { date: 'Sep 27', amount: 980, orders: 8 },
-    { date: 'Sep 28', amount: 1620, orders: 14 },
-    { date: 'Sep 29', amount: 1280, orders: 10 },
-    { date: 'Sep 30', amount: 1890, orders: 15 }
-  ]
+  dailySales: []
 };
