@@ -1,17 +1,68 @@
-import React from 'react';
-import Link from 'next/link';
-import { Logo } from '@/components/layout/Logo';
+'use client';
 
-export const metadata = {
-  title: 'Qxyra Admin & Dropship Hub',
-  description: 'Official management dashboard for Qxyra brand operations and CJ Dropshipping integration.'
-};
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { Logo } from '@/components/layout/Logo';
+import { 
+  checkIsAdminAuthenticated, 
+  getAdminSession, 
+  logoutAdmin 
+} from '@/lib/admin-auth';
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [adminEmail, setAdminEmail] = useState('deshanvazi@gmail.com');
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  // If on login page, render children directly without sidebar
+  const isLoginPage = pathname === '/admin/login';
+
+  useEffect(() => {
+    if (isLoginPage) {
+      setIsCheckingAuth(false);
+      return;
+    }
+
+    const authenticated = checkIsAdminAuthenticated();
+    if (!authenticated) {
+      router.replace(`/admin/login?redirect=${encodeURIComponent(pathname)}`);
+    } else {
+      setIsAuthenticated(true);
+      const session = getAdminSession();
+      if (session?.email) {
+        setAdminEmail(session.email);
+      }
+      setIsCheckingAuth(false);
+    }
+  }, [pathname, isLoginPage, router]);
+
+  const handleLogout = () => {
+    logoutAdmin();
+    router.replace('/admin/login');
+  };
+
+  // If visiting login page, render standalone clean view
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
+
+  // Show quick security verification spinner while checking
+  if (isCheckingAuth || !isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#0C0E12] flex flex-col items-center justify-center text-gray-400 gap-3">
+        <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin" />
+        <span className="text-xs font-mono tracking-wider">Verifying Security Credentials...</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#0C0E12] text-gray-100 flex flex-col md:flex-row font-body antialiased">
       {/* Sidebar Navigation */}
@@ -39,31 +90,47 @@ export default function AdminLayout({
         <nav className="p-4 space-y-1.5 flex-1">
           <Link
             href="/admin"
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:text-white hover:bg-white/5 transition-all group"
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'text-gray-200 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <span className="text-lg text-gray-400 group-hover:text-brand-gold">📊</span>
+            <span className="text-lg">📊</span>
             <span>Dashboard Overview</span>
           </Link>
 
           <Link
             href="/admin/products"
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:text-white hover:bg-white/5 transition-all group"
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin/products'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'text-gray-200 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <span className="text-lg text-gray-400 group-hover:text-brand-gold">📦</span>
+            <span className="text-lg">📦</span>
             <span>Products & Inventory</span>
           </Link>
 
           <Link
             href="/admin/orders"
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:text-white hover:bg-white/5 transition-all group"
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin/orders'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'text-gray-200 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <span className="text-lg text-gray-400 group-hover:text-brand-gold">🛍️</span>
+            <span className="text-lg">🛍️</span>
             <span>Orders & Fulfillment</span>
           </Link>
 
           <Link
             href="/admin/cj-sync"
-            className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium bg-brand-gold/10 text-brand-gold border border-brand-gold/20 hover:bg-brand-gold/15 transition-all group"
+            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin/cj-sync'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'bg-brand-gold/10 text-brand-gold border border-brand-gold/20 hover:bg-brand-gold/15'
+            }`}
           >
             <div className="flex items-center gap-3">
               <span className="text-lg">🔄</span>
@@ -76,23 +143,31 @@ export default function AdminLayout({
 
           <Link
             href="/admin/customers"
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:text-white hover:bg-white/5 transition-all group"
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin/customers'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'text-gray-200 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <span className="text-lg text-gray-400 group-hover:text-brand-gold">👥</span>
+            <span className="text-lg">👥</span>
             <span>Customer Directory</span>
           </Link>
 
           <Link
             href="/admin/settings"
-            className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:text-white hover:bg-white/5 transition-all group"
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+              pathname === '/admin/settings'
+                ? 'bg-brand-gold text-brand-black font-semibold'
+                : 'text-gray-200 hover:text-white hover:bg-white/5'
+            }`}
           >
-            <span className="text-lg text-gray-400 group-hover:text-brand-gold">⚙️</span>
+            <span className="text-lg">⚙️</span>
             <span>Store Settings</span>
           </Link>
         </nav>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-gray-800/80">
+        <div className="p-4 border-t border-gray-800/80 space-y-2">
           <Link
             href="/"
             target="_blank"
@@ -100,6 +175,14 @@ export default function AdminLayout({
           >
             <span>↗ View Storefront</span>
           </Link>
+
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 text-xs font-medium transition-all border border-red-500/20 cursor-pointer"
+          >
+            <span>🚪</span>
+            <span>Logout Administrator</span>
+          </button>
         </div>
       </aside>
 
@@ -121,13 +204,23 @@ export default function AdminLayout({
 
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-brand-gold/20 border border-brand-gold/40 flex items-center justify-center text-xs font-bold text-brand-gold">
-                AD
+                {adminEmail.slice(0, 2).toUpperCase()}
               </div>
               <div className="hidden sm:block text-left">
-                <div className="text-xs font-semibold text-white leading-tight">Admin Manager</div>
-                <div className="text-[10px] text-gray-400">admin@qxyra.com</div>
+                <div className="text-xs font-semibold text-white leading-tight">Owner Admin</div>
+                <div className="text-[10px] text-gray-400 font-mono">{adminEmail}</div>
               </div>
             </div>
+
+            {/* Top Quick Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="p-2 rounded-lg bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-400 transition-colors text-xs flex items-center gap-1 cursor-pointer"
+              title="Logout from Admin Dashboard"
+            >
+              <span>🚪</span>
+              <span className="hidden md:inline">Logout</span>
+            </button>
           </div>
         </header>
 

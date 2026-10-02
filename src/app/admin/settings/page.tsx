@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BRAND_NAME, BRAND_TAGLINE } from '@/lib/constants';
+import { ADMIN_CREDENTIALS_KEY, DEFAULT_ADMIN_CONFIG } from '@/lib/admin-auth';
 
 const STORAGE_KEY = 'qxyra_platform_settings';
 
@@ -22,6 +23,11 @@ export default function AdminSettingsPage() {
   const [stripePublishableKey, setStripePublishableKey] = useState('pk_live_51Pq...Qxyra98');
   const [payhereEnabled, setPayhereEnabled] = useState(true);
   const [payhereMerchantId, setPayhereMerchantId] = useState('1228491');
+
+  // Admin Security Credentials
+  const [adminLoginEmail, setAdminLoginEmail] = useState('deshanvazi@gmail.com');
+  const [adminMasterPassword, setAdminMasterPassword] = useState('Qxyra@2026');
+  const [showAdminPassword, setShowAdminPassword] = useState(false);
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -46,6 +52,14 @@ export default function AdminSettingsPage() {
         if (data.payhereEnabled !== undefined) setPayhereEnabled(data.payhereEnabled);
         if (data.payhereMerchantId !== undefined) setPayhereMerchantId(data.payhereMerchantId);
         if (data.savedAt) setLastSavedTime(data.savedAt);
+      }
+
+      // Load custom admin credentials if saved
+      const savedCreds = localStorage.getItem(ADMIN_CREDENTIALS_KEY);
+      if (savedCreds) {
+        const creds = JSON.parse(savedCreds);
+        if (creds.email) setAdminLoginEmail(creds.email);
+        if (creds.password) setAdminMasterPassword(creds.password);
       }
     } catch (e) {
       console.error('Failed to load settings from localStorage', e);
@@ -73,11 +87,18 @@ export default function AdminSettingsPage() {
     };
 
     try {
-      // 1. Save to browser localStorage (persists across refreshes)
+      // 1. Save general settings
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settingsData));
+      
+      // 2. Save security login credentials
+      localStorage.setItem(ADMIN_CREDENTIALS_KEY, JSON.stringify({
+        email: adminLoginEmail.trim().toLowerCase(),
+        password: adminMasterPassword
+      }));
+
       setLastSavedTime(settingsData.savedAt);
 
-      // 2. Also sync to backend CJ settings API route if available
+      // 3. Also sync to backend CJ settings API route if available
       try {
         await fetch('/api/cj/settings', {
           method: 'POST',
@@ -92,7 +113,7 @@ export default function AdminSettingsPage() {
         // Local persistence still succeeded
       }
 
-      setToastMessage('✓ All store settings & API credentials have been saved!');
+      setToastMessage('✓ All store settings & security credentials have been saved!');
       setTimeout(() => setToastMessage(null), 4500);
     } catch (error) {
       console.error('Failed to save settings', error);
@@ -128,7 +149,7 @@ export default function AdminSettingsPage() {
             )}
           </div>
           <p className="text-gray-400 text-sm mt-1">
-            Configure store branding, payment credentials, and dropshipping fulfillment rules.
+            Configure store branding, payment credentials, dropshipping fulfillment, and admin security.
           </p>
         </div>
 
@@ -153,6 +174,58 @@ export default function AdminSettingsPage() {
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
+        {/* Security & Admin Access Control */}
+        <div className="p-6 rounded-2xl bg-[#141820] border border-brand-gold/30 shadow-sm space-y-4 relative overflow-hidden">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-heading font-medium text-white flex items-center gap-2">
+              <span>🛡️</span>
+              <span>Admin Security & Login Credentials</span>
+            </h2>
+            <span className="text-[10px] bg-brand-gold/10 text-brand-gold border border-brand-gold/30 px-2 py-0.5 rounded-md font-semibold">
+              Protected Portal Gate
+            </span>
+          </div>
+          <p className="text-gray-400 text-xs">
+            Only administrators with these credentials can unlock and access the <code className="text-brand-gold font-mono">/admin</code> dashboard.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
+            <div>
+              <label className="text-gray-300 block mb-1.5 font-medium">Owner / Administrator Email</label>
+              <input
+                type="email"
+                required
+                value={adminLoginEmail}
+                onChange={e => setAdminLoginEmail(e.target.value)}
+                placeholder="deshanvazi@gmail.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm focus:outline-none focus:border-brand-gold"
+              />
+              <span className="text-[10px] text-gray-500 mt-1 block">Also authorized: admin@qxyra.com</span>
+            </div>
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-gray-300 font-medium">Admin Master Password</label>
+                <button
+                  type="button"
+                  onClick={() => setShowAdminPassword(!showAdminPassword)}
+                  className="text-gray-400 hover:text-white text-[11px]"
+                >
+                  {showAdminPassword ? 'Hide' : 'Show'}
+                </button>
+              </div>
+              <input
+                type={showAdminPassword ? 'text' : 'password'}
+                required
+                value={adminMasterPassword}
+                onChange={e => setAdminMasterPassword(e.target.value)}
+                placeholder="Qxyra@2026"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
+              />
+              <span className="text-[10px] text-gray-500 mt-1 block">Used to unlock the dashboard at /admin/login</span>
+            </div>
+          </div>
+        </div>
+
         {/* Brand & Store Identity */}
         <div className="p-6 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm space-y-4">
           <h2 className="text-base font-heading font-medium text-white flex items-center gap-2">
