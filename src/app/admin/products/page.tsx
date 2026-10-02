@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
 import { products as initialProducts } from '@/lib/mock-data';
 import { Product } from '@/types';
 
+const STORAGE_KEY = 'qxyra_products_list';
+
 export default function AdminProductsPage() {
   const [productsList, setProductsList] = useState<Product[]>(initialProducts);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'ALL' | 'ACTIVE' | 'FEATURED' | 'CJ'>('ALL');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: '',
     category: 'c1',
@@ -20,6 +25,35 @@ export default function AdminProductsPage() {
     description: ''
   });
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Load saved catalog from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setProductsList(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error('Failed to load products from localStorage', e);
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  // Save changes to localStorage
+  const updateProducts = (newList: Product[]) => {
+    setProductsList(newList);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
+    } catch (e) {
+      console.error('Failed to save products to localStorage', e);
+    }
+  };
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
 
   const filteredProducts = productsList.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,12 +67,36 @@ export default function AdminProductsPage() {
   });
 
   const toggleProductStatus = (id: string) => {
-    setProductsList(prev => prev.map(p => {
+    const updated = productsList.map(p => {
       if (p.id === id) {
         return { ...p, isActive: !p.isActive };
       }
       return p;
-    }));
+    });
+    updateProducts(updated);
+  };
+
+  // Delete Single Product
+  const handleConfirmDeleteSingle = () => {
+    if (!productToDelete) return;
+    const deletedName = productToDelete.name;
+    const updated = productsList.filter(p => p.id !== productToDelete.id);
+    updateProducts(updated);
+    setProductToDelete(null);
+    showToast(`✓ Removed "${deletedName}" from catalog!`);
+  };
+
+  // Delete All / Clear Demo Products
+  const handleConfirmDeleteAll = () => {
+    updateProducts([]);
+    setShowDeleteAllModal(false);
+    showToast('✓ All demo products cleared! Ready for your real inventory.');
+  };
+
+  // Restore Default Demo Products
+  const handleResetDemoProducts = () => {
+    updateProducts(initialProducts);
+    showToast('✓ Demo catalog restored with 12 items.');
   };
 
   const handleAddProduct = (e: React.FormEvent) => {
@@ -84,18 +142,17 @@ export default function AdminProductsPage() {
       updatedAt: new Date().toISOString()
     };
 
-    setProductsList([created, ...productsList]);
+    updateProducts([created, ...productsList]);
     setShowAddModal(false);
     setNewProduct({ name: '', category: 'c1', basePrice: '', salePrice: '', stock: '50', description: '' });
-    setToastMessage(`✓ Added "${created.name}" to inventory!`);
-    setTimeout(() => setToastMessage(null), 4000);
+    showToast(`✓ Added "${created.name}" to inventory!`);
   };
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3">
+        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
           <span>✨</span>
           <span>{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="ml-2 text-emerald-400 hover:text-white">✕</button>
@@ -105,25 +162,54 @@ export default function AdminProductsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
-            Product Catalog & Inventory
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
+              Product Catalog & Inventory
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+              {productsList.length} Items
+            </span>
+          </div>
           <p className="text-gray-400 text-sm mt-1">
-            Manage your store offerings, active dropship listings, and pricing rules.
+            Manage your store offerings, remove demo items, and publish real products.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {/* Clear / Delete All Demo Products */}
+          {productsList.length > 0 && (
+            <button
+              onClick={() => setShowDeleteAllModal(true)}
+              className="px-3.5 py-2.5 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 text-xs font-medium rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              title="Delete all demo products at once"
+            >
+              <span>🗑️</span>
+              <span>Clear All ({productsList.length})</span>
+            </button>
+          )}
+
+          {/* Restore Demo Catalog */}
+          {productsList.length === 0 && (
+            <button
+              onClick={handleResetDemoProducts}
+              className="px-3.5 py-2.5 bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-medium rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+              title="Restore demo products"
+            >
+              <span>↺</span>
+              <span>Restore Demo</span>
+            </button>
+          )}
+
           <Link
             href="/admin/cj-sync"
             className="px-4 py-2.5 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-xs font-medium rounded-xl transition-all flex items-center gap-2"
           >
             <span>🔄</span>
-            <span>Import from CJ Dropshipping</span>
+            <span>Import CJ</span>
           </Link>
           <button
             onClick={() => setShowAddModal(true)}
-            className="px-4 py-2.5 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold text-xs rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 transition-all flex items-center gap-2"
+            className="px-4 py-2.5 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold text-xs rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>➕</span>
             <span>Create New Product</span>
@@ -148,7 +234,7 @@ export default function AdminProductsPage() {
         {/* Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
           {[
-            { id: 'ALL', label: 'All Products' },
+            { id: 'ALL', label: `All (${productsList.length})` },
             { id: 'ACTIVE', label: 'Active' },
             { id: 'FEATURED', label: 'Featured' },
             { id: 'CJ', label: 'CJ Dropshipped' }
@@ -180,7 +266,7 @@ export default function AdminProductsPage() {
                 <th className="pb-3 font-medium">Inventory</th>
                 <th className="pb-3 font-medium">Sourcing Channel</th>
                 <th className="pb-3 font-medium">Status</th>
-                <th className="pb-3 font-medium text-right">Storefront</th>
+                <th className="pb-3 font-medium text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800/60">
@@ -223,7 +309,7 @@ export default function AdminProductsPage() {
                     <td className="py-4">
                       <button
                         onClick={() => toggleProductStatus(product.id)}
-                        className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase transition-all ${
+                        className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-semibold tracking-wide uppercase transition-all cursor-pointer ${
                           product.isActive
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20'
                             : 'bg-gray-800 text-gray-400 border border-gray-700 hover:bg-gray-700'
@@ -233,22 +319,148 @@ export default function AdminProductsPage() {
                       </button>
                     </td>
                     <td className="py-4 text-right">
-                      <Link
-                        href={`/shop/${product.slug}`}
-                        target="_blank"
-                        className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-xs font-medium inline-flex items-center gap-1"
-                      >
-                        <span>View</span>
-                        <span>↗</span>
-                      </Link>
+                      <div className="flex items-center justify-end gap-2">
+                        <Link
+                          href={`/shop/${product.slug}`}
+                          target="_blank"
+                          className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-xs font-medium inline-flex items-center gap-1"
+                          title="View on Storefront"
+                        >
+                          <span>View</span>
+                          <span>↗</span>
+                        </Link>
+                        <button
+                          onClick={() => setProductToDelete(product)}
+                          className="px-2.5 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 transition-all text-xs font-medium inline-flex items-center gap-1 cursor-pointer"
+                          title={`Delete ${product.name}`}
+                        >
+                          <span>🗑️</span>
+                          <span>Delete</span>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 );
               })}
+
+              {/* Empty State */}
+              {filteredProducts.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="py-14 text-center">
+                    <div className="max-w-md mx-auto space-y-3">
+                      <div className="text-4xl">📦</div>
+                      <h3 className="text-base font-heading text-white font-medium">
+                        {productsList.length === 0 ? 'Catalog is empty' : 'No products found'}
+                      </h3>
+                      <p className="text-xs text-gray-400 max-w-sm mx-auto">
+                        {productsList.length === 0
+                          ? 'All demo items have been cleared. You are ready to start publishing your authentic products!'
+                          : 'No items match your active search filter.'}
+                      </p>
+                      <div className="flex items-center justify-center gap-3 pt-3">
+                        <button
+                          onClick={() => setShowAddModal(true)}
+                          className="px-4 py-2 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black text-xs font-bold rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 cursor-pointer"
+                        >
+                          ➕ Add Real Product
+                        </button>
+                        {productsList.length === 0 && (
+                          <button
+                            onClick={handleResetDemoProducts}
+                            className="px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium rounded-xl border border-white/10 cursor-pointer"
+                          >
+                            ↺ Restore Demo Items
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* Delete Single Product Confirmation Modal */}
+      {productToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#141820] border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-xl text-red-400 shrink-0">
+                🗑️
+              </div>
+              <div>
+                <h3 className="text-lg font-heading text-white font-medium">Delete Product</h3>
+                <p className="text-gray-400 text-xs mt-1">
+                  Are you sure you want to remove <span className="text-white font-semibold">"{productToDelete.name}"</span>?
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-red-950/30 border border-red-900/40 rounded-xl text-red-300 text-xs">
+              ⚠️ This item will be permanently removed from your catalog and inventory.
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setProductToDelete(null)}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDeleteSingle}
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-lg shadow-red-600/20 cursor-pointer"
+              >
+                Yes, Delete Product
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete All Demo Products Confirmation Modal */}
+      {showDeleteAllModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#141820] border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-xl text-red-400 shrink-0">
+                ⚠️
+              </div>
+              <div>
+                <h3 className="text-lg font-heading text-white font-medium">Clear All Demo Products?</h3>
+                <p className="text-gray-400 text-xs mt-1">
+                  This will remove all <span className="text-white font-semibold">{productsList.length} products</span> from your store inventory so you can start with a clean slate for your real items.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-brand-gold/10 border border-brand-gold/20 rounded-xl text-brand-gold text-xs">
+              💡 Don&apos;t worry: You can click &quot;Restore Demo&quot; at any time if you ever want the sample items back.
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowDeleteAllModal(false)}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDeleteAll}
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-lg shadow-red-600/20 cursor-pointer"
+              >
+                Clear All Products
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Product Modal */}
       {showAddModal && (
@@ -257,11 +469,11 @@ export default function AdminProductsPage() {
             <div className="flex items-center justify-between border-b border-gray-800 pb-4">
               <div>
                 <span className="text-xs uppercase text-brand-gold font-semibold">Catalog Management</span>
-                <h3 className="text-xl font-heading text-white font-medium">Add New Product</h3>
+                <h3 className="text-xl font-heading text-white font-medium">Add Real Product</h3>
               </div>
               <button
                 onClick={() => setShowAddModal(false)}
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center"
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center cursor-pointer"
               >
                 ✕
               </button>
@@ -348,13 +560,13 @@ export default function AdminProductsPage() {
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium"
+                  className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black text-xs font-bold shadow-lg shadow-brand-gold/10 hover:opacity-95"
+                  className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black text-xs font-bold shadow-lg shadow-brand-gold/10 hover:opacity-95 cursor-pointer"
                 >
                   Save to Inventory
                 </button>

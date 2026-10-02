@@ -2,24 +2,36 @@
 
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Breadcrumb } from '@/components/layout';
 import { ProductGrid, ProductSort } from '@/components/product';
 import { products as initialProducts } from '@/lib/mock-data';
-import { SortOption } from '@/types';
+import { SortOption, Product } from '@/types';
 
 function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   
+  const [productsList, setProductsList] = useState<Product[]>(initialProducts);
   const [sort, setSort] = useState<SortOption>('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_products_list');
+      if (saved) {
+        setProductsList(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   const filteredProducts = useMemo(() => {
-    let result = initialProducts.filter(p => 
+    let result = productsList.filter(p => (p.isActive ?? true) && (
       p.name.toLowerCase().includes(query.toLowerCase()) || 
       p.description.toLowerCase().includes(query.toLowerCase())
-    );
+    ));
 
     switch (sort) {
       case 'price_asc':
@@ -40,7 +52,7 @@ function SearchContent() {
     }
 
     return result;
-  }, [query, sort]);
+  }, [productsList, query, sort]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

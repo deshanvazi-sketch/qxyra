@@ -1,19 +1,31 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Breadcrumb } from '@/components/layout';
 import { ProductFilters, ProductGrid, ProductSort } from '@/components/product';
 import { products as initialProducts, categories } from '@/lib/mock-data';
-import { FilterState, SortOption } from '@/types';
+import { FilterState, SortOption, Product } from '@/types';
 
 export default function ShopPage() {
+  const [productsList, setProductsList] = useState<Product[]>(initialProducts);
   const [filters, setFilters] = useState<FilterState>({});
   const [sort, setSort] = useState<SortOption>('newest');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('qxyra_products_list');
+      if (saved) {
+        setProductsList(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   const filteredProducts = useMemo(() => {
-    let result = [...initialProducts];
+    let result = productsList.filter(p => p.isActive ?? true);
 
     if (filters.category) {
       result = result.filter(p => p.categoryId === filters.category);
@@ -47,7 +59,7 @@ export default function ShopPage() {
     }
 
     return result;
-  }, [filters, sort]);
+  }, [productsList, filters, sort]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
