@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BRAND_NAME, BRAND_TAGLINE } from '@/lib/constants';
+
+const STORAGE_KEY = 'qxyra_platform_settings';
 
 export default function AdminSettingsPage() {
   const [storeName, setStoreName] = useState(BRAND_NAME);
   const [tagline, setTagline] = useState(BRAND_TAGLINE);
   const [currency, setCurrency] = useState('USD');
-  const [supportEmail, setSupportEmail] = useState('concierge@qxyra.com');
+  const [supportEmail, setSupportEmail] = useState('support@qxyra.com');
   const [freeShippingThreshold, setFreeShippingThreshold] = useState('50');
 
   // CJ Dropshipping API
@@ -22,18 +24,90 @@ export default function AdminSettingsPage() {
   const [payhereMerchantId, setPayhereMerchantId] = useState('1228491');
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    setToastMessage('✓ Store settings & API integrations saved successfully!');
-    setTimeout(() => setToastMessage(null), 4000);
+  // Load saved settings from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data.storeName !== undefined) setStoreName(data.storeName);
+        if (data.tagline !== undefined) setTagline(data.tagline);
+        if (data.currency !== undefined) setCurrency(data.currency);
+        if (data.supportEmail !== undefined) setSupportEmail(data.supportEmail);
+        if (data.freeShippingThreshold !== undefined) setFreeShippingThreshold(data.freeShippingThreshold);
+        if (data.cjEmail !== undefined) setCjEmail(data.cjEmail);
+        if (data.cjApiKey !== undefined) setCjApiKey(data.cjApiKey);
+        if (data.cjAutoSync !== undefined) setCjAutoSync(data.cjAutoSync);
+        if (data.stripeEnabled !== undefined) setStripeEnabled(data.stripeEnabled);
+        if (data.stripePublishableKey !== undefined) setStripePublishableKey(data.stripePublishableKey);
+        if (data.payhereEnabled !== undefined) setPayhereEnabled(data.payhereEnabled);
+        if (data.payhereMerchantId !== undefined) setPayhereMerchantId(data.payhereMerchantId);
+        if (data.savedAt) setLastSavedTime(data.savedAt);
+      }
+    } catch (e) {
+      console.error('Failed to load settings from localStorage', e);
+    }
+  }, []);
+
+  const handleSave = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setIsSaving(true);
+
+    const settingsData = {
+      storeName,
+      tagline,
+      currency,
+      supportEmail,
+      freeShippingThreshold,
+      cjEmail,
+      cjApiKey,
+      cjAutoSync,
+      stripeEnabled,
+      stripePublishableKey,
+      payhereEnabled,
+      payhereMerchantId,
+      savedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    };
+
+    try {
+      // 1. Save to browser localStorage (persists across refreshes)
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settingsData));
+      setLastSavedTime(settingsData.savedAt);
+
+      // 2. Also sync to backend CJ settings API route if available
+      try {
+        await fetch('/api/cj/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: cjEmail,
+            apiKey: cjApiKey,
+            autoSync: cjAutoSync
+          })
+        });
+      } catch (err) {
+        // Local persistence still succeeded
+      }
+
+      setToastMessage('✓ All store settings & API credentials have been saved!');
+      setTimeout(() => setToastMessage(null), 4500);
+    } catch (error) {
+      console.error('Failed to save settings', error);
+      setToastMessage('⚠️ Error saving settings. Please try again.');
+      setTimeout(() => setToastMessage(null), 4000);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-8 max-w-5xl mx-auto pb-12">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3">
+        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
           <span>⚙️</span>
           <span>{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="ml-2 text-emerald-400 hover:text-white">✕</button>
@@ -43,19 +117,38 @@ export default function AdminSettingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
-            Platform Settings & API Keys
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
+              Platform Settings & API Keys
+            </h1>
+            {lastSavedTime && (
+              <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                Saved at {lastSavedTime}
+              </span>
+            )}
+          </div>
           <p className="text-gray-400 text-sm mt-1">
             Configure store branding, payment credentials, and dropshipping fulfillment rules.
           </p>
         </div>
 
         <button
-          onClick={handleSave}
-          className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold text-xs rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 transition-all"
+          type="button"
+          onClick={() => handleSave()}
+          disabled={isSaving}
+          className="px-6 py-2.5 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold text-xs rounded-xl shadow-lg shadow-brand-gold/10 hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
         >
-          Save All Changes
+          {isSaving ? (
+            <>
+              <span className="animate-spin text-xs">⏳</span>
+              <span>Saving Changes...</span>
+            </>
+          ) : (
+            <>
+              <span>💾</span>
+              <span>Save All Changes</span>
+            </>
+          )}
         </button>
       </div>
 
@@ -105,6 +198,7 @@ export default function AdminSettingsPage() {
                 type="email"
                 value={supportEmail}
                 onChange={e => setSupportEmail(e.target.value)}
+                placeholder="support@qxyra.com"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm focus:outline-none focus:border-brand-gold"
               />
             </div>
@@ -136,10 +230,10 @@ export default function AdminSettingsPage() {
             <div>
               <label className="text-gray-300 block mb-1.5 font-medium">CJ OpenAPI Key (v2.0)</label>
               <input
-                type="password"
+                type="text"
                 value={cjApiKey}
                 onChange={e => setCjApiKey(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm focus:outline-none focus:border-brand-gold"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
               />
             </div>
           </div>
@@ -152,7 +246,7 @@ export default function AdminSettingsPage() {
             <button
               type="button"
               onClick={() => setCjAutoSync(!cjAutoSync)}
-              className={`w-11 h-6 rounded-full transition-colors relative p-1 ${
+              className={`w-11 h-6 rounded-full transition-colors relative p-1 cursor-pointer ${
                 cjAutoSync ? 'bg-brand-gold' : 'bg-gray-700'
               }`}
             >
@@ -182,7 +276,7 @@ export default function AdminSettingsPage() {
               <button
                 type="button"
                 onClick={() => setStripeEnabled(!stripeEnabled)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold ${
+                className={`px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer ${
                   stripeEnabled ? 'bg-brand-gold/15 text-brand-gold border border-brand-gold/30' : 'bg-gray-800 text-gray-400'
                 }`}
               >
@@ -212,7 +306,7 @@ export default function AdminSettingsPage() {
               <button
                 type="button"
                 onClick={() => setPayhereEnabled(!payhereEnabled)}
-                className={`px-3 py-1 rounded-lg text-xs font-semibold ${
+                className={`px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer ${
                   payhereEnabled ? 'bg-brand-gold/15 text-brand-gold border border-brand-gold/30' : 'bg-gray-800 text-gray-400'
                 }`}
               >
@@ -261,6 +355,27 @@ export default function AdminSettingsPage() {
               />
             </div>
           </div>
+        </div>
+
+        {/* Bottom Save Action Bar */}
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-800">
+          <button
+            type="submit"
+            disabled={isSaving}
+            className="px-8 py-3 bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-bold text-xs rounded-xl shadow-lg shadow-brand-gold/15 hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50"
+          >
+            {isSaving ? (
+              <>
+                <span className="animate-spin text-xs">⏳</span>
+                <span>Saving Changes...</span>
+              </>
+            ) : (
+              <>
+                <span>💾</span>
+                <span>Save All Changes</span>
+              </>
+            )}
+          </button>
         </div>
       </form>
     </div>
