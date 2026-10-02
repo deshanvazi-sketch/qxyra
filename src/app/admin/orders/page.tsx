@@ -1,17 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatPrice } from '@/lib/utils';
 import { mockOrders } from '@/lib/mock-admin-data';
 import { Order, OrderStatus } from '@/types';
+
+const STORAGE_KEY = 'qxyra_admin_orders';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>(mockOrders);
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalOrder, setActiveModalOrder] = useState<Order | null>(null);
+  const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
   const [syncingOrderId, setSyncingOrderId] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Load orders from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setOrders(JSON.parse(saved));
+      }
+    } catch (e) {
+      console.error('Failed to load orders from localStorage', e);
+    }
+  }, []);
+
+  const updateOrders = (newList: Order[]) => {
+    setOrders(newList);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newList));
+    } catch (e) {
+      console.error('Failed to save orders to localStorage', e);
+    }
+  };
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 4000);
+  };
 
   const filteredOrders = orders.filter(order => {
     const matchesStatus = selectedStatus === 'ALL' || order.status === selectedStatus;
@@ -20,6 +50,26 @@ export default function AdminOrdersPage() {
                           (order.cjOrderId && order.cjOrderId.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesStatus && matchesSearch;
   });
+
+  const handleDeleteSingle = () => {
+    if (!orderToDelete) return;
+    const deletedNum = orderToDelete.orderNumber;
+    const updated = orders.filter(o => o.id !== orderToDelete.id);
+    updateOrders(updated);
+    setOrderToDelete(null);
+    showToast(`✓ Removed Order #${deletedNum} from records!`);
+  };
+
+  const handleClearAllOrders = () => {
+    updateOrders([]);
+    setShowDeleteAllModal(false);
+    showToast('✓ All demo orders cleared from fulfillment queue!');
+  };
+
+  const handleResetDemoOrders = () => {
+    updateOrders(mockOrders);
+    showToast('✓ Restored 5 demo orders.');
+  };
 
   const forwardToCJ = async (order: Order) => {
     setSyncingOrderId(order.id);
@@ -40,7 +90,7 @@ export default function AdminOrdersPage() {
 
       const res = await response.json();
       if (res.success) {
-        setOrders(prev => prev.map(o => {
+        const updated = orders.map(o => {
           if (o.id === order.id) {
             return {
               ...o,
@@ -50,13 +100,13 @@ export default function AdminOrdersPage() {
             };
           }
           return o;
-        }));
-        setToastMessage(`✓ Order #${order.orderNumber} successfully forwarded to CJ Dropshipping (${res.cjOrderId})!`);
-        setTimeout(() => setToastMessage(null), 4000);
+        });
+        updateOrders(updated);
+        showToast(`✓ Order #${order.orderNumber} successfully forwarded to CJ Dropshipping (${res.cjOrderId})!`);
       }
     } catch (e) {
       // Fallback update
-      setOrders(prev => prev.map(o => {
+      const updated = orders.map(o => {
         if (o.id === order.id) {
           return {
             ...o,
@@ -66,9 +116,9 @@ export default function AdminOrdersPage() {
           };
         }
         return o;
-      }));
-      setToastMessage(`✓ Order #${order.orderNumber} transmitted to CJ Dropshipping!`);
-      setTimeout(() => setToastMessage(null), 4000);
+      });
+      updateOrders(updated);
+      showToast(`✓ Order #${order.orderNumber} transmitted to CJ Dropshipping!`);
     } finally {
       setSyncingOrderId(null);
     }
@@ -78,8 +128,8 @@ export default function AdminOrdersPage() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3">
-          <span>🚀</span>
+        <div className="fixed top-6 right-6 z-50 p-4 rounded-xl bg-emerald-950 border border-emerald-500/40 text-emerald-200 text-sm shadow-2xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+          <span>✨</span>
           <span>{toastMessage}</span>
           <button onClick={() => setToastMessage(null)} className="ml-2 text-emerald-400 hover:text-white">✕</button>
         </div>
@@ -88,19 +138,41 @@ export default function AdminOrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
-            Order Fulfillment & Logistics
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl font-heading font-light text-white tracking-wide">
+              Order Fulfillment & Logistics
+            </h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
+              {orders.length} Orders
+            </span>
+          </div>
           <p className="text-gray-400 text-sm mt-1">
             Track customer shipments, manage fulfillment lifecycle, and dispatch orders to CJ Dropshipping.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-400">Total Active Orders:</span>
-          <span className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 font-bold text-white text-xs">
-            {orders.length}
-          </span>
+        <div className="flex items-center gap-2.5 flex-wrap">
+          {orders.length > 0 && (
+            <button
+              onClick={() => setShowDeleteAllModal(true)}
+              className="px-3.5 py-2 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 hover:text-red-300 text-xs font-medium rounded-xl transition-all flex items-center gap-2 cursor-pointer"
+              title="Delete all demo orders"
+            >
+              <span>🗑️</span>
+              <span>Clear All Orders ({orders.length})</span>
+            </button>
+          )}
+
+          {orders.length === 0 && (
+            <button
+              onClick={handleResetDemoOrders}
+              className="px-3.5 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-medium rounded-xl transition-all flex items-center gap-1.5 cursor-pointer"
+              title="Restore demo orders"
+            >
+              <span>↺</span>
+              <span>Restore Demo Orders</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -198,7 +270,7 @@ export default function AdminOrdersPage() {
                           <button
                             onClick={() => forwardToCJ(order)}
                             disabled={isSyncing}
-                            className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black text-xs font-semibold hover:opacity-95 transition-all shadow-sm flex items-center gap-1.5"
+                            className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black text-xs font-semibold hover:opacity-95 transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
                           >
                             {isSyncing ? (
                               <>
@@ -215,19 +287,136 @@ export default function AdminOrdersPage() {
                         )}
                         <button
                           onClick={() => setActiveModalOrder(order)}
-                          className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-xs font-medium"
+                          className="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-all text-xs font-medium cursor-pointer"
                         >
                           Details
+                        </button>
+                        <button
+                          onClick={() => setOrderToDelete(order)}
+                          className="px-2.5 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/20 transition-all text-xs font-medium inline-flex items-center gap-1 cursor-pointer"
+                          title={`Delete Order ${order.orderNumber}`}
+                        >
+                          <span>🗑️</span>
+                          <span>Delete</span>
                         </button>
                       </div>
                     </td>
                   </tr>
                 );
               })}
+
+              {/* Empty State */}
+              {filteredOrders.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="py-14 text-center">
+                    <div className="max-w-md mx-auto space-y-3">
+                      <div className="text-4xl">📋</div>
+                      <h3 className="text-base font-heading text-white font-medium">
+                        {orders.length === 0 ? 'No orders in queue' : 'No matching orders'}
+                      </h3>
+                      <p className="text-xs text-gray-400 max-w-sm mx-auto">
+                        {orders.length === 0
+                          ? 'All demo orders have been cleared. As real customers make purchases on your storefront, their orders will appear here automatically.'
+                          : 'No orders match your selected status filter or search criteria.'}
+                      </p>
+                      {orders.length === 0 && (
+                        <div className="pt-2">
+                          <button
+                            onClick={handleResetDemoOrders}
+                            className="px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium rounded-xl border border-white/10 cursor-pointer"
+                          >
+                            ↺ Restore Demo Orders
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* Delete Single Order Confirmation Modal */}
+      {orderToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#141820] border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-xl text-red-400 shrink-0">
+                🗑️
+              </div>
+              <div>
+                <h3 className="text-lg font-heading text-white font-medium">Delete Order Record</h3>
+                <p className="text-gray-400 text-xs mt-1">
+                  Are you sure you want to delete Order <span className="text-white font-semibold font-mono">#{orderToDelete.orderNumber}</span> ({orderToDelete.shippingAddress.fullName})?
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-red-950/30 border border-red-900/40 rounded-xl text-red-300 text-xs">
+              ⚠️ This order record and its fulfillment tracking details will be permanently removed.
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setOrderToDelete(null)}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteSingle}
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-lg shadow-red-600/20 cursor-pointer"
+              >
+                Yes, Delete Order
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete All Orders Confirmation Modal */}
+      {showDeleteAllModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#141820] border border-red-500/30 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-in fade-in zoom-in-95">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-xl text-red-400 shrink-0">
+                ⚠️
+              </div>
+              <div>
+                <h3 className="text-lg font-heading text-white font-medium">Clear All Demo Orders?</h3>
+                <p className="text-gray-400 text-xs mt-1">
+                  This will remove all <span className="text-white font-semibold">{orders.length} demo orders</span> from your management dashboard.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-brand-gold/10 border border-brand-gold/20 rounded-xl text-brand-gold text-xs">
+              💡 Don&apos;t worry: You can click &quot;Restore Demo Orders&quot; anytime if you ever want the sample orders back.
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowDeleteAllModal(false)}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 text-xs font-medium cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleClearAllOrders}
+                className="px-5 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-lg shadow-red-600/20 cursor-pointer"
+              >
+                Clear All Orders
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Order Detail Modal */}
       {activeModalOrder && (
@@ -240,7 +429,7 @@ export default function AdminOrdersPage() {
               </div>
               <button
                 onClick={() => setActiveModalOrder(null)}
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center"
+                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center cursor-pointer"
               >
                 ✕
               </button>
