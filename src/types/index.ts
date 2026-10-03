@@ -113,19 +113,27 @@ export interface OrderItem {
   price: number;
 }
 
+export type SalesPlatform = 'Qxyra Web' | 'Daraz' | 'CJ Dropshipping' | 'TikTok Shop' | 'AliExpress' | 'eBay' | 'Manual / Other';
+
 export interface Order {
   id: string;
   orderNumber: string;
   userId: string;
+  platform?: SalesPlatform | string;
   items: OrderItem[];
   status: OrderStatus;
   subtotal: number;
   shippingCost: number;
   discount: number;
-  total: number;
+  total: number; // Selling Price (Revenue)
+  costPrice?: number; // Sourcing / Buy Price
+  profit?: number; // Net Profit (total - costPrice)
+  profitMargin?: number; // Profit Margin %
   shippingAddress: Address;
   trackingNumber?: string;
   cjOrderId?: string;
+  externalOrderId?: string;
+  notes?: string;
   createdAt: string;
 }
 
