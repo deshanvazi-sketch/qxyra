@@ -76,11 +76,18 @@ export default function AdminOrdersPage() {
     setTimeout(() => setToastMessage(null), 4000);
   };
 
-  // Profit & Revenue Calculations
-  const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
-  const totalCost = orders.reduce((sum, o) => sum + (o.costPrice || 0), 0);
-  const totalNetProfit = totalRevenue - totalCost;
-  const overallMargin = totalRevenue > 0 ? ((totalNetProfit / totalRevenue) * 100).toFixed(1) : '0';
+  // Profit & Revenue Calculations filtered specifically by Selected Channel / Platform
+  const channelOrders = orders.filter(order => {
+    if (selectedPlatform === 'ALL') return true;
+    const orderPlatform = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
+    return orderPlatform === selectedPlatform;
+  });
+
+  const kpiRevenue = channelOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+  const kpiCost = channelOrders.reduce((sum, o) => sum + (o.costPrice || 0), 0);
+  const kpiNetProfit = kpiRevenue - kpiCost;
+  const kpiMargin = kpiRevenue > 0 ? ((kpiNetProfit / kpiRevenue) * 100).toFixed(1) : '0';
+  const kpiOrdersCount = channelOrders.length;
 
   // Filter Orders
   const filteredOrders = orders.filter(order => {
@@ -373,101 +380,147 @@ export default function AdminOrdersPage() {
         </div>
       </div>
 
-      {/* Financial Profit Summary Banner (4 KPI Cards) */}
+      {/* Platform / Channel Selection Filter (Drives KPI Cards & Table) */}
+      <div className="p-4 rounded-2xl bg-[#141820] border border-gray-800/80 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-gold flex items-center gap-1.5">
+              <span>🌐</span>
+              <span>Filter by Sales Channel:</span>
+            </span>
+            <span className="text-xs text-gray-400">
+              {selectedPlatform === 'ALL' 
+                ? '(Showing Aggregate All-Channel Totals)' 
+                : `(Showing ${selectedPlatform} Specific Financials & Profit)`}
+            </span>
+          </div>
+
+          <div className="text-[11px] text-gray-400 font-mono">
+            Active: <span className="text-white font-bold">{selectedPlatform}</span> ({kpiOrdersCount} orders)
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          {['ALL', 'Daraz', 'Qxyra Web', 'CJ Dropshipping', 'TikTok Shop', 'AliExpress', 'Manual / Other'].map(pl => {
+            const count = pl === 'ALL' 
+              ? orders.length 
+              : orders.filter(o => (o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web')) === pl).length;
+
+            const isSelected = selectedPlatform === pl;
+
+            return (
+              <button
+                key={pl}
+                onClick={() => setSelectedPlatform(pl)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold text-brand-black font-bold shadow-lg shadow-brand-gold/20 scale-[1.02]'
+                    : 'bg-black/40 text-gray-400 border border-gray-800 hover:text-white hover:border-gray-700'
+                }`}
+              >
+                <span>{pl}</span>
+                <span className={`px-1.5 py-0.2 rounded-md font-mono text-[10px] ${
+                  isSelected ? 'bg-black/20 text-brand-black font-bold' : 'bg-white/5 text-gray-400'
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Financial Profit Summary Banner (4 KPI Cards - Filtered by Selected Channel) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Total Sales (Revenue) */}
+        {/* Sales Revenue for Selected Channel */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Total Sales Revenue</span>
+            <span className="font-medium">
+              {selectedPlatform === 'ALL' ? 'Total Sales Revenue' : `${selectedPlatform} Revenue`}
+            </span>
             <span className="text-blue-400 font-semibold bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20 text-[10px]">
-              Sell Value
+              {selectedPlatform === 'ALL' ? 'All Channels' : selectedPlatform}
             </span>
           </div>
           <div className="text-2xl font-heading font-semibold text-white">
-            {format(totalRevenue)}
+            {format(kpiRevenue)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
-            From {orders.length} total orders across all channels
+            {kpiOrdersCount === 0 
+              ? `No ${selectedPlatform} orders logged yet` 
+              : `From ${kpiOrdersCount} ${selectedPlatform === 'ALL' ? 'total orders' : `${selectedPlatform} orders`}`}
           </div>
         </div>
 
-        {/* Total Buy Cost / Sourcing Cost */}
+        {/* Buy / Sourcing Cost for Selected Channel */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Total Sourcing Cost</span>
+            <span className="font-medium">
+              {selectedPlatform === 'ALL' ? 'Total Sourcing Cost' : `${selectedPlatform} Buy Cost`}
+            </span>
             <span className="text-amber-400 font-semibold bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20 text-[10px]">
-              Buy Value
+              Buy Total
             </span>
           </div>
           <div className="text-2xl font-heading font-semibold text-gray-300">
-            {format(totalCost)}
+            {format(kpiCost)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
-            Cost to acquire / dropship inventory
+            {selectedPlatform === 'ALL' 
+              ? 'Cost to acquire / dropship inventory' 
+              : `Inventory sourcing cost for ${selectedPlatform}`}
           </div>
         </div>
 
-        {/* Net Profit (ශුද්ධ ලාභය) */}
+        {/* Net Profit for Selected Channel */}
         <div className="p-5 rounded-2xl bg-gradient-to-br from-[#141820] to-[#12241b] border border-emerald-500/30 shadow-lg shadow-emerald-950/20 relative overflow-hidden">
           <div className="flex items-center justify-between text-emerald-400 text-xs mb-2">
-            <span className="font-semibold">Net Profit (ශුද්ධ ලාභය)</span>
+            <span className="font-semibold">
+              {selectedPlatform === 'ALL' ? 'Net Profit (ශුද්ධ ලාභය)' : `${selectedPlatform} Net Profit`}
+            </span>
             <span className="text-emerald-300 font-bold bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/30 text-[10px]">
-              {overallMargin}% Margin
+              {kpiMargin}% Margin
             </span>
           </div>
           <div className={`text-2xl sm:text-3xl font-heading font-bold ${
-            totalNetProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
+            kpiNetProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
           }`}>
-            {totalNetProfit >= 0 ? format(totalNetProfit, true) : format(totalNetProfit)}
+            {kpiNetProfit >= 0 ? format(kpiNetProfit, true) : format(kpiNetProfit)}
           </div>
           <div className="text-xs text-emerald-300/80 mt-2 flex items-center gap-1">
-            <span>{totalNetProfit >= 0 ? '✨ Profitable business operations' : '⚠️ Operating at net deficit'}</span>
+            <span>
+              {kpiOrdersCount === 0 
+                ? 'Awaiting channel orders' 
+                : kpiNetProfit >= 0 
+                  ? '✨ Profitable business operations' 
+                  : '⚠️ Operating at net deficit'}
+            </span>
           </div>
         </div>
 
-        {/* Profit Margin & Channels */}
+        {/* Profit Margin % for Selected Channel */}
         <div className="p-5 rounded-2xl bg-[#141820] border border-gray-800/80 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Overall Profit Margin</span>
+            <span className="font-medium">
+              {selectedPlatform === 'ALL' ? 'Overall Profit Margin' : `${selectedPlatform} Margin`}
+            </span>
             <span className="text-brand-gold font-semibold bg-brand-gold/10 px-2 py-0.5 rounded-full border border-brand-gold/20 text-[10px]">
               Efficiency
             </span>
           </div>
           <div className="text-2xl font-heading font-semibold text-brand-gold">
-            {overallMargin}%
+            {kpiMargin}%
           </div>
           <div className="text-xs text-gray-500 mt-2">
-            Net gain per $1.00 of total sales
+            {selectedPlatform === 'ALL' 
+              ? 'Net gain percentage across all sales' 
+              : `Net gain percentage on ${selectedPlatform}`}
           </div>
         </div>
       </div>
 
       {/* Filters and Search Bar */}
       <div className="space-y-4">
-        {/* Platform Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <span className="text-xs text-gray-400 font-medium mr-1 shrink-0">Channel:</span>
-          {['ALL', 'Daraz', 'Qxyra Web', 'CJ Dropshipping', 'TikTok Shop', 'AliExpress', 'Manual / Other'].map(pl => {
-            const count = pl === 'ALL' 
-              ? orders.length 
-              : orders.filter(o => (o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web')) === pl).length;
-
-            return (
-              <button
-                key={pl}
-                onClick={() => setSelectedPlatform(pl)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer ${
-                  selectedPlatform === pl
-                    ? 'bg-brand-gold text-brand-black font-semibold shadow-sm'
-                    : 'bg-[#141820] text-gray-400 border border-gray-800 hover:text-white'
-                }`}
-              >
-                <span>{pl}</span>
-                <span className="ml-1.5 opacity-70 font-mono text-[10px]">({count})</span>
-              </button>
-            );
-          })}
-        </div>
 
         {/* Search & Status Bar */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
