@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import { formatPrice } from '@/lib/utils';
 import { mockCJCatalog, CJProductCatalogItem } from '@/lib/mock-admin-data';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function CJDropshippingHubPage() {
+  const { format } = useCurrency();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [markupPercent, setMarkupPercent] = useState(160);
@@ -139,13 +141,13 @@ export default function CJDropshippingHubPage() {
           <div className="text-xs">
             <span className="text-gray-400 block">Example Profit on $20 Item:</span>
             <div className="text-white font-medium mt-0.5">
-              Wholesale: $20.00 → Retail: <strong className="text-brand-gold">{formatPrice(20 * (1 + markupPercent / 100))}</strong>
+              Wholesale: {format(20)} → Retail: <strong className="text-brand-gold">{format(20 * (1 + markupPercent / 100))}</strong>
             </div>
           </div>
           <div className="text-right">
             <span className="text-[10px] text-emerald-400 block">Est. Gross Margin:</span>
             <span className="text-base font-bold text-emerald-400">
-              +{formatPrice(20 * (markupPercent / 100))}
+              {format(20 * (markupPercent / 100), true)}
             </span>
           </div>
         </div>
@@ -224,15 +226,15 @@ export default function CJDropshippingHubPage() {
                 <div className="p-3.5 rounded-xl bg-black/40 border border-gray-800/80 space-y-2">
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-gray-400">CJ Wholesale Cost:</span>
-                    <span className="font-mono text-gray-300 font-semibold">{formatPrice(item.wholesalePrice)}</span>
+                    <span className="font-mono text-gray-300 font-semibold">{format(item.wholesalePrice)}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs">
                     <span className="text-gray-400">Calculated Selling Price:</span>
-                    <span className="font-mono text-brand-gold font-bold text-sm">{formatPrice(calculatedRetail)}</span>
+                    <span className="font-mono text-brand-gold font-bold text-sm">{format(calculatedRetail)}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs pt-1.5 border-t border-gray-800">
                     <span className="text-emerald-400 font-medium">Estimated Net Margin:</span>
-                    <span className="font-mono text-emerald-400 font-bold">+{formatPrice(profit)}</span>
+                    <span className="font-mono text-emerald-400 font-bold">{format(profit, true)}</span>
                   </div>
                 </div>
 

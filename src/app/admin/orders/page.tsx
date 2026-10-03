@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { formatPrice } from '@/lib/utils';
 import { mockOrders } from '@/lib/mock-admin-data';
 import { Order, OrderStatus, SalesPlatform } from '@/types';
+import { useCurrency, Currency } from '@/context/CurrencyContext';
 
 const STORAGE_KEY = 'qxyra_admin_orders';
 
@@ -18,10 +19,12 @@ const PLATFORMS: SalesPlatform[] = [
 ];
 
 export default function AdminOrdersPage() {
+  const { currency, exchangeRate, format, convertToUSD } = useCurrency();
   const [orders, setOrders] = useState<Order[]>(mockOrders);
   const [selectedStatus, setSelectedStatus] = useState<string>('ALL');
   const [selectedPlatform, setSelectedPlatform] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const [inputCurrency, setInputCurrency] = useState<Currency>(currency);
   
   // Modals
   const [showAddModal, setShowAddModal] = useState(false);
@@ -94,7 +97,7 @@ export default function AdminOrdersPage() {
     return matchesStatus && matchesPlatform && matchesSearch;
   });
 
-  // Calculate live profit inside modal
+  // Calculate live profit inside modal (supports USD or LKR entry)
   const formSellNum = parseFloat(newOrder.sellPrice) || 0;
   const formBuyNum = parseFloat(newOrder.buyPrice) || 0;
   const formQtyNum = parseInt(newOrder.quantity) || 1;
@@ -102,6 +105,12 @@ export default function AdminOrdersPage() {
   const formTotalCost = formBuyNum * formQtyNum;
   const formProfit = formTotalSell - formTotalCost;
   const formMargin = formTotalSell > 0 ? ((formProfit / formTotalSell) * 100).toFixed(1) : '0';
+
+  // Normalized USD values stored for global analytics
+  const storedTotalSell = inputCurrency === 'LKR' ? (formTotalSell / exchangeRate) : formTotalSell;
+  const storedTotalCost = inputCurrency === 'LKR' ? (formTotalCost / exchangeRate) : formTotalCost;
+  const storedProfit = storedTotalSell - storedTotalCost;
+  const storedItemSell = inputCurrency === 'LKR' ? (formSellNum / exchangeRate) : formSellNum;
 
   // Handle Add Multi-Channel Order
   const handleCreateOrder = (e: React.FormEvent) => {
@@ -119,15 +128,15 @@ export default function AdminOrdersPage() {
       userId: `user-${Date.now()}`,
       platform: newOrder.platform,
       status: newOrder.status,
-      subtotal: formTotalSell,
+      subtotal: storedTotalSell,
       shippingCost: 0,
       discount: 0,
-      total: formTotalSell,
-      costPrice: formTotalCost,
-      profit: formProfit,
+      total: storedTotalSell,
+      costPrice: storedTotalCost,
+      profit: storedProfit,
       profitMargin: parseFloat(formMargin),
       trackingNumber: newOrder.trackingNumber || undefined,
-      notes: newOrder.notes || undefined,
+      notes: newOrder.notes ? `${newOrder.notes} [Logged in ${inputCurrency}]` : `[Logged in ${inputCurrency}]`,
       createdAt: new Date().toISOString(),
       shippingAddress: {
         id: `addr-${Date.now()}`,
@@ -150,7 +159,7 @@ export default function AdminOrdersPage() {
             name: newOrder.productName || 'Dropshipped Item',
             slug: 'multi-channel-item',
             description: 'Item fulfilled via dropshipping channel.',
-            basePrice: formSellNum,
+            basePrice: storedItemSell,
             images: [],
             categoryId: 'c1',
             variants: [],
@@ -164,12 +173,12 @@ export default function AdminOrdersPage() {
           variant: {
             id: `var-${Date.now()}`,
             productId: `prod-${Date.now()}`,
-            price: formSellNum,
+            price: storedItemSell,
             stock: 100,
             sku: `${newOrder.platform.slice(0, 2).toUpperCase()}-${Math.floor(1000 + Math.random() * 9000)}`
           },
           quantity: formQtyNum,
-          price: formSellNum
+          price: storedItemSell
         }
       ]
     };
@@ -191,7 +200,7 @@ export default function AdminOrdersPage() {
       notes: ''
     });
 
-    showToast(`✓ Order #${createdOrder.orderNumber} (${createdOrder.platform}) saved with ${formatPrice(formProfit)} net profit!`);
+    showToast(`✓ Order #${createdOrder.orderNumber} (${createdOrder.platform}) saved with ${format(storedProfit, true)} net profit!`);
   };
 
   const handleDeleteSingle = () => {
@@ -312,12 +321,28 @@ export default function AdminOrdersPage() {
           <p className="text-gray-400 text-sm mt-1">
             Track multi-platform dropshipping orders (Daraz, Qxyra Web, CJ, TikTok), analyze buy/sell margins, and calculate net profit.
           </p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[11px] text-gray-400">Active Currency:</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white">
+              <span>{currency === 'USD' ? '🇺🇸' : '🇱🇰'}</span>
+              <span>{currency} ({currency === 'USD' ? '$' : 'Rs.'})</span>
+            </span>
+            {currency === 'LKR' && (
+              <span className="text-[11px] text-emerald-300 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>1 USD = Rs. {exchangeRate.toFixed(2)} (Live Rate)</span>
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
           {/* Add Multi-Channel Order Button */}
           <button
-            onClick={() => setShowAddModal(true)}
+            onClick={() => {
+              setInputCurrency(currency);
+              setShowAddModal(true);
+            }}
             className="px-4 py-2.5 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold text-brand-black font-bold text-xs rounded-xl shadow-lg shadow-brand-gold/15 hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>➕</span>
@@ -359,7 +384,7 @@ export default function AdminOrdersPage() {
             </span>
           </div>
           <div className="text-2xl font-heading font-semibold text-white">
-            {formatPrice(totalRevenue)}
+            {format(totalRevenue)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
             From {orders.length} total orders across all channels
@@ -375,7 +400,7 @@ export default function AdminOrdersPage() {
             </span>
           </div>
           <div className="text-2xl font-heading font-semibold text-gray-300">
-            {formatPrice(totalCost)}
+            {format(totalCost)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
             Cost to acquire / dropship inventory
@@ -393,7 +418,7 @@ export default function AdminOrdersPage() {
           <div className={`text-2xl sm:text-3xl font-heading font-bold ${
             totalNetProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
           }`}>
-            {totalNetProfit >= 0 ? `+${formatPrice(totalNetProfit)}` : formatPrice(totalNetProfit)}
+            {totalNetProfit >= 0 ? format(totalNetProfit, true) : format(totalNetProfit)}
           </div>
           <div className="text-xs text-emerald-300/80 mt-2 flex items-center gap-1">
             <span>{totalNetProfit >= 0 ? '✨ Profitable business operations' : '⚠️ Operating at net deficit'}</span>
@@ -531,12 +556,12 @@ export default function AdminOrdersPage() {
 
                     {/* Sell Price */}
                     <td className="py-4 font-semibold text-xs text-white">
-                      {formatPrice(sellAmount)}
+                      {format(sellAmount)}
                     </td>
 
                     {/* Buy Price */}
                     <td className="py-4 font-mono text-xs text-gray-400">
-                      {costAmount > 0 ? formatPrice(costAmount) : '—'}
+                      {costAmount > 0 ? format(costAmount) : '—'}
                     </td>
 
                     {/* Net Profit & Margin */}
@@ -547,7 +572,7 @@ export default function AdminOrdersPage() {
                             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
                             : 'bg-red-500/10 text-red-400 border-red-500/30'
                         }`}>
-                          <span>{profitAmount >= 0 ? `+${formatPrice(profitAmount)}` : formatPrice(profitAmount)}</span>
+                          <span>{profitAmount >= 0 ? format(profitAmount, true) : format(profitAmount)}</span>
                         </span>
                         {sellAmount > 0 && costAmount > 0 && (
                           <div className="text-[10px] text-gray-500 font-mono">
@@ -735,21 +760,59 @@ export default function AdminOrdersPage() {
                 </div>
               </div>
 
+              {/* Currency Selector for Order Input */}
+              <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-gray-800">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-300 font-medium">Input Currency:</span>
+                  <span className="text-[11px] text-gray-500">
+                    {inputCurrency === 'LKR' 
+                      ? `Live forex sync: 1 USD = Rs. ${exchangeRate.toFixed(2)}`
+                      : 'Global USD pricing'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1 bg-black/60 p-1 rounded-lg border border-gray-700">
+                  <button
+                    type="button"
+                    onClick={() => setInputCurrency('USD')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold transition-all cursor-pointer ${
+                      inputCurrency === 'USD'
+                        ? 'bg-brand-gold text-brand-black shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    🇺🇸 USD ($)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setInputCurrency('LKR')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold transition-all cursor-pointer ${
+                      inputCurrency === 'LKR'
+                        ? 'bg-brand-gold text-brand-black shadow-sm'
+                        : 'text-gray-400 hover:text-white'
+                    }`}
+                  >
+                    🇱🇰 LKR (Rs.)
+                  </button>
+                </div>
+              </div>
+
               {/* Buy Price vs Sell Price (Financials) */}
               <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-black/30 border border-gray-800">
                 <div>
                   <label className="text-gray-300 block mb-1.5 font-medium">
-                    Sourcing / Buy Price (Cost)
+                    Sourcing / Buy Price (Cost in {inputCurrency})
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-mono text-xs">
+                      {inputCurrency === 'USD' ? '$' : 'Rs.'}
+                    </span>
                     <input
                       type="number"
                       step="0.01"
-                      placeholder="18.50"
+                      placeholder={inputCurrency === 'USD' ? '18.50' : '6100.00'}
                       value={newOrder.buyPrice}
                       onChange={e => setNewOrder({ ...newOrder, buyPrice: e.target.value })}
-                      className="w-full pl-7 pr-3 py-2 rounded-lg bg-black/50 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-black/50 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
                     />
                   </div>
                   <span className="text-[10px] text-gray-500 mt-1 block">What you pay to supplier</span>
@@ -757,18 +820,20 @@ export default function AdminOrdersPage() {
 
                 <div>
                   <label className="text-gray-300 block mb-1.5 font-medium">
-                    Selling / Retail Price *
+                    Selling / Retail Price * (in {inputCurrency})
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-mono text-xs">
+                      {inputCurrency === 'USD' ? '$' : 'Rs.'}
+                    </span>
                     <input
                       type="number"
                       step="0.01"
                       required
-                      placeholder="59.99"
+                      placeholder={inputCurrency === 'USD' ? '59.99' : '19800.00'}
                       value={newOrder.sellPrice}
                       onChange={e => setNewOrder({ ...newOrder, sellPrice: e.target.value })}
-                      className="w-full pl-7 pr-3 py-2 rounded-lg bg-black/50 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
+                      className="w-full pl-9 pr-3 py-2 rounded-lg bg-black/50 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
                     />
                   </div>
                   <span className="text-[10px] text-gray-500 mt-1 block">Customer purchase price</span>
@@ -779,10 +844,21 @@ export default function AdminOrdersPage() {
               <div className="p-4 rounded-xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
                 <div>
                   <div className="text-[11px] text-emerald-400 font-semibold uppercase tracking-wider">
-                    Calculated Net Profit (ශුද්ධ ලාභය)
+                    Calculated Net Profit ({inputCurrency})
                   </div>
                   <div className="text-2xl font-bold font-mono text-emerald-300 mt-0.5">
-                    {formProfit >= 0 ? `+${formatPrice(formProfit)}` : formatPrice(formProfit)}
+                    {inputCurrency === 'LKR'
+                      ? (formProfit >= 0 
+                          ? `+Rs. ${formProfit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
+                          : `-Rs. ${Math.abs(formProfit).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`)
+                      : (formProfit >= 0 
+                          ? `+$${formProfit.toFixed(2)}` 
+                          : `-$${Math.abs(formProfit).toFixed(2)}`)}
+                  </div>
+                  <div className="text-[10px] text-gray-400 font-mono mt-0.5">
+                    {inputCurrency === 'LKR'
+                      ? `≈ ${storedProfit >= 0 ? `+$${storedProfit.toFixed(2)}` : `-$${Math.abs(storedProfit).toFixed(2)}`} USD (Rate: $1 = Rs. ${exchangeRate.toFixed(2)})`
+                      : `≈ ${formProfit >= 0 ? `+Rs. ${(formProfit * exchangeRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : `-Rs. ${(Math.abs(formProfit) * exchangeRate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`} LKR (Live Forex)`}
                   </div>
                 </div>
 
@@ -866,20 +942,20 @@ export default function AdminOrdersPage() {
             <div className="p-4 rounded-xl bg-gradient-to-r from-black/50 to-emerald-950/20 border border-emerald-500/30 grid grid-cols-3 gap-4 text-xs">
               <div>
                 <span className="text-gray-400 block mb-1">Selling Price (Revenue)</span>
-                <span className="text-base font-bold text-white font-mono">{formatPrice(activeModalOrder.total)}</span>
+                <span className="text-base font-bold text-white font-mono">{format(activeModalOrder.total)}</span>
               </div>
               <div>
                 <span className="text-gray-400 block mb-1">Buy Price (Cost)</span>
                 <span className="text-base font-bold text-gray-400 font-mono">
-                  {activeModalOrder.costPrice ? formatPrice(activeModalOrder.costPrice) : '—'}
+                  {activeModalOrder.costPrice ? format(activeModalOrder.costPrice) : '—'}
                 </span>
               </div>
               <div>
                 <span className="text-emerald-400 font-semibold block mb-1">Net Profit (ශුද්ධ ලාභය)</span>
                 <span className="text-base font-bold text-emerald-400 font-mono">
                   {activeModalOrder.profit !== undefined 
-                    ? (activeModalOrder.profit >= 0 ? `+${formatPrice(activeModalOrder.profit)}` : formatPrice(activeModalOrder.profit))
-                    : `+${formatPrice(activeModalOrder.total - (activeModalOrder.costPrice || 0))}`}
+                    ? (activeModalOrder.profit >= 0 ? format(activeModalOrder.profit, true) : format(activeModalOrder.profit))
+                    : format(activeModalOrder.total - (activeModalOrder.costPrice || 0), true)}
                 </span>
               </div>
             </div>
@@ -918,7 +994,7 @@ export default function AdminOrdersPage() {
                     <div className="text-gray-500 text-[11px]">Qty: {item.quantity} • SKU: {item.variant.sku}</div>
                   </div>
                   <div className="font-mono text-white font-semibold">
-                    {formatPrice(item.price * item.quantity)}
+                    {format(item.price * item.quantity)}
                   </div>
                 </div>
               ))}

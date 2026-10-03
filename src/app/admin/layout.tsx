@@ -9,6 +9,7 @@ import {
   getAdminSession, 
   logoutAdmin 
 } from '@/lib/admin-auth';
+import { CurrencySelector } from '@/components/currency/CurrencySelector';
 
 export default function AdminLayout({
   children,
@@ -196,7 +197,10 @@ export default function AdminLayout({
             <span className="text-xs text-brand-gold uppercase tracking-wider font-semibold">Store Management</span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Real-Time Live Currency Switcher (USD / LKR) */}
+            <CurrencySelector />
+
             <div className="hidden sm:flex items-center gap-2 text-xs text-gray-400 px-3 py-1.5 rounded-lg bg-white/5 border border-white/5">
               <span>Environment:</span>
               <span className="text-emerald-400 font-semibold">Production Ready</span>

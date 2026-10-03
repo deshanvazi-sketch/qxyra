@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { TrackingPixels } from "@/components/analytics/TrackingPixels";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 
 const inter = Inter({
   variable: "--font-heading",
@@ -86,8 +87,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${dmSans.variable} font-body antialiased text-brand-black bg-white min-h-screen flex flex-col`}
       >
-        <TrackingPixels />
-        {children}
+        <CurrencyProvider>
+          <TrackingPixels />
+          {children}
+        </CurrencyProvider>
       </body>
     </html>
   );

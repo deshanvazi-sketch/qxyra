@@ -1,4 +1,12 @@
-export function formatPrice(price: number): string {
+export function formatPrice(price: number, currency: 'USD' | 'LKR' = 'USD', rate: number = 330.41): string {
+  if (isNaN(price)) return currency === 'LKR' ? 'Rs. 0.00' : '$0.00';
+  if (currency === 'LKR') {
+    const lkrVal = price * rate;
+    return `Rs. ${new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(lkrVal)}`;
+  }
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

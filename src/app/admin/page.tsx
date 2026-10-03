@@ -6,8 +6,10 @@ import { formatPrice } from '@/lib/utils';
 import { mockOrders } from '@/lib/mock-admin-data';
 import { products as defaultProducts } from '@/lib/mock-data';
 import { Order, Product } from '@/types';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function AdminDashboardPage() {
+  const { currency, exchangeRate, format } = useCurrency();
   const [orders, setOrders] = useState<Order[]>(mockOrders);
   const [productsList, setProductsList] = useState<Product[]>(defaultProducts);
 
@@ -81,6 +83,19 @@ export default function AdminDashboardPage() {
           <p className="text-gray-400 text-sm mt-1">
             Real-time multi-channel fulfillment, dropshipping margin metrics, and net profit analytics.
           </p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-[11px] text-gray-400">Currency Mode:</span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white">
+              <span>{currency === 'USD' ? '🇺🇸' : '🇱🇰'}</span>
+              <span>{currency} ({currency === 'USD' ? '$' : 'Rs.'})</span>
+            </span>
+            {currency === 'LKR' && (
+              <span className="text-[11px] text-emerald-300 font-mono bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>1 USD = Rs. {exchangeRate.toFixed(2)} (Live Rate)</span>
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
@@ -111,7 +126,7 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-white">
-            {formatPrice(totalRevenue)}
+            {format(totalRevenue)}
           </div>
           <div className="text-xs text-gray-500 mt-2 flex items-center justify-between">
             <span>{ordersCount} orders recorded</span>
@@ -128,7 +143,7 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-gray-300">
-            {formatPrice(totalCost)}
+            {format(totalCost)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
             Inventory & dropship purchase cost
@@ -146,7 +161,7 @@ export default function AdminDashboardPage() {
           <div className={`text-2xl sm:text-3xl font-heading font-bold ${
             totalNetProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
           }`}>
-            {totalNetProfit >= 0 ? `+${formatPrice(totalNetProfit)}` : formatPrice(totalNetProfit)}
+            {totalNetProfit >= 0 ? format(totalNetProfit, true) : format(totalNetProfit)}
           </div>
           <div className="text-xs text-emerald-300/80 mt-2">
             {totalNetProfit >= 0 ? '✨ Pure earnings after sourcing' : '⚠️ Net deficit'}
@@ -162,7 +177,7 @@ export default function AdminDashboardPage() {
             </span>
           </div>
           <div className="text-2xl sm:text-3xl font-heading font-semibold text-brand-gold">
-            {formatPrice(aov)}
+            {format(aov)}
           </div>
           <div className="text-xs text-gray-500 mt-2">
             Average ticket size across platforms
@@ -208,16 +223,16 @@ export default function AdminDashboardPage() {
               <div className="grid grid-cols-3 gap-2 pt-1 border-t border-gray-800/60 text-xs">
                 <div>
                   <span className="text-[10px] text-gray-500 block">Revenue</span>
-                  <span className="font-semibold text-white font-mono">{formatPrice(stat.revenue)}</span>
+                  <span className="font-semibold text-white font-mono">{format(stat.revenue)}</span>
                 </div>
                 <div>
                   <span className="text-[10px] text-gray-500 block">Buy Cost</span>
-                  <span className="font-mono text-gray-400">{formatPrice(stat.cost)}</span>
+                  <span className="font-mono text-gray-400">{format(stat.cost)}</span>
                 </div>
                 <div>
                   <span className="text-[10px] text-emerald-400 font-semibold block">Net Profit</span>
                   <span className="font-bold text-emerald-400 font-mono">
-                    {stat.profit >= 0 ? `+${formatPrice(stat.profit)}` : formatPrice(stat.profit)}
+                    {stat.profit >= 0 ? format(stat.profit, true) : format(stat.profit)}
                   </span>
                 </div>
               </div>
@@ -294,10 +309,10 @@ export default function AdminDashboardPage() {
                         <div className="text-[11px] text-gray-500">{order.shippingAddress.country}</div>
                       </td>
                       <td className="py-4 font-semibold text-xs text-white">
-                        {formatPrice(sellVal)}
+                        {format(sellVal)}
                       </td>
                       <td className="py-4 font-mono text-xs text-gray-400">
-                        {costVal > 0 ? formatPrice(costVal) : '—'}
+                        {costVal > 0 ? format(costVal) : '—'}
                       </td>
                       <td className="py-4">
                         <span className={`inline-flex px-2 py-0.5 rounded text-xs font-bold font-mono border ${
@@ -305,7 +320,7 @@ export default function AdminDashboardPage() {
                             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
                             : 'bg-red-500/10 text-red-400 border-red-500/30'
                         }`}>
-                          {profitVal >= 0 ? `+${formatPrice(profitVal)}` : formatPrice(profitVal)}
+                          {profitVal >= 0 ? format(profitVal, true) : format(profitVal)}
                         </span>
                       </td>
                       <td className="py-4">

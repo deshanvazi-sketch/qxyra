@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
 import { products as initialProducts } from '@/lib/mock-data';
 import { Product } from '@/types';
+import { useCurrency } from '@/context/CurrencyContext';
 
 const STORAGE_KEY = 'qxyra_products_list';
 
 export default function AdminProductsPage() {
+  const { format } = useCurrency();
   const [productsList, setProductsList] = useState<Product[]>(initialProducts);
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -286,10 +288,10 @@ export default function AdminProductsPage() {
                       </div>
                     </td>
                     <td className="py-4 text-xs font-mono text-gray-400">
-                      {formatPrice(product.basePrice)}
+                      {format(product.basePrice)}
                     </td>
                     <td className="py-4 text-xs font-mono font-semibold text-brand-gold">
-                      {product.salePrice ? formatPrice(product.salePrice) : formatPrice(product.basePrice)}
+                      {product.salePrice ? format(product.salePrice) : format(product.basePrice)}
                     </td>
                     <td className="py-4 text-xs text-gray-300">
                       <span className={totalStock < 20 ? 'text-amber-400 font-medium' : ''}>

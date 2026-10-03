@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { BRAND_NAME, NAV_LINKS } from '@/lib/constants';
 import { MobileNav } from './MobileNav';
 import { Logo } from './Logo';
+import { CurrencySelector } from '@/components/currency/CurrencySelector';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -66,8 +67,11 @@ export function Header() {
       )}>
         {/* Top Bar */}
         <div className="bg-brand-black text-brand-gold text-xs font-body py-1.5 px-4 sm:px-8 flex justify-between items-center tracking-wide">
-          <div className="hidden sm:block text-[11px] text-gray-400 font-medium">Official Qxyra Storefront</div>
-          <p className="text-center flex-1 sm:flex-initial">Free standard shipping on orders over $50.</p>
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-[11px] text-gray-400 font-medium">Official Qxyra Storefront</span>
+            <CurrencySelector showRateBadge={false} />
+          </div>
+          <p className="text-center flex-1 sm:flex-initial hidden md:block">Free standard shipping on orders over $50.</p>
           <Link
             href="/admin"
             className="text-[11px] text-white hover:text-brand-gold font-medium transition-colors bg-white/10 hover:bg-white/15 px-2.5 py-0.5 rounded-full border border-white/10"
