@@ -38,10 +38,8 @@ export const FOOTER_LINKS = [
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about' },
-      { label: 'Careers', href: '/careers' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Admin Hub & Dropship', href: '/admin' },
     ],
   },
 ];
