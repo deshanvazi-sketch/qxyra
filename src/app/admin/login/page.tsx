@@ -4,47 +4,74 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Logo } from '@/components/layout/Logo';
-import { 
-  verifyAdminCredentials, 
-  setAdminSession, 
-  checkIsAdminAuthenticated,
-  DEFAULT_ADMIN_CONFIG 
-} from '@/lib/admin-auth';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTarget = searchParams.get('redirect') || '/admin';
 
-  const [email, setEmail] = useState('deshanvazi@gmail.com');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [honeypot, setHoneypot] = useState(''); // Anti-bot honeypot
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLocked, setIsLocked] = useState(false);
 
-  // If already logged in, redirect to admin
+  // Check if session is already active via secure API
   useEffect(() => {
-    if (checkIsAdminAuthenticated()) {
-      router.replace(redirectTarget);
-    }
+    fetch('/api/admin/auth', { cache: 'no-store' })
+      .then(res => {
+        if (res.ok) {
+          router.replace(redirectTarget);
+        }
+      })
+      .catch(() => {});
   }, [router, redirectTarget]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLocked) return;
+
     setErrorMessage(null);
     setIsLoading(true);
 
-    setTimeout(() => {
-      const isValid = verifyAdminCredentials(email, password);
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.trim(),
+          password,
+          honeypot,
+        }),
+      });
 
-      if (isValid) {
-        setAdminSession(email);
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Also save user email to local state for convenience
+        try {
+          localStorage.setItem('qxyra_admin_session', JSON.stringify({
+            email: email.trim().toLowerCase(),
+            role: 'OWNER_ADMIN',
+            authenticatedAt: new Date().toISOString()
+          }));
+        } catch {
+          // ignore
+        }
         router.replace(redirectTarget);
       } else {
         setIsLoading(false);
-        setErrorMessage('Access Denied: Invalid administrator email or master password.');
+        if (res.status === 429 || data.locked) {
+          setIsLocked(true);
+        }
+        setErrorMessage(data.error || 'Access Denied: Invalid administrator credentials.');
       }
-    }, 600);
+    } catch {
+      setIsLoading(false);
+      setErrorMessage('Network error during authentication. Please try again.');
+    }
   };
 
   return (
@@ -58,24 +85,47 @@ function LoginForm() {
         <div className="flex justify-center mb-4">
           <Logo size="md" theme="dark" />
         </div>
-        <h1 className="text-2xl font-heading font-light text-white tracking-wide">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-mono uppercase tracking-wider">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+          <span>Restricted Access Portal</span>
+        </div>
+        <h1 className="text-2xl font-heading font-light text-white tracking-wide mt-1">
           Command Center Login
         </h1>
         <p className="text-xs text-gray-400">
-          Restricted administrative access. Authorized personnel only.
+          Strict security authentication required. All access attempts are logged and monitored.
         </p>
       </div>
 
-      {/* Error Banner */}
+      {/* Error or Lockout Banner */}
       {errorMessage && (
-        <div className="mb-6 p-3.5 rounded-xl bg-red-950/40 border border-red-500/30 text-red-300 text-xs flex items-center gap-2.5 animate-in fade-in">
-          <span>⚠️</span>
-          <span>{errorMessage}</span>
+        <div className={`mb-6 p-4 rounded-xl border text-xs flex items-start gap-3 animate-in fade-in ${
+          isLocked 
+            ? 'bg-amber-950/40 border-amber-500/40 text-amber-200' 
+            : 'bg-red-950/40 border-red-500/30 text-red-300'
+        }`}>
+          <span className="text-base shrink-0">{isLocked ? '🛑' : '⚠️'}</span>
+          <div>
+            <div className="font-semibold">{isLocked ? 'Security Lockout' : 'Access Denied'}</div>
+            <div className="mt-0.5 opacity-90">{errorMessage}</div>
+          </div>
         </div>
       )}
 
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5 text-xs">
+        {/* Hidden Honeypot trap to catch automated hacking bots */}
+        <input
+          type="text"
+          name="security_honeypot_field"
+          value={honeypot}
+          onChange={e => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+        />
+
         <div>
           <label className="text-gray-300 block mb-1.5 font-medium">Administrator Email</label>
           <div className="relative">
@@ -83,10 +133,12 @@ function LoginForm() {
             <input
               type="email"
               required
+              autoFocus
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="admin@qxyra.com"
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-gray-800 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+              placeholder="Enter authorized administrator email"
+              disabled={isLocked || isLoading}
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-gray-800 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold transition-colors disabled:opacity-50"
             />
           </div>
         </div>
@@ -109,34 +161,34 @@ function LoginForm() {
               required
               value={password}
               onChange={e => setPassword(e.target.value)}
-              placeholder="••••••••••••"
-              className="w-full pl-10 pr-10 py-3 rounded-xl bg-black/40 border border-gray-800 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold transition-colors font-mono"
+              placeholder="Enter master password key"
+              disabled={isLocked || isLoading}
+              className="w-full pl-10 pr-10 py-3 rounded-xl bg-black/40 border border-gray-800 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-gold transition-colors font-mono disabled:opacity-50"
             />
           </div>
         </div>
 
-        {/* Credentials Tip Card */}
-        <div className="p-3.5 rounded-xl bg-brand-gold/5 border border-brand-gold/20 text-gray-300 text-[11px] space-y-1">
-          <div className="text-brand-gold font-semibold flex items-center gap-1.5">
-            <span>🛡️</span>
-            <span>Default Master Credentials:</span>
-          </div>
-          <div className="text-gray-400 font-mono text-[10px] pl-5">
-            <div>Email: <span className="text-white">deshanvazi@gmail.com</span></div>
-            <div>Password: <span className="text-brand-gold font-bold">Qxyra@2026</span></div>
-          </div>
+        {/* Security Notice */}
+        <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-[11px] text-gray-400 flex items-center gap-2">
+          <span className="text-emerald-400">🛡️</span>
+          <span>Protected with cryptographic rate limiting & brute-force defense.</span>
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || isLocked}
           className="w-full py-3.5 px-4 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold text-brand-black font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-brand-gold/15 hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
         >
           {isLoading ? (
             <>
               <span className="animate-spin text-sm">⏳</span>
-              <span>Authenticating Portal...</span>
+              <span>Authenticating Secure Vault...</span>
+            </>
+          ) : isLocked ? (
+            <>
+              <span>🛑</span>
+              <span>Account Temporarily Locked</span>
             </>
           ) : (
             <>

@@ -71,13 +71,9 @@ export function Header() {
             <span className="hidden sm:inline text-[11px] text-gray-400 font-medium">Official Qxyra Storefront</span>
             <CurrencySelector showRateBadge={false} />
           </div>
-          <p className="text-center flex-1 sm:flex-initial hidden md:block">Free standard shipping on orders over $50.</p>
-          <Link
-            href="/admin"
-            className="text-[11px] text-white hover:text-brand-gold font-medium transition-colors bg-white/10 hover:bg-white/15 px-2.5 py-0.5 rounded-full border border-white/10"
-          >
-            ⚡ Admin & CJ Hub
-          </Link>
+          <div className="hidden sm:flex items-center gap-3 text-[11px] text-gray-400">
+            <span>Customer Care: <span className="text-brand-gold">support@qxyra.com</span></span>
+          </div>
         </div>
 
         {/* Main Header */}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { BRAND_NAME, BRAND_TAGLINE } from '@/lib/constants';
-import { ADMIN_CREDENTIALS_KEY, DEFAULT_ADMIN_CONFIG } from '@/lib/admin-auth';
+import { getAdminSession } from '@/lib/admin-auth';
 
 const STORAGE_KEY = 'qxyra_platform_settings';
 
@@ -24,10 +24,14 @@ export default function AdminSettingsPage() {
   const [payhereEnabled, setPayhereEnabled] = useState(true);
   const [payhereMerchantId, setPayhereMerchantId] = useState('1228491');
 
-  // Admin Security Credentials
-  const [adminLoginEmail, setAdminLoginEmail] = useState('deshanvazi@gmail.com');
-  const [adminMasterPassword, setAdminMasterPassword] = useState('Qxyra@2026');
-  const [showAdminPassword, setShowAdminPassword] = useState(false);
+  // Admin Security & Master Password Update
+  const [adminEmail, setAdminEmail] = useState('deshanvazi@gmail.com');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [passwordFeedback, setPasswordFeedback] = useState<{ text: string; error: boolean } | null>(null);
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -54,17 +58,61 @@ export default function AdminSettingsPage() {
         if (data.savedAt) setLastSavedTime(data.savedAt);
       }
 
-      // Load custom admin credentials if saved
-      const savedCreds = localStorage.getItem(ADMIN_CREDENTIALS_KEY);
-      if (savedCreds) {
-        const creds = JSON.parse(savedCreds);
-        if (creds.email) setAdminLoginEmail(creds.email);
-        if (creds.password) setAdminMasterPassword(creds.password);
+      // Load active admin session email
+      const session = getAdminSession();
+      if (session?.email) {
+        setAdminEmail(session.email);
       }
     } catch (e) {
       console.error('Failed to load settings from localStorage', e);
     }
   }, []);
+
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordFeedback(null);
+
+    if (!currentPassword || !newPassword) {
+      setPasswordFeedback({ text: 'Please enter both current and new password.', error: true });
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setPasswordFeedback({ text: 'New password must be at least 8 characters long.', error: true });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setPasswordFeedback({ text: 'New passwords do not match. Please verify.', error: true });
+      return;
+    }
+
+    setIsUpdatingPassword(true);
+    try {
+      const res = await fetch('/api/admin/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword,
+          newPassword
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setPasswordFeedback({ text: '✓ Master password updated successfully on server!', error: false });
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+      } else {
+        setPasswordFeedback({ text: data.error || 'Failed to update password.', error: true });
+      }
+    } catch {
+      setPasswordFeedback({ text: 'Network error updating password.', error: true });
+    } finally {
+      setIsUpdatingPassword(false);
+    }
+  };
 
   const handleSave = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -89,13 +137,6 @@ export default function AdminSettingsPage() {
     try {
       // 1. Save general settings
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settingsData));
-      
-      // 2. Save security login credentials
-      localStorage.setItem(ADMIN_CREDENTIALS_KEY, JSON.stringify({
-        email: adminLoginEmail.trim().toLowerCase(),
-        password: adminMasterPassword
-      }));
-
       setLastSavedTime(settingsData.savedAt);
 
       // 3. Also sync to backend CJ settings API route if available
@@ -175,54 +216,127 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-6">
         {/* Security & Admin Access Control */}
-        <div className="p-6 rounded-2xl bg-[#141820] border border-brand-gold/30 shadow-sm space-y-4 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <h2 className="text-base font-heading font-medium text-white flex items-center gap-2">
-              <span>🛡️</span>
-              <span>Admin Security & Login Credentials</span>
-            </h2>
-            <span className="text-[10px] bg-brand-gold/10 text-brand-gold border border-brand-gold/30 px-2 py-0.5 rounded-md font-semibold">
-              Protected Portal Gate
-            </span>
+        <div className="p-6 rounded-2xl bg-[#141820] border border-brand-gold/30 shadow-sm space-y-5 relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h2 className="text-base font-heading font-medium text-white flex items-center gap-2">
+                <span>🛡️</span>
+                <span>Admin Master Security & Access Control</span>
+              </h2>
+              <p className="text-gray-400 text-xs mt-1">
+                Server-side HMAC authenticated access. Public storefront links and default credentials have been removed.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-full font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Rate Limiting & Honeypot Active
+              </span>
+            </div>
           </div>
-          <p className="text-gray-400 text-xs">
-            Only administrators with these credentials can unlock and access the <code className="text-brand-gold font-mono">/admin</code> dashboard.
-          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs bg-black/30 p-3.5 rounded-xl border border-gray-800">
             <div>
-              <label className="text-gray-300 block mb-1.5 font-medium">Owner / Administrator Email</label>
-              <input
-                type="email"
-                required
-                value={adminLoginEmail}
-                onChange={e => setAdminLoginEmail(e.target.value)}
-                placeholder="deshanvazi@gmail.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm focus:outline-none focus:border-brand-gold"
-              />
-              <span className="text-[10px] text-gray-500 mt-1 block">Also authorized: admin@qxyra.com</span>
+              <span className="text-gray-500 block text-[11px]">Primary Master Admin</span>
+              <span className="text-white font-medium">{adminEmail}</span>
             </div>
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-gray-300 font-medium">Admin Master Password</label>
-                <button
-                  type="button"
-                  onClick={() => setShowAdminPassword(!showAdminPassword)}
-                  className="text-gray-400 hover:text-white text-[11px]"
-                >
-                  {showAdminPassword ? 'Hide' : 'Show'}
-                </button>
+              <span className="text-gray-500 block text-[11px]">Authentication Mechanism</span>
+              <span className="text-brand-gold font-mono text-[11px]">HMAC SHA-256 HttpOnly Cookie</span>
+            </div>
+            <div>
+              <span className="text-gray-500 block text-[11px]">Brute-Force Shield</span>
+              <span className="text-emerald-400 text-[11px]">5 attempts / 15m lockout</span>
+            </div>
+          </div>
+
+          {/* Change Master Password Accordion / Form */}
+          <div className="pt-2 border-t border-gray-800/80">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
+                  <span>🔑</span>
+                  <span>Change Master Admin Password</span>
+                </h3>
+                <p className="text-gray-400 text-[11px]">Update your server-side master login password safely.</p>
               </div>
-              <input
-                type={showAdminPassword ? 'text' : 'password'}
-                required
-                value={adminMasterPassword}
-                onChange={e => setAdminMasterPassword(e.target.value)}
-                placeholder="Qxyra@2026"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm font-mono focus:outline-none focus:border-brand-gold"
-              />
-              <span className="text-[10px] text-gray-500 mt-1 block">Used to unlock the dashboard at /admin/login</span>
+              <button
+                type="button"
+                onClick={() => setShowPasswordFields(!showPasswordFields)}
+                className="text-xs text-brand-gold hover:underline font-medium"
+              >
+                {showPasswordFields ? 'Collapse ▲' : 'Update Password ▼'}
+              </button>
             </div>
+
+            {showPasswordFields && (
+              <div className="mt-4 p-4 rounded-xl bg-black/40 border border-gray-800 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                  <div>
+                    <label className="text-gray-300 block mb-1 font-medium">Current Password</label>
+                    <input
+                      type="password"
+                      value={currentPassword}
+                      onChange={e => setCurrentPassword(e.target.value)}
+                      placeholder="Enter current password"
+                      className="w-full px-3 py-2 rounded-lg bg-black/60 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-gray-300 block mb-1 font-medium">New Password</label>
+                    <input
+                      type="password"
+                      value={newPassword}
+                      onChange={e => setNewPassword(e.target.value)}
+                      placeholder="Minimum 8 characters"
+                      className="w-full px-3 py-2 rounded-lg bg-black/60 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-gray-300 block mb-1 font-medium">Confirm New Password</label>
+                    <input
+                      type="password"
+                      value={confirmPassword}
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      placeholder="Repeat new password"
+                      className="w-full px-3 py-2 rounded-lg bg-black/60 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+                </div>
+
+                {passwordFeedback && (
+                  <div className={`p-2.5 rounded-lg text-xs flex items-center gap-2 ${
+                    passwordFeedback.error
+                      ? 'bg-red-500/10 border border-red-500/30 text-red-300'
+                      : 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300'
+                  }`}>
+                    <span>{passwordFeedback.error ? '⚠️' : '✓'}</span>
+                    <span>{passwordFeedback.text}</span>
+                  </div>
+                )}
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={handleUpdatePassword}
+                    disabled={isUpdatingPassword}
+                    className="px-4 py-2 bg-brand-gold text-brand-black font-semibold text-xs rounded-lg hover:opacity-90 transition-all flex items-center gap-1.5 disabled:opacity-50"
+                  >
+                    {isUpdatingPassword ? (
+                      <>
+                        <span className="animate-spin text-xs">⏳</span>
+                        <span>Updating Password...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>🔒</span>
+                        <span>Save New Master Password</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

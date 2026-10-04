@@ -31,21 +31,30 @@ export default function AdminLayout({
       return;
     }
 
-    const authenticated = checkIsAdminAuthenticated();
-    if (!authenticated) {
-      router.replace(`/admin/login?redirect=${encodeURIComponent(pathname)}`);
-    } else {
-      setIsAuthenticated(true);
-      const session = getAdminSession();
-      if (session?.email) {
-        setAdminEmail(session.email);
-      }
-      setIsCheckingAuth(false);
-    }
+    fetch('/api/admin/auth', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated && data.user?.email) {
+          setIsAuthenticated(true);
+          setAdminEmail(data.user.email);
+        } else {
+          router.replace(`/admin/login?redirect=${encodeURIComponent(pathname)}`);
+        }
+      })
+      .catch(() => {
+        if (checkIsAdminAuthenticated()) {
+          setIsAuthenticated(true);
+        } else {
+          router.replace(`/admin/login?redirect=${encodeURIComponent(pathname)}`);
+        }
+      })
+      .finally(() => {
+        setIsCheckingAuth(false);
+      });
   }, [pathname, isLoginPage, router]);
 
-  const handleLogout = () => {
-    logoutAdmin();
+  const handleLogout = async () => {
+    await logoutAdmin();
     router.replace('/admin/login');
   };
 
