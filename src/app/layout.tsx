@@ -3,6 +3,7 @@ import { Inter, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { TrackingPixels } from "@/components/analytics/TrackingPixels";
 import { CurrencyProvider } from "@/context/CurrencyContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const inter = Inter({
   variable: "--font-heading",
@@ -77,7 +78,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning className="dark">
       <head>
         <script
           type="application/ld+json"
@@ -87,10 +88,12 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${dmSans.variable} font-body antialiased text-brand-black bg-white min-h-screen flex flex-col`}
       >
-        <CurrencyProvider>
-          <TrackingPixels />
-          {children}
-        </CurrencyProvider>
+        <ThemeProvider>
+          <CurrencyProvider>
+            <TrackingPixels />
+            {children}
+          </CurrencyProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

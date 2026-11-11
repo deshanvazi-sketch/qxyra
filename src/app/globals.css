@@ -20,6 +20,11 @@
   --color-brand-error: #EF4444;
   --color-brand-warning: #F59E0B;
   --color-brand-info: #3B82F6;
+  --color-labs-blue: #3B82F6;
+  --color-labs-blue-light: #60A5FA;
+  --color-labs-blue-dark: #2563EB;
+  --color-labs-purple: #8B5CF6;
+  --color-labs-cyan: #06B6D4;
   --font-heading: 'Inter', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
@@ -57,3 +62,147 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-gray-400);
 }
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES
+   When user switches to Light Mode, smoothly invert dark luxury surfaces
+   into pristine ivory/white luxury with crisp contrast & gold/blue accents.
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #080B10;
+  color: #FFFFFF;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #F8F9FA !important;
+  color: #111827 !important;
+}
+
+/* Top bar & Header */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light header .bg-black {
+  background-color: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+}
+
+html.light header .text-white {
+  color: #111827 !important;
+}
+
+html.light header .text-gray-300 {
+  color: #374151 !important;
+}
+
+html.light header .text-gray-400 {
+  color: #4B5563 !important;
+}
+
+/* Background surfaces */
+html.light .bg-black,
+html.light .bg-\[\#0A0A0A\],
+html.light .bg-\[\#080B10\],
+html.light .bg-\[\#080C14\] {
+  background-color: #F9FAFB !important;
+  color: #111827 !important;
+}
+
+/* Cards & Surface Containers */
+html.light .bg-\[\#141820\],
+html.light .bg-\[\#0E1422\],
+html.light .bg-\[\#121620\],
+html.light .bg-\[\#0E121A\],
+html.light .bg-\[\#0D121D\],
+html.light .bg-\[\#0E131E\],
+html.light .bg-\[\#131B30\],
+html.light .bg-\[\#141C33\],
+html.light .bg-\[\#0A0F1D\],
+html.light .bg-\[\#0E1527\] {
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Opacity variations of dark containers & mega menus */
+html.light .bg-\[\#0E121A\]\/95,
+html.light .bg-\[\#0A0A0A\]\/95,
+html.light .bg-black\/95,
+html.light .bg-black\/90,
+html.light .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  color: #111827 !important;
+}
+
+/* Translucent light surfaces */
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: #E5E7EB !important;
+}
+
+/* Borders */
+html.light .border-white\/10,
+html.light .border-white\/20,
+html.light .border-gray-800,
+html.light .border-gray-800\/80,
+html.light .border-gray-800\/60,
+html.light .border-gray-800\/40 {
+  border-color: #E5E7EB !important;
+}
+
+/* Form inputs */
+html.light input,
+html.light select,
+html.light textarea {
+  color: #111827 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #9CA3AF !important;
+}
+
+/* Mobile Nav Drawer */
+html.light .fixed.bg-\[\#0E121A\] {
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+/* Footer in Light Mode */
+html.light footer.bg-black {
+  background-color: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #111827 !important;
+}
+
+html.light footer .bg-\[\#0E131E\] {
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light footer .text-white {
+  color: #111827 !important;
+}
+
+html.light footer .text-gray-400 {
+  color: #4B5563 !important;
+}
+
+html.light footer .text-gray-500 {
+  color: #6B7280 !important;
+}
+

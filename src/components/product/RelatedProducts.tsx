@@ -11,7 +11,7 @@ function SimpleProductCard({ product }: { product: Product }) {
   const primaryImage = product.images.find(img => img.isPrimary) || product.images[0];
   
   return (
-    <Link href={`/shop/${product.slug}`} className="group flex flex-col gap-3 min-w-[240px] md:min-w-0">
+    <Link href={`/store/${product.slug}`} className="group flex flex-col gap-3 min-w-[240px] md:min-w-0">
       <div className="relative aspect-[4/5] bg-gray-100 rounded-xl overflow-hidden mb-2">
         {/* Placeholder image representation since we don't have next/image setup with remote patterns guaranteed */}
         <div className="absolute inset-0 bg-neutral-200 group-hover:scale-105 transition-transform duration-500 ease-out" />
@@ -73,7 +73,7 @@ export function RelatedProducts({ currentProductId, categoryId }: RelatedProduct
         <h2 className="text-2xl md:text-3xl font-heading font-light tracking-wide text-brand-black">
           You May Also Like
         </h2>
-        <Link href={`/shop?category=${categoryId}`} className="text-sm font-medium text-brand-black hover:text-brand-gold transition-colors uppercase tracking-wider">
+        <Link href="/store" className="text-sm font-medium text-brand-black hover:text-brand-gold transition-colors uppercase tracking-wider">
           View All
         </Link>
       </div>

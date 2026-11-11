@@ -147,3 +147,5 @@ export interface FilterState {
   colors?: string[];
   inStock?: boolean;
 }
+
+export * from './labs';

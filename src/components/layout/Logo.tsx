@@ -1,5 +1,7 @@
-import React from 'react';
-import Link from 'next/link';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface LogoProps {
   className?: string;
@@ -8,25 +10,33 @@ interface LogoProps {
   theme?: 'dark' | 'light';
 }
 
+const iconSizes = {
+  sm: { width: 28, height: 28 },
+  md: { width: 38, height: 38 },
+  lg: { width: 56, height: 56 },
+};
+
+const textSizes = {
+  sm: 'text-base tracking-[0.25em]',
+  md: 'text-xl tracking-[0.28em]',
+  lg: 'text-2xl tracking-[0.32em]',
+};
+
 export function Logo({
   className = '',
   size = 'md',
   showText = true,
-  theme = 'light',
+  theme: explicitTheme,
 }: LogoProps) {
-  const iconSizes = {
-    sm: { width: 28, height: 28 },
-    md: { width: 38, height: 38 },
-    lg: { width: 56, height: 56 },
-  };
+  const { theme: contextTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const textSizes = {
-    sm: 'text-base tracking-[0.25em]',
-    md: 'text-xl tracking-[0.28em]',
-    lg: 'text-2xl tracking-[0.32em]',
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const isDark = theme === 'dark';
+  const activeTheme = explicitTheme || (mounted ? contextTheme : 'dark');
+  const isDark = activeTheme === 'dark';
   const mainColor = isDark ? '#FFFFFF' : '#0A0A0A';
   const redColor = '#EF4444'; // Dynamic Crimson Laser Red
 

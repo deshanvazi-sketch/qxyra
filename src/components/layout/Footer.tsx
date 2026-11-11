@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_NAME, BRAND_TAGLINE, FOOTER_LINKS, SOCIAL_LINKS } from '@/lib/constants';
@@ -5,53 +7,77 @@ import { Logo } from './Logo';
 
 export function Footer() {
   return (
-    <footer className="bg-brand-black text-white pt-16 pb-8 font-body">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
-          {/* Brand Info */}
-          <div className="space-y-6">
-            <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
-              <Logo size="md" theme="dark" />
-            </Link>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              {BRAND_TAGLINE} We curate the finest products for those who appreciate quality and design.
+    <footer className="bg-black text-white pt-20 pb-10 border-t border-gray-800 font-body">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        {/* Newsletter Banner */}
+        <div className="mb-16 p-8 sm:p-12 rounded-3xl bg-[#0E131E] border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 text-center md:text-left">
+            <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
+              Join the Qxyra Circle
+            </span>
+            <h3 className="font-heading text-2xl font-light text-white">
+              Curated drops & engineering updates in your inbox.
+            </h3>
+            <p className="text-gray-400 text-xs max-w-md">
+              Receive limited garment drop access, tech firmware alerts, and commercial software discounts. Zero spam.
             </p>
-            <div className="flex space-x-4">
+          </div>
+
+          <form className="flex w-full md:w-auto max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
+            <input 
+              type="email" 
+              placeholder="Enter your work email" 
+              className="bg-black/60 border border-gray-800 text-white px-4 py-3 text-xs rounded-xl focus:outline-none focus:border-brand-gold flex-grow"
+              required
+            />
+            <button 
+              type="submit" 
+              className="bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold px-5 py-3 text-xs rounded-xl hover:opacity-95 transition-opacity whitespace-nowrap cursor-pointer shadow-md"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+        {/* 5-Column Navigation Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 pb-16 border-b border-gray-800/80">
+          {/* Brand Info (2 cols on lg) */}
+          <div className="lg:col-span-2 space-y-6">
+            <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
+              <Logo size="md" />
+            </Link>
+            <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
+              {BRAND_TAGLINE} We operate across two dedicated divisions: Qxyra Store (curated heavyweight apparel & tech peripherals) and Qxyra Labs (Point of Sale software & custom web engineering).
+            </p>
+            <div className="flex space-x-3">
               {SOCIAL_LINKS.map((social) => (
                 <a 
                   key={social.label} 
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-brand-gold hover:text-brand-black transition-colors"
+                  className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-brand-gold hover:text-brand-black transition-colors"
                   aria-label={social.label}
                 >
-                  {/* Simplified icon rendering based on label */}
-                  {social.label.toLowerCase() === 'instagram' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                  )}
-                  {social.label.toLowerCase() === 'twitter' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                  )}
-                  {social.label.toLowerCase() === 'facebook' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                  )}
-                  {social.label.toLowerCase() !== 'instagram' && social.label.toLowerCase() !== 'twitter' && social.label.toLowerCase() !== 'facebook' && (
-                    <span className="text-xs">{social.label.charAt(0)}</span>
-                  )}
+                  <span className="text-xs font-mono font-semibold">{social.label.charAt(0)}</span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links & Customer Service */}
+          {/* Dynamic Link Groups from constants */}
           {FOOTER_LINKS.map((group) => (
-            <div key={group.title}>
-              <h3 className="font-heading font-semibold text-lg mb-6 text-white">{group.title}</h3>
-              <ul className="space-y-4">
+            <div key={group.title} className="space-y-4">
+              <h4 className="font-heading font-medium text-xs text-white uppercase tracking-wider font-mono">
+                {group.title}
+              </h4>
+              <ul className="space-y-2.5">
                 {group.links.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} className="text-gray-400 hover:text-brand-gold transition-colors text-sm">
+                    <Link 
+                      href={link.href} 
+                      className="text-gray-400 hover:text-brand-gold transition-colors text-xs block py-0.5"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -59,36 +85,16 @@ export function Footer() {
               </ul>
             </div>
           ))}
-
-          {/* Newsletter */}
-          <div>
-            <h3 className="font-heading font-semibold text-lg mb-6 text-white">Newsletter</h3>
-            <p className="text-gray-400 text-sm mb-4">
-              Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
-            </p>
-            <form className="flex flex-col space-y-3">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="bg-white/5 border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors rounded-none"
-                required
-              />
-              <button 
-                type="submit" 
-                className="bg-brand-gold text-brand-black font-semibold px-4 py-3 text-sm hover:bg-white transition-colors uppercase tracking-wider"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-gray-500 text-xs">
-          <p>&copy; {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.</p>
-          <div className="flex space-x-6">
+        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs font-mono">
+          <p>&copy; {new Date().getFullYear()} {BRAND_NAME} Worldwide. All rights reserved.</p>
+          <div className="flex space-x-6 text-[11px]">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/shipping" className="hover:text-white transition-colors">Shipping Policy</Link>
+            <Link href="/returns" className="hover:text-white transition-colors">Returns & Guarantee</Link>
           </div>
         </div>
       </div>

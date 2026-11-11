@@ -66,7 +66,7 @@ export function CartSummary() {
         </button>
         
         <div className="text-center mt-4">
-          <Link href="/shop" className="text-gray-500 underline hover:text-brand-gold transition-colors text-sm">
+          <Link href="/store" className="text-gray-500 underline hover:text-brand-gold transition-colors text-sm">
             Continue Shopping
           </Link>
         </div>
