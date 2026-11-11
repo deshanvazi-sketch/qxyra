@@ -8,6 +8,7 @@ import { SoftwareProduct } from '@/types/labs';
 import { useCurrency, CURRENCIES, Currency } from '@/context/CurrencyContext';
 import { useProductStore } from '@/store/productStore';
 import { useLabsStore } from '@/store/labsStore';
+import CreatableCombobox from '@/components/admin/CreatableCombobox';
 
 type DivisionType = 'FASHION' | 'TECH' | 'SOFTWARE';
 
@@ -73,6 +74,22 @@ const COLOR_PALETTES = [
   { label: 'Minimalist (Jet Black, Off-White, Slate)', value: 'Jet Black, Off-White, Slate' },
   { label: 'Cyber (Midnight Navy, Cyber Lime, Stealth Gray)', value: 'Midnight Navy, Cyber Lime, Stealth Gray' },
   { label: 'Pastel (Vintage Lavender, Sage Green, Baby Blue)', value: 'Vintage Lavender, Sage Green, Baby Blue' },
+];
+
+const TECH_COMPATIBILITY_OPTIONS = [
+  'MagSafe, iPhone 12-16, Qi2 Wireless Fast Charging',
+  'Universal USB-C Power Delivery (100W PD)',
+  'MacBook Pro 14"/16", MacBook Air, iPad Pro M4',
+  'Dual 4K 60Hz HDMI, DisplayPort, Gigabit LAN',
+  'All Qi-enabled Smartphones, AirPods & Apple Watch',
+];
+
+const TECH_MATERIAL_OPTIONS = [
+  'CNC Anodized 6063 Aluminum Alloy (Space Gray)',
+  'Aerospace Grade Titanium & Braided Kevlar',
+  'Tempered Frosted Glass with Silicone Anti-Slip Padding',
+  'Full Grain Horween Leather & Solid Brass Hardware',
+  'Recycled Ocean Plastic & Matte Polycarbonate',
 ];
 
 const PRESET_SAMPLE_PHOTOS = [
@@ -1118,22 +1135,23 @@ export default function AdminProductsPage() {
                 </div>
 
                 <div>
-                  <label className="text-gray-300 block mb-1.5 font-medium">Category / Department *</label>
-                  <select
+                  <CreatableCombobox
+                    label="Category / Department"
+                    sublabel="Select preset or type custom to add"
                     value={formCategory}
-                    onChange={e => setFormCategory(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                  >
-                    {itemType === 'FASHION' && FASHION_CATEGORIES.map(c => (
-                      <option key={c.id} value={c.id} className="bg-[#121622] text-white">{c.label}</option>
-                    ))}
-                    {itemType === 'TECH' && TECH_CATEGORIES.map(c => (
-                      <option key={c.id} value={c.id} className="bg-[#121622] text-white">{c.label}</option>
-                    ))}
-                    {itemType === 'SOFTWARE' && SOFTWARE_CATEGORIES.map(c => (
-                      <option key={c.id} value={c.id} className="bg-[#121622] text-white">{c.label}</option>
-                    ))}
-                  </select>
+                    options={
+                      itemType === 'FASHION'
+                        ? FASHION_CATEGORIES
+                        : itemType === 'TECH'
+                        ? TECH_CATEGORIES
+                        : SOFTWARE_CATEGORIES
+                    }
+                    onChange={val => setFormCategory(val)}
+                    placeholder="Select department or type new category..."
+                    accentColor={itemType === 'SOFTWARE' ? 'blue' : itemType === 'TECH' ? 'purple' : 'gold'}
+                    storageKey={`category_${itemType.toLowerCase()}`}
+                    required
+                  />
                 </div>
               </div>
 
@@ -1348,7 +1366,7 @@ export default function AdminProductsPage() {
               </div>
 
               {/* =============================================================
-                  FASHION DROPDOWN SELECTORS + CUSTOM INPUT
+                  FASHION DROPDOWN SELECTORS + TYPE-TO-ADD COMBOBOXES
                   ============================================================= */}
               {itemType === 'FASHION' && (
                 <div className="p-4 sm:p-5 rounded-2xl bg-amber-950/10 border border-amber-500/20 space-y-5">
@@ -1358,67 +1376,39 @@ export default function AdminProductsPage() {
                       <span>Fashion Drop Specifications</span>
                     </div>
                     <span className="text-[10px] text-gray-400 font-mono">
-                      Choose from dropdowns or type custom values
+                      Choose from presets or type to add custom options
                     </span>
                   </div>
 
                   {/* 1. Fabric GSM & Composition */}
-                  <div className="space-y-1.5">
-                    <label className="text-gray-300 block font-medium">Fabric GSM & Composition</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <select
-                        onChange={e => {
-                          if (e.target.value) setFashionGsm(e.target.value);
-                        }}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
-                      >
-                        <option value="">▼ Select Fabric Preset...</option>
-                        {FABRIC_GSM_OPTIONS.map(opt => (
-                          <option key={opt} value={opt} className="bg-[#121622]">{opt}</option>
-                        ))}
-                      </select>
-
-                      <input
-                        type="text"
-                        placeholder="Or type custom Fabric / GSM here..."
-                        value={fashionGsm}
-                        onChange={e => setFashionGsm(e.target.value)}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
-                  </div>
+                  <CreatableCombobox
+                    label="Fabric GSM & Composition"
+                    sublabel="Select preset or type custom to add"
+                    value={fashionGsm}
+                    options={FABRIC_GSM_OPTIONS}
+                    onChange={val => setFashionGsm(val)}
+                    placeholder="Select fabric or type custom (e.g. 240 GSM Combed Organic Cotton)..."
+                    accentColor="gold"
+                    storageKey="fashion_gsm"
+                  />
 
                   {/* 2. Silhouette / Fit Type */}
-                  <div className="space-y-1.5">
-                    <label className="text-gray-300 block font-medium">Silhouette / Fit Type</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <select
-                        onChange={e => {
-                          if (e.target.value) setFashionFit(e.target.value);
-                        }}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
-                      >
-                        <option value="">▼ Select Fit Type...</option>
-                        {FIT_TYPE_OPTIONS.map(opt => (
-                          <option key={opt} value={opt} className="bg-[#121622]">{opt}</option>
-                        ))}
-                      </select>
+                  <CreatableCombobox
+                    label="Silhouette / Fit Type"
+                    sublabel="Select fit or type custom to add"
+                    value={fashionFit}
+                    options={FIT_TYPE_OPTIONS}
+                    onChange={val => setFashionFit(val)}
+                    placeholder="Select silhouette or type custom (e.g. Regular Boxy Fit)..."
+                    accentColor="gold"
+                    storageKey="fashion_fit"
+                  />
 
-                      <input
-                        type="text"
-                        placeholder="Or type custom fit..."
-                        value={fashionFit}
-                        onChange={e => setFashionFit(e.target.value)}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
-                  </div>
-
-                  {/* 3. Available Sizes (Presets + Quick Toggle Chips + Input) */}
+                  {/* 3. Available Sizes (Presets + Quick Toggle Chips + Type-to-Add) */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-gray-300 font-medium">Available Sizes</label>
-                      <div className="flex gap-1 items-center">
+                      <label className="text-gray-300 font-medium text-xs">Available Sizes</label>
+                      <div className="flex gap-1 items-center flex-wrap">
                         {['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(sz => {
                           const isSelected = fashionSizes.split(',').map(s => s.trim()).includes(sz);
                           return (
@@ -1439,54 +1429,27 @@ export default function AdminProductsPage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <select
-                        onChange={e => {
-                          if (e.target.value) setFashionSizes(e.target.value);
-                        }}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
-                      >
-                        <option value="">▼ Select Size Bundle...</option>
-                        {SIZE_BUNDLES.map(b => (
-                          <option key={b.label} value={b.value} className="bg-[#121622]">{b.label}</option>
-                        ))}
-                      </select>
-
-                      <input
-                        type="text"
-                        placeholder="Comma-separated (S, M, L, XL...)"
-                        value={fashionSizes}
-                        onChange={e => setFashionSizes(e.target.value)}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
+                    <CreatableCombobox
+                      value={fashionSizes}
+                      options={SIZE_BUNDLES}
+                      onChange={val => setFashionSizes(val)}
+                      placeholder="Select size bundle or type custom sizes (e.g. S, M, L, XL)..."
+                      accentColor="gold"
+                      storageKey="fashion_sizes"
+                    />
                   </div>
 
-                  {/* 4. Available Colors (Palettes + Custom Input) */}
-                  <div className="space-y-1.5">
-                    <label className="text-gray-300 block font-medium">Available Colors</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <select
-                        onChange={e => {
-                          if (e.target.value) setFashionColors(e.target.value);
-                        }}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
-                      >
-                        <option value="">▼ Select Color Palette...</option>
-                        {COLOR_PALETTES.map(cp => (
-                          <option key={cp.label} value={cp.value} className="bg-[#121622]">{cp.label}</option>
-                        ))}
-                      </select>
-
-                      <input
-                        type="text"
-                        placeholder="Comma-separated (e.g. Onyx Black, Pure Chalk...)"
-                        value={fashionColors}
-                        onChange={e => setFashionColors(e.target.value)}
-                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
-                  </div>
+                  {/* 4. Available Colors (Palettes + Type-to-Add) */}
+                  <CreatableCombobox
+                    label="Available Colors"
+                    sublabel="Select palette or type custom colors"
+                    value={fashionColors}
+                    options={COLOR_PALETTES}
+                    onChange={val => setFashionColors(val)}
+                    placeholder="Select palette or type custom colors (e.g. Onyx Black, Pure Chalk)..."
+                    accentColor="gold"
+                    storageKey="fashion_colors"
+                  />
                 </div>
               )}
 
@@ -1499,31 +1462,31 @@ export default function AdminProductsPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Device Compatibility</label>
-                      <input
-                        type="text"
-                        placeholder="MagSafe, iPhone 12-16, Qi Wireless, USB-C"
-                        value={techCompatibility}
-                        onChange={e => setTechCompatibility(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-purple-400"
-                      />
-                    </div>
+                    <CreatableCombobox
+                      label="Device Compatibility"
+                      sublabel="Select preset or type custom"
+                      value={techCompatibility}
+                      options={TECH_COMPATIBILITY_OPTIONS}
+                      onChange={val => setTechCompatibility(val)}
+                      placeholder="MagSafe, iPhone 12-16, Qi Wireless..."
+                      accentColor="purple"
+                      storageKey="tech_compatibility"
+                    />
 
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Material & Finish</label>
-                      <input
-                        type="text"
-                        placeholder="CNC Anodized Space Gray Aluminum"
-                        value={techMaterial}
-                        onChange={e => setTechMaterial(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-purple-400"
-                      />
-                    </div>
+                    <CreatableCombobox
+                      label="Material & Finish"
+                      sublabel="Select preset or type custom"
+                      value={techMaterial}
+                      options={TECH_MATERIAL_OPTIONS}
+                      onChange={val => setTechMaterial(val)}
+                      placeholder="CNC Anodized Space Gray Aluminum..."
+                      accentColor="purple"
+                      storageKey="tech_material"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-gray-300 block mb-1 font-medium">Hardware Specs (Wattage / Ports)</label>
+                    <label className="text-gray-300 block mb-1 font-medium text-xs">Hardware Specs (Wattage / Ports)</label>
                     <input
                       type="text"
                       placeholder="15W Fast Charge / 100W PD Pass-through / 4K@60Hz"
