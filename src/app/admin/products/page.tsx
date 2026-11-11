@@ -5,11 +5,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/types';
 import { SoftwareProduct } from '@/types/labs';
-import { useCurrency, CURRENCIES } from '@/context/CurrencyContext';
+import { useCurrency, CURRENCIES, Currency } from '@/context/CurrencyContext';
 import { useProductStore } from '@/store/productStore';
 import { useLabsStore } from '@/store/labsStore';
 
 type DivisionType = 'FASHION' | 'TECH' | 'SOFTWARE';
+
+interface GalleryImage {
+  id: string;
+  url: string;
+  alt: string;
+  isPrimary: boolean;
+  sortOrder: number;
+}
 
 const FASHION_CATEGORIES = [
   { id: 'regular-fit-tee', label: 'Regular Fit Tee (240GSM Heavy Cotton)' },
@@ -33,23 +41,56 @@ const SOFTWARE_CATEGORIES = [
   { id: 'custom-dev', label: 'Custom Enterprise Software / Automation Engine' },
 ];
 
-const PRESET_IMAGES = [
-  { label: '👕 Regular Fit Tee', url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800', type: 'FASHION', cat: 'regular-fit-tee' },
-  { label: '🥋 Oversized Tee', url: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800', type: 'FASHION', cat: 'oversized-tee' },
-  { label: '🧥 French Hoodie', url: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800', type: 'FASHION', cat: 'hoodie' },
-  { label: '⚡ MagSafe Stand', url: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&q=80&w=800', type: 'TECH', cat: 'mobile' },
-  { label: '💻 CNC PC Riser', url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800', type: 'TECH', cat: 'computer' },
+// Presets for Dropdown & Quick Selection
+const FABRIC_GSM_OPTIONS = [
+  '240 GSM Combed Organic Cotton (Mid-Heavy)',
+  '280 GSM Heavy Drop Cotton (Heavyweight Streetwear)',
+  '320 GSM French Terry Loopback',
+  '380 GSM Heavy Fleece Sweatshirt',
+  '460 GSM Ultra-Heavy French Terry (Hoodies)',
+  '180 GSM Lightweight Supima Cotton',
+];
+
+const FIT_TYPE_OPTIONS = [
+  'Regular Boxy Fit',
+  'Oversized Drop-Shoulder Fit',
+  'Relaxed Streetwear Fit',
+  'Athletic / Slim Fit',
+  'Cropped Boxy Fit',
+  'Tailored Luxury Silhouette',
+];
+
+const SIZE_BUNDLES = [
+  { label: 'Standard: S, M, L, XL, 2XL', value: 'S, M, L, XL, 2XL' },
+  { label: 'Extended: XS, S, M, L, XL, 2XL, 3XL', value: 'XS, S, M, L, XL, 2XL, 3XL' },
+  { label: 'Compact: S, M, L, XL', value: 'S, M, L, XL' },
+  { label: 'Free Size: One Size Fits All', value: 'One Size' },
+];
+
+const COLOR_PALETTES = [
+  { label: 'Monochrome (Onyx Black, Pure Chalk, Heather Gray)', value: 'Onyx Black, Pure Chalk, Heather Gray' },
+  { label: 'Earth Tones (Vintage Olive, Desert Sand, Mocha Brown)', value: 'Vintage Olive, Desert Sand, Mocha Brown' },
+  { label: 'Minimalist (Jet Black, Off-White, Slate)', value: 'Jet Black, Off-White, Slate' },
+  { label: 'Cyber (Midnight Navy, Cyber Lime, Stealth Gray)', value: 'Midnight Navy, Cyber Lime, Stealth Gray' },
+  { label: 'Pastel (Vintage Lavender, Sage Green, Baby Blue)', value: 'Vintage Lavender, Sage Green, Baby Blue' },
+];
+
+const PRESET_SAMPLE_PHOTOS = [
+  { label: '👕 Regular Fit Tee', url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800' },
+  { label: '🥋 Oversized Tee', url: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&q=80&w=800' },
+  { label: '🧥 French Hoodie', url: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800' },
+  { label: '⚡ MagSafe Stand', url: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?auto=format&fit=crop&q=80&w=800' },
+  { label: '💻 CNC PC Riser', url: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800' },
 ];
 
 export default function AdminProductsPage() {
-  const { format, currency, exchangeRate, detectedCountry } = useCurrency();
+  const { format, currency, setCurrency, exchangeRate, rates, detectedCountry } = useCurrency();
   const { 
     products, 
     addProduct, 
     updateProduct, 
     deleteProduct, 
     toggleProductStatus, 
-    clearAllProducts, 
     resetToDefault 
   } = useProductStore();
 
@@ -67,7 +108,6 @@ export default function AdminProductsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingType, setEditingType] = useState<DivisionType>('FASHION');
   const [itemToDelete, setItemToDelete] = useState<{ id: string; name: string; type: DivisionType } | null>(null);
   const [showResetModal, setShowResetModal] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -79,19 +119,43 @@ export default function AdminProductsPage() {
   const [formName, setFormName] = useState('');
   const [formSlug, setFormSlug] = useState('');
   const [formCategory, setFormCategory] = useState('regular-fit-tee');
-  const [formBasePrice, setFormBasePrice] = useState('');
-  const [formSalePrice, setFormSalePrice] = useState('');
   const [formStock, setFormStock] = useState('50');
   const [formDescription, setFormDescription] = useState('');
-  const [formImageUrl, setFormImageUrl] = useState('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800');
   const [formIsActive, setFormIsActive] = useState(true);
   const [formIsFeatured, setFormIsFeatured] = useState(true);
 
-  // Fashion Specific Fields
-  const [fashionSizes, setFashionSizes] = useState('S, M, L, XL, 2XL');
-  const [fashionColors, setFashionColors] = useState('Onyx Black, Pure Chalk, Vintage Khaki');
-  const [fashionGsm, setFashionGsm] = useState('240 GSM Combed Cotton');
+  // =========================================================================
+  // MULTI-CURRENCY PRICING ENGINE
+  // =========================================================================
+  // The admin can choose what currency they are typing the price in!
+  const [adminInputCurrency, setAdminInputCurrency] = useState<Currency>('USD');
+  const [formInputPrice, setFormInputPrice] = useState('38.00');
+  const [formInputSalePrice, setFormInputSalePrice] = useState('28.00');
+
+  // =========================================================================
+  // MULTI-IMAGE GALLERY (1:1 Square Auto-Crop + Reordering + Removal)
+  // =========================================================================
+  const [formImages, setFormImages] = useState<GalleryImage[]>([
+    {
+      id: 'img-default-1',
+      url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+      alt: 'Cover Image',
+      isPrimary: true,
+      sortOrder: 0,
+    }
+  ]);
+  const [imageUploadSource, setImageUploadSource] = useState<'PC' | 'URL'>('PC');
+  const [manualUrlInput, setManualUrlInput] = useState('');
+  const [isProcessingImage, setIsProcessingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // =========================================================================
+  // FASHION SPECIFICATIONS (Dropdowns + Custom Typing)
+  // =========================================================================
+  const [fashionGsm, setFashionGsm] = useState('240 GSM Combed Organic Cotton (Mid-Heavy)');
   const [fashionFit, setFashionFit] = useState('Regular Boxy Fit');
+  const [fashionSizes, setFashionSizes] = useState('S, M, L, XL, 2XL');
+  const [fashionColors, setFashionColors] = useState('Onyx Black, Pure Chalk, Vintage Olive');
 
   // Tech Specific Fields
   const [techCompatibility, setTechCompatibility] = useState('MagSafe, iPhone 12-16, Qi Wireless');
@@ -109,12 +173,6 @@ export default function AdminProductsPage() {
   const [softwareTechStack, setSoftwareTechStack] = useState('Next.js, TypeScript, PostgreSQL, Tailwind');
   const [softwareDemoUrl, setSoftwareDemoUrl] = useState('/labs/quote?type=software');
 
-  // Image Upload State (Canvas 1:1 Square Processor)
-  const [imageUploadSource, setImageUploadSource] = useState<'PC' | 'URL'>('PC');
-  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number; isCropped: boolean } | null>({ width: 800, height: 800, isCropped: true });
-  const [isProcessingImage, setIsProcessingImage] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -125,87 +183,176 @@ export default function AdminProductsPage() {
   };
 
   /**
-   * Process and Enforce 1:1 Aspect Ratio from uploaded PC file
+   * Process uploaded image from PC: Center-crop to 1:1 Square Canvas
    */
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload a valid image file (PNG, JPG, WEBP).');
-      return;
-    }
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
 
     setIsProcessingImage(true);
-    const reader = new FileReader();
 
-    reader.onload = (event) => {
-      const dataUrl = event.target?.result as string;
-      const img = new window.Image();
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith('image/')) return;
 
-      img.onload = () => {
-        const origW = img.width;
-        const origH = img.height;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result as string;
+        const img = new window.Image();
 
-        // Calculate 1:1 Square Center Crop
-        const minSide = Math.min(origW, origH);
-        const startX = (origW - minSide) / 2;
-        const startY = (origH - minSide) / 2;
+        img.onload = () => {
+          const origW = img.width;
+          const origH = img.height;
 
-        // Target standard square dimension (max 1000px for crisp performance)
-        const targetDimension = Math.min(1000, minSide);
+          // Calculate 1:1 Square Center Crop
+          const minSide = Math.min(origW, origH);
+          const startX = (origW - minSide) / 2;
+          const startY = (origH - minSide) / 2;
+          const targetDimension = Math.min(1000, minSide);
 
-        const canvas = document.createElement('canvas');
-        canvas.width = targetDimension;
-        canvas.height = targetDimension;
-        const ctx = canvas.getContext('2d');
+          const canvas = document.createElement('canvas');
+          canvas.width = targetDimension;
+          canvas.height = targetDimension;
+          const ctx = canvas.getContext('2d');
 
-        if (ctx) {
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          ctx.drawImage(img, startX, startY, minSide, minSide, 0, 0, targetDimension, targetDimension);
+          if (ctx) {
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(img, startX, startY, minSide, minSide, 0, 0, targetDimension, targetDimension);
+            const squareDataUrl = canvas.toDataURL('image/jpeg', 0.92);
 
-          const squareDataUrl = canvas.toDataURL('image/jpeg', 0.92);
-          setFormImageUrl(squareDataUrl);
-          setImageDimensions({
-            width: targetDimension,
-            height: targetDimension,
-            isCropped: origW !== origH,
-          });
-          showToast(`✓ Image cropped to 1:1 Square (${targetDimension}×${targetDimension}px)`);
-        }
-        setIsProcessingImage(false);
+            setFormImages(prev => [
+              ...prev,
+              {
+                id: `img-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+                url: squareDataUrl,
+                alt: `${formName || 'Product'} Image ${prev.length + 1}`,
+                isPrimary: prev.length === 0,
+                sortOrder: prev.length,
+              }
+            ]);
+            showToast(`✓ Image added & cropped to 1:1 Square (${targetDimension}×${targetDimension}px)`);
+          }
+          setIsProcessingImage(false);
+        };
+
+        img.src = dataUrl;
       };
 
-      img.onerror = () => {
-        setIsProcessingImage(false);
-        alert('Failed to load image file.');
-      };
+      reader.readAsDataURL(file);
+    });
 
-      img.src = dataUrl;
-    };
-
-    reader.readAsDataURL(file);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  // Reset Form
+  /**
+   * Add image via URL
+   */
+  const handleAddUrlImage = () => {
+    if (!manualUrlInput || !manualUrlInput.trim()) return;
+    setFormImages(prev => [
+      ...prev,
+      {
+        id: `img-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        url: manualUrlInput.trim(),
+        alt: `${formName || 'Product'} Image ${prev.length + 1}`,
+        isPrimary: prev.length === 0,
+        sortOrder: prev.length,
+      }
+    ]);
+    setManualUrlInput('');
+    showToast('✓ Image URL added to gallery');
+  };
+
+  /**
+   * Remove Image from Gallery
+   */
+  const handleRemoveImage = (indexToRemove: number) => {
+    setFormImages(prev => {
+      const filtered = prev.filter((_, idx) => idx !== indexToRemove);
+      return filtered.map((img, idx) => ({
+        ...img,
+        isPrimary: idx === 0,
+        sortOrder: idx,
+      }));
+    });
+    showToast('Photo removed from gallery');
+  };
+
+  /**
+   * Reorder Images: Move Left or Move Right
+   */
+  const handleMoveImage = (index: number, direction: 'left' | 'right') => {
+    setFormImages(prev => {
+      const targetIndex = direction === 'left' ? index - 1 : index + 1;
+      if (targetIndex < 0 || targetIndex >= prev.length) return prev;
+      const reordered = [...prev];
+      const temp = reordered[index];
+      reordered[index] = reordered[targetIndex];
+      reordered[targetIndex] = temp;
+      return reordered.map((img, idx) => ({
+        ...img,
+        isPrimary: idx === 0,
+        sortOrder: idx,
+      }));
+    });
+  };
+
+  /**
+   * Set an image as the Main Cover Photo (sortOrder: 0)
+   */
+  const handleMakeCover = (index: number) => {
+    setFormImages(prev => {
+      const chosen = prev[index];
+      const others = prev.filter((_, idx) => idx !== index);
+      const updated = [chosen, ...others];
+      return updated.map((img, idx) => ({
+        ...img,
+        isPrimary: idx === 0,
+        sortOrder: idx,
+      }));
+    });
+    showToast('✓ Set as Main Cover Photo (#1)');
+  };
+
+  /**
+   * Toggle a specific size on/off
+   */
+  const handleToggleSize = (size: string) => {
+    const list = fashionSizes.split(',').map(s => s.trim()).filter(Boolean);
+    if (list.includes(size)) {
+      setFashionSizes(list.filter(s => s !== size).join(', '));
+    } else {
+      setFashionSizes([...list, size].join(', '));
+    }
+  };
+
+  // Reset form to clean state
   const resetForm = () => {
     setItemType('FASHION');
     setEditingId(null);
     setFormName('');
     setFormSlug('');
     setFormCategory('regular-fit-tee');
-    setFormBasePrice('');
-    setFormSalePrice('');
+    setAdminInputCurrency('USD');
+    setFormInputPrice('38.00');
+    setFormInputSalePrice('28.00');
     setFormStock('50');
     setFormDescription('');
-    setFormImageUrl('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800');
     setFormIsActive(true);
     setFormIsFeatured(true);
-    setFashionSizes('S, M, L, XL, 2XL');
-    setFashionColors('Onyx Black, Pure Chalk, Vintage Khaki');
-    setFashionGsm('240 GSM Combed Cotton');
+    setFormImages([
+      {
+        id: 'img-default-1',
+        url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+        alt: 'Cover Image',
+        isPrimary: true,
+        sortOrder: 0,
+      }
+    ]);
+    setFashionGsm('240 GSM Combed Organic Cotton (Mid-Heavy)');
     setFashionFit('Regular Boxy Fit');
+    setFashionSizes('S, M, L, XL, 2XL');
+    setFashionColors('Onyx Black, Pure Chalk, Vintage Olive');
     setTechCompatibility('MagSafe, iPhone 12-16, Qi Wireless');
     setTechMaterial('CNC Anodized Space Gray Aluminum');
     setTechSpecs('15W Fast Charge / 4K@60Hz HDMI');
@@ -218,7 +365,6 @@ export default function AdminProductsPage() {
     );
     setSoftwareTechStack('Next.js, TypeScript, PostgreSQL, Tailwind');
     setSoftwareDemoUrl('/labs/quote?type=software');
-    setImageDimensions({ width: 800, height: 800, isCropped: true });
   };
 
   const openCreateModal = (type: DivisionType = 'FASHION') => {
@@ -235,19 +381,28 @@ export default function AdminProductsPage() {
     const chosenType = isTech ? 'TECH' : 'FASHION';
     
     setEditingId(p.id);
-    setEditingType(chosenType);
     setItemType(chosenType);
-
     setFormName(p.name);
     setFormSlug(p.slug);
     setFormCategory(p.categoryId);
-    setFormBasePrice(p.basePrice.toString());
-    setFormSalePrice(p.salePrice ? p.salePrice.toString() : '');
+    setAdminInputCurrency('USD');
+    setFormInputPrice(p.basePrice.toString());
+    setFormInputSalePrice(p.salePrice ? p.salePrice.toString() : '');
     setFormStock(p.variants.reduce((acc, v) => acc + v.stock, 0).toString());
     setFormDescription(p.description || '');
-    setFormImageUrl(p.images?.[0]?.url || '');
     setFormIsActive(p.isActive ?? true);
     setFormIsFeatured(p.isFeatured ?? true);
+
+    // Load existing images
+    if (p.images && p.images.length > 0) {
+      setFormImages(p.images.map((img, idx) => ({
+        id: img.id || `img-${idx}`,
+        url: img.url,
+        alt: img.alt || p.name,
+        isPrimary: idx === 0,
+        sortOrder: idx,
+      })));
+    }
 
     const sizes = Array.from(new Set(p.variants.map(v => v.size).filter(Boolean))).join(', ') || 'S, M, L, XL';
     const colors = Array.from(new Set(p.variants.map(v => v.color).filter(Boolean))).join(', ') || 'Standard';
@@ -259,13 +414,12 @@ export default function AdminProductsPage() {
 
   const openEditSoftware = (sw: SoftwareProduct) => {
     setEditingId(sw.id);
-    setEditingType('SOFTWARE');
     setItemType('SOFTWARE');
-
     setFormName(sw.name);
     setFormSlug(sw.slug);
     setFormCategory(sw.category);
-    setFormBasePrice(sw.pricing.startingAt ? sw.pricing.startingAt.toString() : '');
+    setAdminInputCurrency('USD');
+    setFormInputPrice(sw.pricing.startingAt ? sw.pricing.startingAt.toString() : '');
     setFormDescription(sw.description || '');
     setSoftwareIcon(sw.icon || '🛒');
     setSoftwareBadge(sw.badge || 'Software');
@@ -287,18 +441,30 @@ export default function AdminProductsPage() {
     }
   };
 
+  // Convert entered price into standard USD base price
+  const getUsdBasePrice = (amount: number, inputCur: Currency): number => {
+    if (inputCur === 'USD') return amount;
+    const rate = rates[inputCur] || 1;
+    if (rate <= 0) return amount;
+    return Number((amount / rate).toFixed(2));
+  };
+
   // Form Submit Handler
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName) return;
 
     const slug = formSlug || formName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const rawPrice = parseFloat(formInputPrice) || 0;
+    const rawSalePrice = formInputSalePrice ? parseFloat(formInputSalePrice) : undefined;
+
+    // Convert into canonical USD base price
+    const basePriceUSD = getUsdBasePrice(rawPrice, adminInputCurrency);
+    const salePriceUSD = rawSalePrice != null ? getUsdBasePrice(rawSalePrice, adminInputCurrency) : undefined;
 
     if (itemType === 'SOFTWARE') {
-      // Software Item Submission
       const featArray = softwareFeatures.split('\n').map(f => f.trim()).filter(Boolean);
       const techArray = softwareTechStack.split(',').map(t => t.trim()).filter(Boolean);
-      const startingAtNum = formBasePrice ? parseFloat(formBasePrice) : undefined;
 
       const swItem: SoftwareProduct = {
         id: editingId || `sw-${Date.now()}`,
@@ -314,7 +480,7 @@ export default function AdminProductsPage() {
         technologies: techArray.length > 0 ? techArray : ['Next.js', 'TypeScript', 'PostgreSQL'],
         pricing: {
           type: softwarePricingType,
-          startingAt: startingAtNum,
+          startingAt: basePriceUSD > 0 ? basePriceUSD : undefined,
           period: softwarePeriod,
           currency: 'USD',
         },
@@ -331,12 +497,10 @@ export default function AdminProductsPage() {
         showToast(`✓ New software published to Qxyra Labs: "${formName}"`);
       }
     } else {
-      // Physical Store Item (Fashion or Tech)
-      const basePriceNum = parseFloat(formBasePrice) || 30;
-      const salePriceNum = formSalePrice ? parseFloat(formSalePrice) : undefined;
+      // Physical Store Product
+      const prodId = editingId || `prod-${Date.now()}`;
       const stockTotal = parseInt(formStock) || 50;
 
-      const prodId = editingId || `prod-${Date.now()}`;
       const sizeList = itemType === 'FASHION'
         ? fashionSizes.split(',').map(s => s.trim()).filter(Boolean)
         : ['One Size'];
@@ -355,31 +519,41 @@ export default function AdminProductsPage() {
             sku: `QXY-${slug.slice(0, 6).toUpperCase()}-${size}-${color.slice(0, 3).toUpperCase()}`,
             size,
             color,
-            price: salePriceNum || basePriceNum,
+            price: salePriceUSD || basePriceUSD,
             stock: stockPerVariant,
             inStock: true,
           });
         }
       }
 
+      // Map gallery images
+      const imagesPayload = formImages.length > 0 ? formImages.map((img, idx) => ({
+        id: img.id,
+        productId: prodId,
+        url: img.url,
+        alt: img.alt || formName,
+        isPrimary: idx === 0,
+        sortOrder: idx,
+      })) : [
+        {
+          id: `img-${Date.now()}`,
+          productId: prodId,
+          url: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=800',
+          alt: formName,
+          isPrimary: true,
+          sortOrder: 0,
+        }
+      ];
+
       const productItem: Product = {
         id: prodId,
         name: formName,
         slug,
         description: formDescription || `${formName} engineered by Qxyra.`,
-        basePrice: basePriceNum,
-        salePrice: salePriceNum,
+        basePrice: basePriceUSD,
+        salePrice: salePriceUSD,
         categoryId: formCategory,
-        images: [
-          {
-            id: `img-${Date.now()}`,
-            productId: prodId,
-            url: formImageUrl,
-            alt: formName,
-            isPrimary: true,
-            sortOrder: 0,
-          },
-        ],
+        images: imagesPayload,
         variants,
         rating: 5.0,
         totalSold: 0,
@@ -448,9 +622,9 @@ export default function AdminProductsPage() {
     return <div className="p-8 text-center text-gray-500 font-mono text-xs">Loading Qxyra Unified Inventory Engine...</div>;
   }
 
-  // Live currency equivalent calculation
-  const parsedPrice = parseFloat(formBasePrice) || 0;
-  const convertedEquivalent = format(parsedPrice);
+  // Live conversion calculations for the form
+  const rawInputNumeric = parseFloat(formInputPrice) || 0;
+  const convertedUsd = getUsdBasePrice(rawInputNumeric, adminInputCurrency);
 
   return (
     <div className="space-y-8 pb-20">
@@ -475,8 +649,7 @@ export default function AdminProductsPage() {
             Universal Product & Software Catalog
           </h1>
           <p className="text-xs text-gray-400 max-w-2xl leading-relaxed">
-            Manage Division 01 Physical dropship garments (Fashion & Tech) alongside Division 02 software engineering platforms. 
-            Prices automatically localize in real-time according to each visitor&apos;s country ({detectedCountry || 'Auto-Detected'}).
+            Multi-image gallery manager with 1:1 auto-cropping, dropdown & custom specs, and automatic visitor geo-currency localization.
           </p>
         </div>
 
@@ -519,23 +692,44 @@ export default function AdminProductsPage() {
           <p className="text-[10px] text-blue-300 font-mono">Retail POS, Web & Automation</p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#121622] border border-emerald-500/20 space-y-1">
-          <div className="flex items-center gap-1.5 text-emerald-400">
-            <span className="text-sm">🌐</span>
-            <span className="text-xs font-semibold uppercase font-mono">Geo-Currency Sync</span>
+        {/* Dynamic Currency Box with 1-Click Tester */}
+        <div className="p-5 rounded-2xl bg-[#121622] border border-emerald-500/20 space-y-1.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase font-mono text-emerald-400 flex items-center gap-1">
+              <span>🌐</span> Currency Auto-Sync
+            </span>
+            <span className="text-[10px] bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-500/30">
+              Live Forex
+            </span>
           </div>
           <p className="text-lg font-mono font-bold text-white">
             1 USD = {CURRENCIES[currency]?.symbol}{exchangeRate.toFixed(2)}
           </p>
-          <p className="text-[10px] text-emerald-400 font-mono">
-            Active: {currency} ({CURRENCIES[currency]?.label})
-          </p>
+          <div className="flex flex-wrap gap-1 pt-1">
+            {(['LKR', 'USD', 'EUR', 'GBP'] as Currency[]).map((cur) => (
+              <button
+                key={cur}
+                onClick={() => setCurrency(cur)}
+                className={`px-1.5 py-0.5 rounded text-[10px] font-mono cursor-pointer transition-colors ${
+                  currency === cur
+                    ? 'bg-brand-gold text-brand-black font-bold'
+                    : 'bg-white/5 text-gray-400 hover:text-white'
+                }`}
+                title={`Switch display to ${cur}`}
+              >
+                {cur}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="p-5 rounded-2xl bg-[#121622] border border-gray-800 space-y-1">
-          <span className="text-xs font-semibold text-gray-400 uppercase font-mono">Visitor Region</span>
-          <p className="text-lg font-heading font-medium text-white">{detectedCountry || 'Global / Automatic'}</p>
-          <p className="text-[10px] text-gray-500 font-mono">Auto-adapts to visitor IP & Timezone</p>
+          <span className="text-xs font-semibold text-gray-400 uppercase font-mono">Visitor Geo-Location</span>
+          <p className="text-lg font-heading font-medium text-white flex items-center gap-1.5">
+            <span>{CURRENCIES[currency]?.flag}</span>
+            <span>{detectedCountry || 'Sri Lanka (Auto)'}</span>
+          </p>
+          <p className="text-[10px] text-emerald-400 font-mono">Auto-selected: {currency} ({CURRENCIES[currency]?.symbol.trim()})</p>
         </div>
       </div>
 
@@ -604,7 +798,7 @@ export default function AdminProductsPage() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-gray-800/80 bg-[#141926] text-[11px] font-mono text-gray-400 uppercase tracking-wider">
-                <th className="py-4 px-6">Item / Media</th>
+                <th className="py-4 px-6">Item / Media Gallery</th>
                 <th className="py-4">Division & Type</th>
                 <th className="py-4">Specifications & Architecture</th>
                 <th className="py-4">USD Base Price</th>
@@ -618,10 +812,11 @@ export default function AdminProductsPage() {
               {activeTab !== 'SOFTWARE' && filteredProducts.map((p) => {
                 const isFashion = ['regular-fit-tee', 'oversized-tee', 'hoodie', 'sweatshirt', 'track-short'].includes(p.categoryId);
                 const totalStock = p.variants.reduce((acc, v) => acc + v.stock, 0);
+                const imgCount = p.images?.length || 1;
 
                 return (
                   <tr key={p.id} className="hover:bg-white/[0.02] transition-colors">
-                    {/* Item & 1:1 Thumbnail */}
+                    {/* Item & 1:1 Thumbnail with Photo Count */}
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3.5">
                         <div className="relative w-12 h-12 rounded-xl bg-gray-900 border border-gray-800 overflow-hidden shrink-0 aspect-square shadow-sm">
@@ -632,9 +827,15 @@ export default function AdminProductsPage() {
                               fill
                               className="object-cover"
                               sizes="48px"
+                              unoptimized={p.images[0].url.startsWith('data:')}
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-lg">📦</div>
+                          )}
+                          {imgCount > 1 && (
+                            <span className="absolute bottom-0.5 right-0.5 text-[8px] bg-black/80 text-brand-gold px-1 rounded font-mono font-bold">
+                              {imgCount}📷
+                            </span>
                           )}
                         </div>
                         <div>
@@ -722,7 +923,6 @@ export default function AdminProductsPage() {
               {activeTab !== 'FASHION' && activeTab !== 'TECH' && filteredSoftware.map((sw) => {
                 return (
                   <tr key={sw.id} className="hover:bg-white/[0.02] transition-colors bg-blue-950/10">
-                    {/* Icon & Name */}
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3.5">
                         <div className="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-2xl shrink-0 aspect-square shadow-sm">
@@ -735,32 +935,27 @@ export default function AdminProductsPage() {
                       </div>
                     </td>
 
-                    {/* Division */}
                     <td className="py-4">
                       <span className="inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-mono font-medium bg-blue-500/15 text-blue-300 border border-blue-500/30">
                         💻 Labs Software
                       </span>
                     </td>
 
-                    {/* Architecture */}
                     <td className="py-4 text-gray-300">
                       <div className="font-mono text-[11px] text-blue-300 font-semibold">{sw.badge}</div>
                       <div className="text-[10px] text-gray-400 line-clamp-1">{sw.technologies.slice(0, 3).join(', ')}</div>
                     </td>
 
-                    {/* USD Price */}
                     <td className="py-4 font-mono text-gray-400">
                       {sw.pricing.type === 'custom-quote' ? 'Quote' : `$${sw.pricing.startingAt}`}
                       {sw.pricing.period && <span className="block text-[9px] text-gray-500">/{sw.pricing.period}</span>}
                     </td>
 
-                    {/* Localized Price */}
                     <td className="py-4 font-mono font-semibold text-blue-400">
                       {sw.pricing.type === 'custom-quote' ? 'Custom Quote' : format(sw.pricing.startingAt || 0)}
                       <span className="block text-[9px] text-gray-500 font-sans font-normal">Auto-converted for visitor</span>
                     </td>
 
-                    {/* Status */}
                     <td className="py-4">
                       <button
                         onClick={() => toggleSoftwareStatus(sw.id)}
@@ -774,7 +969,6 @@ export default function AdminProductsPage() {
                       </button>
                     </td>
 
-                    {/* Actions */}
                     <td className="py-4 px-6 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <Link
@@ -801,21 +995,13 @@ export default function AdminProductsPage() {
                   </tr>
                 );
               })}
-
-              {filteredProducts.length === 0 && filteredSoftware.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="text-center py-16 text-gray-500 font-mono text-xs">
-                    No items found. Click one of the buttons above to add a new item!
-                  </td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>
       </div>
 
       {/* =======================================================================
-          DYNAMIC ADD / EDIT MODAL (FASHION vs TECH vs SOFTWARE)
+          DYNAMIC ADD / EDIT MODAL (WITH MULTI-IMAGE GALLERY & DROPDOWN SPECS)
           ======================================================================= */}
       {showModal && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
@@ -836,7 +1022,7 @@ export default function AdminProductsPage() {
               </button>
             </div>
 
-            {/* Division Switcher (3 Contexts: Fashion, Tech, Software) */}
+            {/* Division Switcher */}
             {!editingId && (
               <div className="space-y-1.5">
                 <label className="text-gray-300 block font-medium text-xs">Select Department / Item Type:</label>
@@ -895,7 +1081,7 @@ export default function AdminProductsPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5 text-xs">
+            <form onSubmit={handleSubmit} className="space-y-6 text-xs">
               {/* Product/Software Name */}
               <div>
                 <label className="text-gray-300 block mb-1.5 font-medium">
@@ -952,89 +1138,25 @@ export default function AdminProductsPage() {
               </div>
 
               {/* =============================================================
-                  PRICING WITH REAL-TIME GEO-CURRENCY LOCALIZATION
+                  PHOTO GALLERY STUDIO: REORDER, REMOVE & 1:1 SQUARE PC UPLOAD
                   ============================================================= */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-gray-800/80 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-gray-300 font-semibold flex items-center gap-1.5">
-                    <span>💵</span> Pricing Structure (USD Base with Live Visitor Localizer)
-                  </span>
-                  <span className="text-[10px] text-emerald-400 font-mono">
-                    Auto-converts to {currency} for visitors
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/40 border border-gray-800 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800/80 pb-3">
                   <div>
-                    <label className="text-gray-300 block mb-1 font-medium">
-                      {itemType === 'SOFTWARE' ? 'Starting Price ($ USD)' : 'Base Retail Price ($ USD) *'}
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      required={itemType !== 'SOFTWARE' || softwarePricingType !== 'custom-quote'}
-                      placeholder={itemType === 'SOFTWARE' ? '350.00' : '38.00'}
-                      value={formBasePrice}
-                      onChange={e => setFormBasePrice(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white font-mono text-sm focus:outline-none focus:border-brand-gold"
-                    />
-                  </div>
-
-                  {itemType !== 'SOFTWARE' ? (
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Store Sale Price ($ USD Optional)</label>
-                      <input
-                        type="number"
-                        step="0.01"
-                        placeholder="28.00"
-                        value={formSalePrice}
-                        onChange={e => setFormSalePrice(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-brand-gold font-mono text-sm focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
-                  ) : (
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">License / Pricing Model</label>
-                      <select
-                        value={softwarePricingType}
-                        onChange={e => setSoftwarePricingType(e.target.value as any)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-blue-400"
-                      >
-                        <option value="one-time" className="bg-[#121622]">One-Time Lifetime License</option>
-                        <option value="subscription" className="bg-[#121622]">SaaS Subscription (Monthly/Yearly)</option>
-                        <option value="custom-quote" className="bg-[#121622]">Custom Quote Only</option>
-                      </select>
-                    </div>
-                  )}
-                </div>
-
-                {/* Live Currency Preview Badge */}
-                {parsedPrice > 0 && (
-                  <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/25 flex items-center justify-between text-xs">
-                    <span className="text-emerald-300 font-mono">
-                      Visitor preview in {detectedCountry || 'Your Region'}:
+                    <span className="font-semibold text-white text-sm flex items-center gap-1.5">
+                      <span>🖼️</span> Item Photo Gallery ({formImages.length} Photos)
                     </span>
-                    <span className="font-bold font-mono text-emerald-400 text-sm">
-                      {convertedEquivalent}
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      1:1 Square Enforced • #1 is Cover Photo • Reorder with ◀ ▶
                     </span>
                   </div>
-                )}
-              </div>
 
-              {/* =============================================================
-                  IMAGE STUDIO: PC DIRECT UPLOAD + 1:1 SQUARE ENFORCER
-                  ============================================================= */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-gray-800 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="font-medium text-white block">Product Visual & Media</span>
-                    <span className="text-[10px] text-gray-400 font-mono">Enforced 1:1 Square Aspect Ratio</span>
-                  </div>
-                  <div className="flex items-center gap-1 bg-[#1a2030] p-0.5 rounded-xl border border-gray-800 text-[11px]">
+                  {/* Upload Source Selector */}
+                  <div className="flex items-center gap-1 bg-[#1a2030] p-1 rounded-xl border border-gray-800 self-start sm:self-auto">
                     <button
                       type="button"
                       onClick={() => setImageUploadSource('PC')}
-                      className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-xs transition-colors cursor-pointer ${
                         imageUploadSource === 'PC' ? 'bg-brand-gold text-brand-black font-bold' : 'text-gray-400 hover:text-white'
                       }`}
                     >
@@ -1043,15 +1165,16 @@ export default function AdminProductsPage() {
                     <button
                       type="button"
                       onClick={() => setImageUploadSource('URL')}
-                      className={`px-3 py-1 rounded-lg transition-colors cursor-pointer ${
+                      className={`px-3 py-1 rounded-lg text-xs transition-colors cursor-pointer ${
                         imageUploadSource === 'URL' ? 'bg-brand-gold text-brand-black font-bold' : 'text-gray-400 hover:text-white'
                       }`}
                     >
-                      🌐 Image URL
+                      🌐 Add by URL
                     </button>
                   </div>
                 </div>
 
+                {/* Upload Action Area */}
                 {imageUploadSource === 'PC' ? (
                   <div>
                     <input
@@ -1059,6 +1182,7 @@ export default function AdminProductsPage() {
                       ref={fileInputRef}
                       onChange={handleFileUpload}
                       accept="image/png, image/jpeg, image/jpg, image/webp"
+                      multiple
                       className="hidden"
                     />
 
@@ -1066,144 +1190,312 @@ export default function AdminProductsPage() {
                       onClick={() => fileInputRef.current?.click()}
                       className="border-2 border-dashed border-gray-700 hover:border-brand-gold/60 rounded-2xl p-6 text-center cursor-pointer transition-all bg-[#0a0d14]/60 hover:bg-black/50 group"
                     >
-                      <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">📁</div>
-                      <p className="text-xs font-medium text-white mb-1">
-                        Click or drag to upload image from your computer
+                      <div className="text-3xl mb-1.5 group-hover:scale-110 transition-transform">📸</div>
+                      <p className="text-xs font-semibold text-white mb-0.5">
+                        Click or drag to select photos from your PC
                       </p>
-                      <p className="text-[10px] text-gray-500 font-mono">
-                        PNG, JPG, WEBP. Automatically center-cropped to a sharp <span className="text-brand-gold font-semibold">1:1 Square</span>.
+                      <p className="text-[10px] text-gray-400 font-mono">
+                        Select multiple photos. All images are center-cropped into an exact <span className="text-brand-gold font-bold">1:1 Square</span> automatically!
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <input
-                      type="url"
-                      placeholder="https://images.unsplash.com/photo-..."
-                      value={formImageUrl}
-                      onChange={e => setFormImageUrl(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
-                    />
-                    {/* Presets */}
+                    <div className="flex gap-2">
+                      <input
+                        type="url"
+                        placeholder="Paste image URL (https://images.unsplash.com/...)"
+                        value={manualUrlInput}
+                        onChange={e => setManualUrlInput(e.target.value)}
+                        className="flex-1 px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddUrlImage}
+                        className="px-4 py-2.5 rounded-xl bg-brand-gold text-brand-black font-bold text-xs cursor-pointer hover:opacity-90"
+                      >
+                        + Add Photo
+                      </button>
+                    </div>
+
+                    {/* Quick Presets */}
                     <div className="flex flex-wrap gap-1.5 items-center pt-1">
-                      <span className="text-[10px] text-gray-500 font-mono">Presets:</span>
-                      {PRESET_IMAGES.map(pr => (
+                      <span className="text-[10px] text-gray-500 font-mono">1-Click Presets:</span>
+                      {PRESET_SAMPLE_PHOTOS.map(pr => (
                         <button
                           key={pr.label}
                           type="button"
                           onClick={() => {
-                            setFormImageUrl(pr.url);
-                            setFormCategory(pr.cat);
+                            setFormImages(prev => [
+                              ...prev,
+                              {
+                                id: `img-pr-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+                                url: pr.url,
+                                alt: pr.label,
+                                isPrimary: prev.length === 0,
+                                sortOrder: prev.length,
+                              }
+                            ]);
+                            showToast(`Added ${pr.label}`);
                           }}
                           className="px-2 py-0.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-gray-800 text-[10px] font-mono cursor-pointer"
                         >
-                          {pr.label}
+                          + {pr.label}
                         </button>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* 1:1 Square Preview Box */}
-                {formImageUrl && (
-                  <div className="flex items-center gap-4 p-3 rounded-2xl bg-black/60 border border-gray-800/80">
-                    <div className="relative w-20 h-20 rounded-2xl bg-gray-900 border-2 border-brand-gold/40 overflow-hidden shrink-0 aspect-square shadow-xl">
-                      <Image
-                        src={formImageUrl}
-                        alt="1:1 Square Preview"
-                        fill
-                        className="object-cover"
-                        unoptimized={formImageUrl.startsWith('data:')}
-                      />
-                      <span className="absolute bottom-1 right-1 text-[8px] bg-black/80 text-brand-gold px-1 rounded font-mono">
-                        1:1
-                      </span>
+                {/* Interactive Reorder & Gallery Grid */}
+                {formImages.length > 0 ? (
+                  <div className="space-y-2 pt-2">
+                    <div className="flex items-center justify-between text-[11px] text-gray-400 font-mono">
+                      <span>Customer Presentation Order (Left to Right):</span>
+                      <span className="text-emerald-400">✓ 1:1 Aspect Ratio Verified</span>
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                          ✓ 1:1 Aspect Ratio Verified
-                        </span>
-                        {imageDimensions && (
-                          <span className="text-[10px] text-gray-500 font-mono">
-                            {imageDimensions.width} × {imageDimensions.height} px
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[11px] text-gray-400">
-                        Square format preserves ideal layout density across the storefront and mobile cards.
-                      </p>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {formImages.map((img, idx) => (
+                        <div
+                          key={img.id}
+                          className={`relative rounded-2xl overflow-hidden border-2 bg-gray-900 group transition-all p-1.5 ${
+                            idx === 0
+                              ? 'border-brand-gold shadow-lg shadow-brand-gold/15 bg-brand-gold/5'
+                              : 'border-gray-800 hover:border-gray-700'
+                          }`}
+                        >
+                          {/* Image Box 1:1 */}
+                          <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-black/60">
+                            <Image
+                              src={img.url}
+                              alt={img.alt || `Photo ${idx + 1}`}
+                              fill
+                              className="object-cover"
+                              unoptimized={img.url.startsWith('data:')}
+                            />
+
+                            {/* Badge #1 Cover */}
+                            {idx === 0 ? (
+                              <span className="absolute top-1.5 left-1.5 bg-brand-gold text-brand-black px-1.5 py-0.5 rounded-md font-mono text-[9px] font-bold shadow-md">
+                                ★ COVER #1
+                              </span>
+                            ) : (
+                              <span className="absolute top-1.5 left-1.5 bg-black/75 text-gray-300 px-1.5 py-0.5 rounded-md font-mono text-[9px]">
+                                #{idx + 1}
+                              </span>
+                            )}
+
+                            {/* Delete Photo Button */}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(idx)}
+                              className="absolute top-1.5 right-1.5 w-6 h-6 rounded-lg bg-red-600/90 hover:bg-red-500 text-white flex items-center justify-center text-xs font-bold cursor-pointer transition-transform hover:scale-110 shadow-lg"
+                              title="Delete this photo"
+                            >
+                              ✕
+                            </button>
+                          </div>
+
+                          {/* Reordering Controls (Move Left / Move Right / Make Cover) */}
+                          <div className="flex items-center justify-between gap-1 mt-2 px-1 text-[10px]">
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                disabled={idx === 0}
+                                onClick={() => handleMoveImage(idx, 'left')}
+                                className={`w-6 h-6 rounded-md flex items-center justify-center font-mono cursor-pointer ${
+                                  idx === 0 ? 'text-gray-700 cursor-not-allowed bg-white/5' : 'bg-white/10 text-white hover:bg-white/20'
+                                }`}
+                                title="Move Earlier (Left)"
+                              >
+                                ◀
+                              </button>
+
+                              <button
+                                type="button"
+                                disabled={idx === formImages.length - 1}
+                                onClick={() => handleMoveImage(idx, 'right')}
+                                className={`w-6 h-6 rounded-md flex items-center justify-center font-mono cursor-pointer ${
+                                  idx === formImages.length - 1 ? 'text-gray-700 cursor-not-allowed bg-white/5' : 'bg-white/10 text-white hover:bg-white/20'
+                                }`}
+                                title="Move Later (Right)"
+                              >
+                                ▶
+                              </button>
+                            </div>
+
+                            {idx !== 0 && (
+                              <button
+                                type="button"
+                                onClick={() => handleMakeCover(idx)}
+                                className="px-1.5 py-0.5 rounded bg-brand-gold/15 hover:bg-brand-gold/30 text-brand-gold text-[9px] font-mono font-semibold cursor-pointer"
+                                title="Make this image the main cover"
+                              >
+                                Set Cover
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
+                ) : (
+                  <p className="text-center py-4 text-gray-500 font-mono text-xs">
+                    No photos added yet. Upload an image from your PC or paste a URL above!
+                  </p>
                 )}
               </div>
 
               {/* =============================================================
-                  CONTEXTUAL FIELDS: FASHION vs TECH vs SOFTWARE
+                  FASHION DROPDOWN SELECTORS + CUSTOM INPUT
                   ============================================================= */}
               {itemType === 'FASHION' && (
-                <div className="p-4 rounded-2xl bg-amber-950/10 border border-amber-500/20 space-y-4">
-                  <div className="flex items-center gap-2 text-amber-400 font-semibold">
-                    <span>👕</span>
-                    <span>Fashion Drop Specifications</span>
+                <div className="p-4 sm:p-5 rounded-2xl bg-amber-950/10 border border-amber-500/20 space-y-5">
+                  <div className="flex items-center justify-between border-b border-amber-500/20 pb-3">
+                    <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
+                      <span>👕</span>
+                      <span>Fashion Drop Specifications</span>
+                    </div>
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      Choose from dropdowns or type custom values
+                    </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Fabric GSM & Composition</label>
+                  {/* 1. Fabric GSM & Composition */}
+                  <div className="space-y-1.5">
+                    <label className="text-gray-300 block font-medium">Fabric GSM & Composition</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <select
+                        onChange={e => {
+                          if (e.target.value) setFashionGsm(e.target.value);
+                        }}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
+                      >
+                        <option value="">▼ Select Fabric Preset...</option>
+                        {FABRIC_GSM_OPTIONS.map(opt => (
+                          <option key={opt} value={opt} className="bg-[#121622]">{opt}</option>
+                        ))}
+                      </select>
+
                       <input
                         type="text"
-                        placeholder="240 GSM Combed Organic Cotton"
+                        placeholder="Or type custom Fabric / GSM here..."
                         value={fashionGsm}
                         onChange={e => setFashionGsm(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Silhouette / Fit Type</label>
-                      <input
-                        type="text"
-                        placeholder="Regular Boxy Fit / Oversized Drop"
-                        value={fashionFit}
-                        onChange={e => setFashionFit(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
+                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Available Sizes (Comma-separated)</label>
+                  {/* 2. Silhouette / Fit Type */}
+                  <div className="space-y-1.5">
+                    <label className="text-gray-300 block font-medium">Silhouette / Fit Type</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <select
+                        onChange={e => {
+                          if (e.target.value) setFashionFit(e.target.value);
+                        }}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
+                      >
+                        <option value="">▼ Select Fit Type...</option>
+                        {FIT_TYPE_OPTIONS.map(opt => (
+                          <option key={opt} value={opt} className="bg-[#121622]">{opt}</option>
+                        ))}
+                      </select>
+
                       <input
                         type="text"
-                        placeholder="S, M, L, XL, 2XL"
-                        value={fashionSizes}
-                        onChange={e => setFashionSizes(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
+                        placeholder="Or type custom fit..."
+                        value={fashionFit}
+                        onChange={e => setFashionFit(e.target.value)}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
                       />
                     </div>
+                  </div>
 
-                    <div>
-                      <label className="text-gray-300 block mb-1 font-medium">Available Colors (Comma-separated)</label>
+                  {/* 3. Available Sizes (Presets + Quick Toggle Chips + Input) */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-gray-300 font-medium">Available Sizes</label>
+                      <div className="flex gap-1 items-center">
+                        {['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(sz => {
+                          const isSelected = fashionSizes.split(',').map(s => s.trim()).includes(sz);
+                          return (
+                            <button
+                              key={sz}
+                              type="button"
+                              onClick={() => handleToggleSize(sz)}
+                              className={`px-2 py-0.5 rounded text-[10px] font-mono cursor-pointer transition-colors ${
+                                isSelected
+                                  ? 'bg-brand-gold text-brand-black font-bold'
+                                  : 'bg-white/5 text-gray-400 hover:text-white'
+                              }`}
+                            >
+                              {sz}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <select
+                        onChange={e => {
+                          if (e.target.value) setFashionSizes(e.target.value);
+                        }}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
+                      >
+                        <option value="">▼ Select Size Bundle...</option>
+                        {SIZE_BUNDLES.map(b => (
+                          <option key={b.label} value={b.value} className="bg-[#121622]">{b.label}</option>
+                        ))}
+                      </select>
+
                       <input
                         type="text"
-                        placeholder="Onyx Black, Pure Chalk, Vintage Olive"
+                        placeholder="Comma-separated (S, M, L, XL...)"
+                        value={fashionSizes}
+                        onChange={e => setFashionSizes(e.target.value)}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 4. Available Colors (Palettes + Custom Input) */}
+                  <div className="space-y-1.5">
+                    <label className="text-gray-300 block font-medium">Available Colors</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <select
+                        onChange={e => {
+                          if (e.target.value) setFashionColors(e.target.value);
+                        }}
+                        className="px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold cursor-pointer"
+                      >
+                        <option value="">▼ Select Color Palette...</option>
+                        {COLOR_PALETTES.map(cp => (
+                          <option key={cp.label} value={cp.value} className="bg-[#121622]">{cp.label}</option>
+                        ))}
+                      </select>
+
+                      <input
+                        type="text"
+                        placeholder="Comma-separated (e.g. Onyx Black, Pure Chalk...)"
                         value={fashionColors}
                         onChange={e => setFashionColors(e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
+                        className="px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-gold"
                       />
                     </div>
                   </div>
                 </div>
               )}
 
+              {/* Tech Specific Details */}
               {itemType === 'TECH' && (
                 <div className="p-4 rounded-2xl bg-purple-950/10 border border-purple-500/20 space-y-4">
                   <div className="flex items-center gap-2 text-purple-400 font-semibold">
                     <span>⚡</span>
-                    <span>Tech Gear & Hardware Specifications</span>
+                    <span>Tech Gear Specifications</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1222,7 +1514,7 @@ export default function AdminProductsPage() {
                       <label className="text-gray-300 block mb-1 font-medium">Material & Finish</label>
                       <input
                         type="text"
-                        placeholder="CNC Anodized Aluminum, Matte Silicone"
+                        placeholder="CNC Anodized Space Gray Aluminum"
                         value={techMaterial}
                         onChange={e => setTechMaterial(e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-purple-400"
@@ -1243,6 +1535,7 @@ export default function AdminProductsPage() {
                 </div>
               )}
 
+              {/* Software Specific Details */}
               {itemType === 'SOFTWARE' && (
                 <div className="p-4 rounded-2xl bg-blue-950/15 border border-blue-500/25 space-y-4">
                   <div className="flex items-center gap-2 text-blue-400 font-semibold">
@@ -1293,21 +1586,110 @@ export default function AdminProductsPage() {
                       className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs focus:outline-none focus:border-blue-400 font-mono"
                     />
                   </div>
-
-                  <div>
-                    <label className="text-gray-300 block mb-1 font-medium">Demo / Quote Request URL</label>
-                    <input
-                      type="text"
-                      placeholder="/labs/quote?type=software or https://demo.qxyra.com"
-                      value={softwareDemoUrl}
-                      onChange={e => setSoftwareDemoUrl(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white text-xs font-mono focus:outline-none focus:border-blue-400"
-                    />
-                  </div>
                 </div>
               )}
 
-              {/* Description */}
+              {/* =============================================================
+                  PRICING WITH INPUT CURRENCY SELECTOR & VISITOR AUTO-DETECT
+                  ============================================================= */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/40 border border-gray-800/80 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-800/80 pb-3">
+                  <div>
+                    <span className="font-semibold text-white text-sm flex items-center gap-1.5">
+                      <span>💰</span> Pricing & Currency Structure
+                    </span>
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      Enter in your preferred currency • Auto-converts for each visitor&apos;s country
+                    </span>
+                  </div>
+
+                  {/* Input Currency Selector */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] text-gray-400">Pricing in:</span>
+                    <select
+                      value={adminInputCurrency}
+                      onChange={e => setAdminInputCurrency(e.target.value as Currency)}
+                      className="px-2.5 py-1 rounded-xl bg-[#1a2030] border border-gray-700 text-white font-mono text-xs font-semibold focus:outline-none focus:border-brand-gold cursor-pointer"
+                    >
+                      {(Object.keys(CURRENCIES) as Currency[]).map(cur => (
+                        <option key={cur} value={cur} className="bg-[#121622]">
+                          {CURRENCIES[cur].flag} {cur} ({CURRENCIES[cur].symbol.trim()})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-gray-300 block mb-1 font-medium">
+                      Base Retail Price ({CURRENCIES[adminInputCurrency].symbol.trim()}) *
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      placeholder="38.00"
+                      value={formInputPrice}
+                      onChange={e => setFormInputPrice(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white font-mono text-sm focus:outline-none focus:border-brand-gold"
+                    />
+                  </div>
+
+                  {itemType !== 'SOFTWARE' ? (
+                    <div>
+                      <label className="text-gray-300 block mb-1 font-medium">
+                        Sale Price ({CURRENCIES[adminInputCurrency].symbol.trim()} Optional)
+                      </label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        placeholder="28.00"
+                        value={formInputSalePrice}
+                        onChange={e => setFormInputSalePrice(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-brand-gold font-mono text-sm focus:outline-none focus:border-brand-gold"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <label className="text-gray-300 block mb-1 font-medium">License / Pricing Model</label>
+                      <select
+                        value={softwarePricingType}
+                        onChange={e => setSoftwarePricingType(e.target.value as any)}
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-gray-800 text-white text-xs focus:outline-none focus:border-blue-400"
+                      >
+                        <option value="one-time" className="bg-[#121622]">One-Time Lifetime License</option>
+                        <option value="subscription" className="bg-[#121622]">SaaS Subscription (Monthly/Yearly)</option>
+                        <option value="custom-quote" className="bg-[#121622]">Custom Quote Only</option>
+                      </select>
+                    </div>
+                  )}
+                </div>
+
+                {/* Real-Time Live Conversion Badge */}
+                {rawInputNumeric > 0 && (
+                  <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                    <div>
+                      <span className="text-emerald-300 font-mono font-medium block">
+                        🌍 Visitor Auto-Localization:
+                      </span>
+                      <span className="text-[11px] text-gray-400">
+                        Visitors from {detectedCountry || 'their region'} automatically see:
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-bold font-mono text-emerald-400 text-base">
+                        {format(convertedUsd)}
+                      </span>
+                      <span className="block text-[10px] text-gray-500 font-mono">
+                        Base: ${convertedUsd.toFixed(2)} USD
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Description & Overview */}
               <div>
                 <label className="text-gray-300 block mb-1.5 font-medium">Description & Overview</label>
                 <textarea

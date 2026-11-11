@@ -38,6 +38,11 @@ const nextConfig: NextConfig = {
         destination: '/store',
         permanent: true,
       },
+      {
+        source: '/admin/product',
+        destination: '/admin/products',
+        permanent: true,
+      },
     ];
   },
 };
