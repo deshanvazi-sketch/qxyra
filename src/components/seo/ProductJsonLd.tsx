@@ -16,7 +16,7 @@ export function ProductJsonLd({ product, url }: ProductJsonLdProps) {
     sku: product.variants[0]?.sku || `QX-${product.id}`,
     brand: {
       '@type': 'Brand',
-      name: 'Qxyra',
+      name: 'Methmi Mobile',
     },
     offers: {
       '@type': 'Offer',

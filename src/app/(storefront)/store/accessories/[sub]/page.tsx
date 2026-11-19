@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: AccessoriesSubPageProps): Pro
   const config = SUB_META[sub];
 
   if (!config) {
-    return { title: 'Category Not Found | Qxyra Store' };
+    return { title: 'Category Not Found | Methmi Store' };
   }
 
   return {
-    title: `${config.title} | Qxyra Store`,
+    title: `${config.title} | Methmi Store`,
     description: config.subtitle,
   };
 }

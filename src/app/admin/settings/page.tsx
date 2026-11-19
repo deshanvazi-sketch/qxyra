@@ -4,23 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { BRAND_NAME, BRAND_TAGLINE } from '@/lib/constants';
 import { getAdminSession } from '@/lib/admin-auth';
 
-const STORAGE_KEY = 'qxyra_platform_settings';
+const STORAGE_KEY = 'methmi_platform_settings';
 
 export default function AdminSettingsPage() {
   const [storeName, setStoreName] = useState(BRAND_NAME);
   const [tagline, setTagline] = useState(BRAND_TAGLINE);
   const [currency, setCurrency] = useState('USD');
-  const [supportEmail, setSupportEmail] = useState('support@qxyra.com');
+  const [supportEmail, setSupportEmail] = useState('support@methmimobilepvtltd.lk');
   const [freeShippingThreshold, setFreeShippingThreshold] = useState('50');
 
   // CJ Dropshipping API
-  const [cjEmail, setCjEmail] = useState('dropship@qxyra.com');
+  const [cjEmail, setCjEmail] = useState('dropship@methmimobilepvtltd.lk');
   const [cjApiKey, setCjApiKey] = useState('••••••••••••••••••••••••38f9b2');
   const [cjAutoSync, setCjAutoSync] = useState(true);
 
   // Stripe & PayHere
   const [stripeEnabled, setStripeEnabled] = useState(true);
-  const [stripePublishableKey, setStripePublishableKey] = useState('pk_live_51Pq...Qxyra98');
+  const [stripePublishableKey, setStripePublishableKey] = useState('pk_live_51Pq...Methmi Mobile98');
   const [payhereEnabled, setPayhereEnabled] = useState(true);
   const [payhereMerchantId, setPayhereMerchantId] = useState('1228491');
 
@@ -385,7 +385,7 @@ export default function AdminSettingsPage() {
                 type="email"
                 value={supportEmail}
                 onChange={e => setSupportEmail(e.target.value)}
-                placeholder="support@qxyra.com"
+                placeholder="support@methmimobilepvtltd.lk"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-black/40 border border-gray-800 text-white text-sm focus:outline-none focus:border-brand-gold"
               />
             </div>

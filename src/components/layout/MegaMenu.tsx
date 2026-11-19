@@ -40,7 +40,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
               <span className="text-lg">🛍️</span>
               <div>
                 <h3 className={cn("text-sm font-semibold flex items-center gap-2", isLight ? "text-gray-900" : "text-white")}>
-                  <span>Qxyra Store</span>
+                  <span>Methmi Mobile Store</span>
                   <span className={cn(
                     "text-[10px] px-2 py-0.5 rounded-full font-mono font-medium uppercase",
                     isLight ? "bg-amber-100 text-amber-800" : "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
@@ -236,7 +236,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
             <span className="text-lg">⚡</span>
             <div>
               <h3 className={cn("text-sm font-semibold flex items-center gap-2", isLight ? "text-gray-900" : "text-white")}>
-                <span>Qxyra Labs</span>
+                <span>Methmi Mobile Labs</span>
                 <span className={cn(
                   "text-[10px] px-2 py-0.5 rounded-full font-mono font-medium uppercase",
                   isLight ? "bg-blue-100 text-blue-800" : "bg-blue-500/15 text-blue-400 border border-blue-500/30"

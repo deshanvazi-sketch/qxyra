@@ -12,27 +12,27 @@ export function Footer() {
         {/* Newsletter Banner */}
         <div className="mb-16 p-8 sm:p-12 rounded-3xl bg-[#0E131E] border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
-              Join the Qxyra Circle
+            <span className="text-xs uppercase tracking-widest text-[#D49B6A] font-mono font-medium">
+              Join the Methmi Mobile VIP Club
             </span>
             <h3 className="font-heading text-2xl font-light text-white">
-              Curated drops & engineering updates in your inbox.
+              Latest smartphone drops & tech innovations in your inbox.
             </h3>
             <p className="text-gray-400 text-xs max-w-md">
-              Receive limited garment drop access, tech firmware alerts, and commercial software discounts. Zero spam.
+              Receive early access to Apple & Samsung flagship stock, flash discounts, and commercial POS software updates. Zero spam.
             </p>
           </div>
 
           <form className="flex w-full md:w-auto max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
             <input 
               type="email" 
-              placeholder="Enter your work email" 
-              className="bg-black/60 border border-gray-800 text-white px-4 py-3 text-xs rounded-xl focus:outline-none focus:border-brand-gold flex-grow"
+              placeholder="Enter your email address" 
+              className="bg-black/60 border border-gray-800 text-white px-4 py-3 text-xs rounded-xl focus:outline-none focus:border-[#D49B6A] flex-grow"
               required
             />
             <button 
               type="submit" 
-              className="bg-gradient-to-r from-brand-gold to-brand-gold-light text-brand-black font-semibold px-5 py-3 text-xs rounded-xl hover:opacity-95 transition-opacity whitespace-nowrap cursor-pointer shadow-md"
+              className="bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold px-5 py-3 text-xs rounded-xl hover:opacity-95 transition-opacity whitespace-nowrap cursor-pointer shadow-md"
             >
               Subscribe
             </button>
@@ -47,7 +47,7 @@ export function Footer() {
               <Logo size="md" />
             </Link>
             <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
-              {BRAND_TAGLINE} We operate across two dedicated divisions: Qxyra Store (curated heavyweight apparel & tech peripherals) and Qxyra Labs (Point of Sale software & custom web engineering).
+              {BRAND_TAGLINE}. We operate across two dedicated divisions: Methmi Store (TRCSL-approved smartphones & mobile accessories) and Methmi Labs (Point of Sale software & cloud business systems).
             </p>
             <div className="flex space-x-3">
               {SOCIAL_LINKS.map((social) => (

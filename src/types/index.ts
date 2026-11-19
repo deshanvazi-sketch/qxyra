@@ -113,7 +113,7 @@ export interface OrderItem {
   price: number;
 }
 
-export type SalesPlatform = 'Qxyra Web' | 'Daraz' | 'CJ Dropshipping' | 'TikTok Shop' | 'AliExpress' | 'eBay' | 'Manual / Other';
+export type SalesPlatform = 'Methmi Mobile Web' | 'Daraz' | 'CJ Dropshipping' | 'TikTok Shop' | 'AliExpress' | 'eBay' | 'Manual / Other';
 
 export interface Order {
   id: string;

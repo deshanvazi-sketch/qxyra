@@ -33,7 +33,7 @@ export const useWishlistStore = create<WishlistState>()(
       clearWishlist: () => set({ items: [] }),
     }),
     {
-      name: 'qxyra-wishlist',
+      name: 'methmi-mobile-wishlist',
     }
   )
 );

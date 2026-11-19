@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Qxyra Labs | Enterprise Software, POS Systems & Web Solutions',
-  description: 'Point of sale retail software, multi-channel inventory orchestrators, and high-conversion e-commerce engineering by Qxyra Labs.',
+  title: 'Methmi Labs | Enterprise Software, POS Systems & Web Solutions',
+  description: 'Point of sale retail software, multi-channel inventory orchestrators, and high-conversion e-commerce engineering by Methmi Labs.',
 };
 
 export default function LabsLayout({
@@ -17,7 +17,7 @@ export default function LabsLayout({
         <div className="max-w-7xl mx-auto flex items-center justify-between text-[11px] font-mono">
           <span className="flex items-center gap-1.5 text-blue-400">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-            <span>Qxyra Labs Engineering Division</span>
+            <span>Methmi Labs Engineering Division</span>
           </span>
           <span className="text-gray-400 hidden sm:inline">
             Turnkey POS Systems • Bespoke Web Solutions • Cloud Architecture

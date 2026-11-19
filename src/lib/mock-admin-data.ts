@@ -176,7 +176,7 @@ export const mockAnalytics: StoreAnalytics = {
     {
       id: 'act-1',
       type: 'cj_sync',
-      title: 'Storefront and Admin active at qxyra.com. Ready for authentic inventory.',
+      title: 'Storefront and Admin active at methmi mobile.com. Ready for authentic inventory.',
       time: 'Just now',
       badge: 'Live'
     }

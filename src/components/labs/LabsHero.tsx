@@ -30,7 +30,7 @@ export function LabsHero({
         <div className="flex items-center justify-center sm:justify-start gap-2">
           <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
           <span className="text-xs uppercase tracking-widest text-blue-400 font-mono font-medium">
-            Qxyra Labs • {tag}
+            Methmi Labs • {tag}
           </span>
         </div>
 

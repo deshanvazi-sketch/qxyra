@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { QuoteForm } from '@/components/labs/QuoteForm';
 
 export const metadata: Metadata = {
-  title: 'Request a Quote | Qxyra Labs Engineering',
+  title: 'Request a Quote | Methmi Mobile Labs Engineering',
   description: 'Submit your requirements for custom Point of Sale (POS) software, e-commerce storefronts, or tailored web applications.',
 };
 

@@ -13,10 +13,13 @@ export function FeaturedProducts() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_products_list');
+      const saved = localStorage.getItem('methmi_products_list') || localStorage.getItem('methmi mobile_products_list');
       if (saved) {
-        const parsed: Product[] = JSON.parse(saved);
-        setItems(parsed.filter((p) => (p.isFeatured ?? true) && p.isActive).slice(0, 8));
+        const parsed = JSON.parse(saved);
+        const list: Product[] = Array.isArray(parsed) ? parsed : parsed?.state?.products || [];
+        if (list.length > 0) {
+          setItems(list.filter((p) => (p.isFeatured ?? true) && p.isActive).slice(0, 8));
+        }
       }
     } catch (e) {
       console.error(e);

@@ -6,10 +6,10 @@ import { mockOrders } from '@/lib/mock-admin-data';
 import { Order, OrderStatus, SalesPlatform } from '@/types';
 import { useCurrency, Currency } from '@/context/CurrencyContext';
 
-const STORAGE_KEY = 'qxyra_admin_orders';
+const STORAGE_KEY = 'methmi_admin_orders';
 
 const PLATFORMS: SalesPlatform[] = [
-  'Qxyra Web',
+  'Methmi Mobile Web',
   'Daraz',
   'CJ Dropshipping',
   'TikTok Shop',
@@ -79,7 +79,7 @@ export default function AdminOrdersPage() {
   // Profit & Revenue Calculations filtered specifically by Selected Channel / Platform
   const channelOrders = orders.filter(order => {
     if (selectedPlatform === 'ALL') return true;
-    const orderPlatform = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
+    const orderPlatform = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web');
     return orderPlatform === selectedPlatform;
   });
 
@@ -92,7 +92,7 @@ export default function AdminOrdersPage() {
   // Filter Orders
   const filteredOrders = orders.filter(order => {
     const matchesStatus = selectedStatus === 'ALL' || order.status === selectedStatus;
-    const orderPlatform = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
+    const orderPlatform = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web');
     const matchesPlatform = selectedPlatform === 'ALL' || orderPlatform === selectedPlatform;
 
     const matchesSearch = 
@@ -284,7 +284,7 @@ export default function AdminOrdersPage() {
 
   // Helper for Platform Badge Styling
   const getPlatformBadge = (platform?: string) => {
-    const p = platform || 'Qxyra Web';
+    const p = platform || 'Methmi Mobile Web';
     if (p === 'Daraz') {
       return 'bg-[#FF6000]/15 text-[#FF6000] border-[#FF6000]/30';
     }
@@ -326,7 +326,7 @@ export default function AdminOrdersPage() {
             </span>
           </div>
           <p className="text-gray-400 text-sm mt-1">
-            Track multi-platform dropshipping orders (Daraz, Qxyra Web, CJ, TikTok), analyze buy/sell margins, and calculate net profit.
+            Track multi-platform orders (Daraz, Methmi Mobile Web, CJ, TikTok), analyze buy/sell margins, and calculate net profit.
           </p>
           <div className="flex items-center gap-2 mt-2">
             <span className="text-[11px] text-gray-400">Active Currency:</span>
@@ -401,10 +401,10 @@ export default function AdminOrdersPage() {
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          {['ALL', 'Daraz', 'Qxyra Web', 'CJ Dropshipping', 'TikTok Shop', 'AliExpress', 'Manual / Other'].map(pl => {
+          {['ALL', 'Daraz', 'Methmi Mobile Web', 'CJ Dropshipping', 'TikTok Shop', 'AliExpress', 'Manual / Other'].map(pl => {
             const count = pl === 'ALL' 
               ? orders.length 
-              : orders.filter(o => (o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web')) === pl).length;
+              : orders.filter(o => (o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web')) === pl).length;
 
             const isSelected = selectedPlatform === pl;
 
@@ -574,7 +574,7 @@ export default function AdminOrdersPage() {
             <tbody className="divide-y divide-gray-800/60">
               {filteredOrders.map(order => {
                 const isSyncing = syncingOrderId === order.id;
-                const platformName = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
+                const platformName = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web');
                 
                 // Profit calculation per row
                 const sellAmount = order.total || 0;

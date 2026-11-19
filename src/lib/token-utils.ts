@@ -1,7 +1,7 @@
 // Universal Web Crypto HMAC and token verification (100% Edge & Node compatible)
 
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'qxyra_vault_super_secret_master_key_2026_!@#$%^';
-export const ADMIN_COOKIE_NAME = 'qxyra_admin_token';
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'methmi_vault_super_secret_master_key_2026_!@#$%^';
+export const ADMIN_COOKIE_NAME = 'methmi_admin_token';
 
 function base64UrlEncode(buffer: ArrayBuffer | Uint8Array): string {
   const bytes = new Uint8Array(buffer);

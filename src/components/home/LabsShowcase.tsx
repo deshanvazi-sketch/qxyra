@@ -21,7 +21,7 @@ export function LabsShowcase() {
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-light text-white tracking-wide">
-              Qxyra <span className="font-normal text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400">Labs</span> Suite
+              Methmi Mobile <span className="font-normal text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400">Labs</span> Suite
             </h2>
             <p className="text-gray-400 text-sm max-w-xl">
               Turnkey retail Point of Sale (POS) software, multi-branch stock orchestration, and bespoke web platforms engineered for maximum conversion.

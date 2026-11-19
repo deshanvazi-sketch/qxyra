@@ -21,7 +21,7 @@ export default function TermsOfServicePage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">1. Agreement to Terms</h2>
             <p>
-              By accessing or using {BRAND_NAME} (https://qxyra.com), you agree to be bound by these Terms of Service and all applicable international trade regulations.
+              By accessing or using {BRAND_NAME} (https://methmimobilepvtltd.lk), you agree to be bound by these Terms of Service and all applicable international trade regulations.
             </p>
           </section>
 
@@ -49,7 +49,7 @@ export default function TermsOfServicePage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">5. Governing Law & Support</h2>
             <p>
-              For customer inquiries or legal questions, reach our customer service desk at <span className="text-brand-gold">support@qxyra.com</span>.
+              For customer inquiries or legal questions, reach our customer service desk at <span className="text-brand-gold">support@methmimobilepvtltd.lk</span>.
             </p>
           </section>
         </div>

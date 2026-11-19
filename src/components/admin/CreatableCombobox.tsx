@@ -61,7 +61,7 @@ export default function CreatableCombobox({
     const base = normalize(initialRawOptions);
     if (storageKey && typeof window !== 'undefined') {
       try {
-        const saved = localStorage.getItem(`qxyra_combobox_${storageKey}`);
+        const saved = localStorage.getItem(`methmi-mobile_combobox_${storageKey}`);
         if (saved) {
           const parsed = JSON.parse(saved) as ComboboxOption[];
           const existingValues = new Set(base.map((b) => b.value));
@@ -98,7 +98,7 @@ export default function CreatableCombobox({
     if (storageKey && typeof window !== 'undefined') {
       try {
         const customOnly = opts.filter((o) => o.isCustom);
-        localStorage.setItem(`qxyra_combobox_${storageKey}`, JSON.stringify(customOnly));
+        localStorage.setItem(`methmi-mobile_combobox_${storageKey}`, JSON.stringify(customOnly));
       } catch (err) {
         console.error('Failed saving custom options:', err);
       }

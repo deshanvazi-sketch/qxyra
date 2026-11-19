@@ -52,7 +52,7 @@ function LoginForm() {
       if (res.ok && data.success) {
         // Also save user email to local state for convenience
         try {
-          localStorage.setItem('qxyra_admin_session', JSON.stringify({
+          localStorage.setItem('methmi_admin_session', JSON.stringify({
             email: email.trim().toLowerCase(),
             role: 'OWNER_ADMIN',
             authenticatedAt: new Date().toISOString()
@@ -206,7 +206,7 @@ function LoginForm() {
           className="text-xs text-gray-400 hover:text-white transition-colors inline-flex items-center gap-1.5"
         >
           <span>←</span>
-          <span>Return to Qxyra Storefront</span>
+          <span>Return to Methmi Mobile Storefront</span>
         </Link>
       </div>
     </div>

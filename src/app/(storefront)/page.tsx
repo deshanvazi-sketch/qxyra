@@ -8,7 +8,7 @@ import { TrustBadges } from '@/components/home/TrustBadges';
 
 export const metadata: Metadata = {
   title: `${BRAND_NAME} | ${BRAND_TAGLINE} — Store & Labs`,
-  description: 'Qxyra operates two distinct divisions: Qxyra Store (curated streetwear and smart tech accessories) and Qxyra Labs (Point of Sale software and custom web engineering).',
+  description: 'Methmi Mobile operates two distinct divisions: Methmi Mobile Store (curated streetwear and smart tech accessories) and Methmi Mobile Labs (Point of Sale software and custom web engineering).',
 };
 
 export default function HomePage() {

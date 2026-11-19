@@ -149,7 +149,7 @@ export function PaymentForm({ onSubmit }: PaymentFormProps) {
       {method === 'bank_transfer' && (
         <div className="bg-gray-50 p-6 text-gray-600 text-sm space-y-2 border border-gray-100">
           <p>Please transfer the total amount to the following bank account:</p>
-          <p className="font-mono mt-2">Bank: Qxyra Global Bank</p>
+          <p className="font-mono mt-2">Bank: Methmi Mobile Global Bank</p>
           <p className="font-mono">Account No: 1234-5678-9012</p>
           <p className="font-mono">Routing No: 987654321</p>
         </div>

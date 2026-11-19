@@ -72,8 +72,8 @@ export const products: Product[] = [
   // ─── FASHION: REGULAR FIT TEE ─────────────────────────────────
   {
     id: 'prod-rft-01',
-    name: 'Qxyra Signature Heavyweight Regular Fit Tee',
-    slug: 'qxyra-signature-heavyweight-regular-fit-tee',
+    name: 'Methmi Mobile Signature Heavyweight Regular Fit Tee',
+    slug: 'methmi-signature-heavyweight-regular-fit-tee',
     description: 'Crafted from 240GSM organic combed cotton with pre-shrunk treatment and a structured ribbed collar that never sags.',
     basePrice: 38.00,
     salePrice: 28.00,
@@ -97,8 +97,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-rft-02',
-    name: 'Qxyra Monochrome Minimalist Regular Tee',
-    slug: 'qxyra-monochrome-minimalist-regular-tee',
+    name: 'Methmi Mobile Monochrome Minimalist Regular Tee',
+    slug: 'methmi-monochrome-minimalist-regular-tee',
     description: 'Clean micro-embroidered chest glyph in muted titanium thread. Breathable, ultra-soft luxury hand-feel designed for year-round layering.',
     basePrice: 35.00,
     salePrice: 26.00,
@@ -119,8 +119,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-rft-03',
-    name: 'Qxyra Studio Olive Regular Fit Crewneck',
-    slug: 'qxyra-studio-olive-regular-fit-crewneck',
+    name: 'Methmi Mobile Studio Olive Regular Fit Crewneck',
+    slug: 'methmi-studio-olive-regular-fit-crewneck',
     description: 'Garment-dyed earthy olive tone with blind-stitch hems and reinforced shoulder taping.',
     basePrice: 40.00,
     salePrice: 32.00,
@@ -143,8 +143,8 @@ export const products: Product[] = [
   // ─── FASHION: OVERSIZED TEE ───────────────────────────────────
   {
     id: 'prod-ost-01',
-    name: 'Qxyra Acid Wash Drop-Shoulder Oversized Tee',
-    slug: 'qxyra-acid-wash-drop-shoulder-oversized-tee',
+    name: 'Methmi Mobile Acid Wash Drop-Shoulder Oversized Tee',
+    slug: 'methmi-acid-wash-drop-shoulder-oversized-tee',
     description: 'Heavy 280GSM dense jersey cotton with vintage mineral-wash finish. Relaxed dropped shoulders and extended elbow-length sleeves.',
     basePrice: 50.00,
     salePrice: 38.00,
@@ -165,8 +165,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-ost-02',
-    name: 'Qxyra Boxy Fit Heavyweight Cream Tee',
-    slug: 'qxyra-boxy-fit-heavyweight-cream-tee',
+    name: 'Methmi Mobile Boxy Fit Heavyweight Cream Tee',
+    slug: 'methmi-boxy-fit-heavyweight-cream-tee',
     description: 'Wide silhouette with cropped body length. Custom ribbed collar, dense structure that holds shape wash after wash.',
     basePrice: 48.00,
     salePrice: 36.00,
@@ -187,8 +187,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-ost-03',
-    name: 'Qxyra Geometric Matrix Oversized Graphic Tee',
-    slug: 'qxyra-geometric-matrix-oversized-graphic-tee',
+    name: 'Methmi Mobile Geometric Matrix Oversized Graphic Tee',
+    slug: 'methmi-geometric-matrix-oversized-graphic-tee',
     description: 'High-density screen printed rear blueprint artwork inspired by futuristic architectural grids.',
     basePrice: 55.00,
     salePrice: 42.00,
@@ -211,8 +211,8 @@ export const products: Product[] = [
   // ─── FASHION: HOODIE ──────────────────────────────────────────
   {
     id: 'prod-hd-01',
-    name: 'Qxyra 460GSM French Terry Pullover Hoodie',
-    slug: 'qxyra-460gsm-french-terry-pullover-hoodie',
+    name: 'Methmi Mobile 460GSM French Terry Pullover Hoodie',
+    slug: 'methmi-460gsm-french-terry-pullover-hoodie',
     description: 'The definitive streetwear hoodie. 460GSM ultra-dense organic cotton french terry with seamless double-lined hood, no drawstrings, and hidden kangaroo pocket.',
     basePrice: 90.00,
     salePrice: 68.00,
@@ -235,8 +235,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-hd-02',
-    name: 'Qxyra Minimalist Heather Gray Heavy Zip Hoodie',
-    slug: 'qxyra-minimalist-heather-gray-heavy-zip-hoodie',
+    name: 'Methmi Mobile Minimalist Heather Gray Heavy Zip Hoodie',
+    slug: 'methmi-minimalist-heather-gray-heavy-zip-hoodie',
     description: 'YKK two-way metallic gunmetal zipper, reinforced cuff ribbing, and deep fleece-lined insulation for cold climate comfort.',
     basePrice: 98.00,
     salePrice: 74.00,
@@ -257,8 +257,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-hd-03',
-    name: 'Qxyra Monochrome Obsidian Embroidered Hoodie',
-    slug: 'qxyra-monochrome-obsidian-embroidered-hoodie',
+    name: 'Methmi Mobile Monochrome Obsidian Embroidered Hoodie',
+    slug: 'methmi-monochrome-obsidian-embroidered-hoodie',
     description: 'Matte tonal embroidery across upper chest, dropped shoulder drape, heavy 420GSM fleece blend.',
     basePrice: 85.00,
     salePrice: 65.00,
@@ -281,8 +281,8 @@ export const products: Product[] = [
   // ─── ACCESSORIES: MOBILE ─────────────────────────────────────
   {
     id: 'prod-mob-01',
-    name: 'Qxyra Magnetic MagSafe Vegan Leather Wallet Stand',
-    slug: 'qxyra-magnetic-magsafe-vegan-leather-wallet-stand',
+    name: 'Methmi Mobile Magnetic MagSafe Vegan Leather Wallet Stand',
+    slug: 'methmi-magnetic-magsafe-vegan-leather-wallet-stand',
     description: 'Precision engineered with 3500Gs N52 rare-earth neodymium magnets. Holds 3 cards securely and snaps into multi-angle portrait and landscape viewing stands.',
     basePrice: 45.00,
     salePrice: 34.00,
@@ -303,8 +303,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-mob-02',
-    name: 'Qxyra 65W GaN Dual-Port Ultra-Compact Fast Charger',
-    slug: 'qxyra-65w-gan-dual-port-ultra-compact-fast-charger',
+    name: 'Methmi Mobile 65W GaN Dual-Port Ultra-Compact Fast Charger',
+    slug: 'methmi-65w-gan-dual-port-ultra-compact-fast-charger',
     description: 'Gallium Nitride (GaN III) high efficiency architecture. Charges iPhone, Galaxy, and MacBook Air at peak speed in a form factor 50% smaller than standard blocks.',
     basePrice: 58.00,
     salePrice: 45.00,
@@ -324,8 +324,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-mob-03',
-    name: 'Qxyra 10000mAh Magnetic Wireless Power Bank',
-    slug: 'qxyra-10000mah-magnetic-wireless-power-bank',
+    name: 'Methmi Mobile 10000mAh Magnetic Wireless Power Bank',
+    slug: 'methmi-10000mah-magnetic-wireless-power-bank',
     description: 'Slimline 15W wireless snap charging with 20W PD Type-C output, digital battery percentage LED screen, and aerospace aluminum casing.',
     basePrice: 68.00,
     salePrice: 52.00,
@@ -345,8 +345,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-mob-04',
-    name: 'Qxyra Armored Kevlar USB-C to USB-C 100W Cable (2M)',
-    slug: 'qxyra-armored-kevlar-usbc-to-usbc-100w-cable',
+    name: 'Methmi Mobile Armored Kevlar USB-C to USB-C 100W Cable (2M)',
+    slug: 'methmi-armored-kevlar-usbc-to-usbc-100w-cable',
     description: 'Ballistic braided nylon with Kevlar core tested for 30,000+ bends. Built-in E-marker chip supporting 100W Power Delivery and 480Mbps data transfer.',
     basePrice: 28.00,
     salePrice: 22.00,
@@ -368,8 +368,8 @@ export const products: Product[] = [
   // ─── ACCESSORIES: COMPUTER ───────────────────────────────────
   {
     id: 'prod-cmp-01',
-    name: 'Qxyra CNC Aluminum Ergonomic Laptop Elevator Stand',
-    slug: 'qxyra-cnc-aluminum-ergonomic-laptop-elevator-stand',
+    name: 'Methmi Mobile CNC Aluminum Ergonomic Laptop Elevator Stand',
+    slug: 'methmi-cnc-aluminum-ergonomic-laptop-elevator-stand',
     description: 'Carved from single-slab sandblasted aerospace aluminum. Raises your screen to eye level, promotes optimal thermals, and supports all laptops up to 17 inches.',
     basePrice: 75.00,
     salePrice: 58.00,
@@ -390,8 +390,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-cmp-02',
-    name: 'Qxyra 7-in-1 Dual 4K HDMI USB-C Hub Docking Station',
-    slug: 'qxyra-7-in-1-dual-4k-hdmi-usbc-hub-docking-station',
+    name: 'Methmi Mobile 7-in-1 Dual 4K HDMI USB-C Hub Docking Station',
+    slug: 'methmi-7-in-1-dual-4k-hdmi-usbc-hub-docking-station',
     description: 'Single-cable connectivity: 4K 60Hz HDMI, 100W Power Delivery pass-through, 3x USB 3.2 5Gbps ports, SD and TF micro high-speed card readers.',
     basePrice: 89.00,
     salePrice: 69.00,
@@ -411,8 +411,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-cmp-03',
-    name: 'Qxyra Stealth Ergonomic Wireless Silent Mouse',
-    slug: 'qxyra-stealth-ergonomic-wireless-silent-mouse',
+    name: 'Methmi Mobile Stealth Ergonomic Wireless Silent Mouse',
+    slug: 'methmi-stealth-ergonomic-wireless-silent-mouse',
     description: 'Sculpted comfort grip with natural wrist angle, silent acoustic micro-switches (<20dB), dual Bluetooth 5.2 + 2.4GHz dongle connectivity, and 90-day battery life.',
     basePrice: 62.00,
     salePrice: 48.00,
@@ -432,8 +432,8 @@ export const products: Product[] = [
   },
   {
     id: 'prod-cmp-04',
-    name: 'Qxyra Premium Dual-Texture Desk Mat (900x400mm)',
-    slug: 'qxyra-premium-dual-texture-desk-mat',
+    name: 'Methmi Mobile Premium Dual-Texture Desk Mat (900x400mm)',
+    slug: 'methmi-premium-dual-texture-desk-mat',
     description: 'Reversible workspace pad with smooth waterproof vegan leather on one side and cozy high-density wool-felt on the other. Non-slip stitched edges.',
     basePrice: 46.00,
     salePrice: 35.00,

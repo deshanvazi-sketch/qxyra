@@ -34,11 +34,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const convertedProduct = cjClient.convertCJItemToQxyraProduct(cjItem, categoryId || 'c1');
+    const convertedProduct = cjClient.convertCJItemToMethmiProduct(cjItem, categoryId || 'c1');
 
     return NextResponse.json({
       success: true,
-      message: `Product "${convertedProduct.name}" imported to Qxyra catalog successfully!`,
+      message: `Product "${convertedProduct.name}" imported to Methmi Store catalog successfully!`,
       product: convertedProduct
     });
   } catch (error) {

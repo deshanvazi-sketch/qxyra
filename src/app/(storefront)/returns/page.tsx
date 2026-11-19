@@ -37,10 +37,10 @@ export default function ReturnsPolicyPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">3. How to Request a Refund</h2>
             <p>
-              Simply email our support desk at <span className="text-brand-gold">support@qxyra.com</span> with:
+              Simply email our support desk at <span className="text-brand-gold">support@methmimobilepvtltd.lk</span> with:
             </p>
             <ol className="list-decimal pl-5 space-y-1 text-gray-400">
-              <li>Your Qxyra Order Number (e.g. QX-...).</li>
+              <li>Your Methmi Mobile Order Number (e.g. QX-...).</li>
               <li>A clear photo or video showing the defect or issue.</li>
             </ol>
             <p className="mt-2">
@@ -51,7 +51,7 @@ export default function ReturnsPolicyPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">4. Customer Support</h2>
             <p>
-              We are dedicated to your peace of mind. For any help regarding returns, please contact us at <span className="text-brand-gold">support@qxyra.com</span>.
+              We are dedicated to your peace of mind. For any help regarding returns, please contact us at <span className="text-brand-gold">support@methmimobilepvtltd.lk</span>.
             </p>
           </section>
         </div>

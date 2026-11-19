@@ -13,7 +13,7 @@ export default function OrdersPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_customer_orders');
+      const saved = localStorage.getItem('methmi_customer_orders');
       if (saved) {
         setOrders(JSON.parse(saved));
       }
@@ -72,7 +72,7 @@ export default function OrdersPage() {
           </h3>
           <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
             {orders.length === 0
-              ? 'When you place an order at Qxyra, your receipt, fulfillment progress, and tracking details will be displayed here.'
+              ? 'When you place an order at Methmi Mobile, your receipt, fulfillment progress, and tracking details will be displayed here.'
               : `There are currently no orders in ${activeTab.toLowerCase()} status.`}
           </p>
           <Link

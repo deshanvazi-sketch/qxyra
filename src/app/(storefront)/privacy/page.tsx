@@ -21,7 +21,7 @@ export default function PrivacyPolicyPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">1. Overview</h2>
             <p>
-              Welcome to {BRAND_NAME} (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We respect your privacy and are committed to protecting personal data you share when visiting or making purchases at {BRAND_NAME} (https://qxyra.com).
+              Welcome to {BRAND_NAME} (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;). We respect your privacy and are committed to protecting personal data you share when visiting or making purchases at {BRAND_NAME} (https://methmimobilepvtltd.lk).
             </p>
           </section>
 
@@ -58,7 +58,7 @@ export default function PrivacyPolicyPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">6. Contact Us</h2>
             <p>
-              If you have any questions or data inquiries regarding this Privacy Policy, please contact our team at <span className="text-brand-gold">support@qxyra.com</span>.
+              If you have any questions or data inquiries regarding this Privacy Policy, please contact our team at <span className="text-brand-gold">support@methmimobilepvtltd.lk</span>.
             </p>
           </section>
         </div>

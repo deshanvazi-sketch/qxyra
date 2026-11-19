@@ -15,34 +15,45 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://qxyra.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://methmimobilepvtltd.lk";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Qxyra | Discover. Desire. Deliver.",
-    template: "%s | Qxyra",
+    default: "Methmi Mobile (Pvt) Ltd | Your Trusted Mobile Partner",
+    template: "%s | Methmi Mobile",
   },
-  description: "Qxyra is an elite global e-commerce and dropshipping brand delivering world-class craftsmanship, innovative smart lifestyle essentials, and curated luxury.",
-  keywords: ["Qxyra", "e-commerce", "premium dropshipping", "luxury electronics", "lifestyle", "boutique", "CJ dropshipping"],
-  authors: [{ name: "Qxyra Global" }],
-  creator: "Qxyra",
-  publisher: "Qxyra Inc.",
+  description: "Sri Lanka's premier technology flagship: 100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix, Xiaomi Redmi, premium accessories, and retail Cloud POS software solutions.",
+  keywords: [
+    "Methmi Mobile",
+    "Methmi Mobile Pvt Ltd",
+    "iPhone Sri Lanka",
+    "Samsung Galaxy Sri Lanka",
+    "Tecno Camon 50 Pro",
+    "Infinix Note 60 Pro",
+    "TRCSL Approved Phones",
+    "Methmi POS",
+    "Retail POS System Sri Lanka",
+    "Mobile Shop Sri Lanka"
+  ],
+  authors: [{ name: "Methmi Mobile (Pvt) Ltd" }],
+  creator: "Methmi Mobile (Pvt) Ltd",
+  publisher: "Methmi Mobile (Pvt) Ltd",
   robots: {
     index: true,
     follow: true,
   },
   openGraph: {
-    title: "Qxyra | Discover. Desire. Deliver.",
-    description: "Discover world-class quality and exceptional design with Qxyra.",
+    title: "Methmi Mobile (Pvt) Ltd | Your Trusted Mobile Partner",
+    description: "Experience 100% genuine TRCSL-approved smartphones, premium mobile gear, and cutting-edge retail Cloud POS software solutions in Sri Lanka.",
     url: siteUrl,
-    siteName: "Qxyra",
+    siteName: "Methmi Mobile",
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Qxyra Official Brand Showcase",
+        url: "/methmi-logo.jpg",
+        width: 1024,
+        height: 571,
+        alt: "Methmi Mobile (Pvt) Ltd Official Brand",
       },
     ],
     locale: "en_US",
@@ -50,10 +61,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Qxyra | Discover. Desire. Deliver.",
-    description: "Curated world-class lifestyle products & global dropshipping.",
-    creator: "@qxyra",
-    images: ["/og-image.jpg"],
+    title: "Methmi Mobile (Pvt) Ltd | Your Trusted Mobile Partner",
+    description: "100% genuine TRCSL-approved smartphones, accessories & retail Cloud POS software solutions.",
+    creator: "@methmimobile",
+    images: ["/methmi-logo.jpg"],
   },
 };
 
@@ -65,21 +76,20 @@ export default function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Qxyra",
+    name: "Methmi Mobile (Pvt) Ltd",
     url: siteUrl,
-    logo: `${siteUrl}/logo.png`,
-    description: "World-class e-commerce brand and curated lifestyle catalog.",
+    logo: `${siteUrl}/methmi-logo.jpg`,
+    description: "Sri Lanka's trusted flagship for original TRCSL approved mobile phones, premium accessories, and Cloud POS systems.",
     sameAs: [
-      "https://facebook.com/qxyra",
-      "https://instagram.com/qxyra",
-      "https://tiktok.com/@qxyra",
-      "https://twitter.com/qxyra"
+      "https://facebook.com/methmimobile",
+      "https://tiktok.com/@methmimobile"
     ]
   };
 
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
+        <link rel="icon" href="/methmi-logo.jpg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

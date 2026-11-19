@@ -11,7 +11,7 @@ export function Testimonials() {
     {
       id: 2,
       title: "Guaranteed Authenticity",
-      description: "Each design undergoes strict verification to uphold the distinctive craftsmanship and aesthetic excellence of Qxyra.",
+      description: "Each design undergoes strict verification to uphold the distinctive craftsmanship and aesthetic excellence of Methmi Mobile.",
       icon: "💎"
     },
     {
@@ -27,7 +27,7 @@ export function Testimonials() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <span className="text-xs uppercase tracking-widest text-brand-gold font-semibold block mb-2">
-            The Qxyra Standard
+            The Methmi Mobile Standard
           </span>
           <h2 className="text-3xl md:text-4xl font-heading text-brand-black font-bold">
             Crafted for Distinction

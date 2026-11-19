@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { StoreCatalog } from '@/components/store/StoreCatalog';
 
 export const metadata: Metadata = {
-  title: 'Qxyra Store | Premium Streetwear, Hoodies & Lifestyle Accessories',
+  title: 'Methmi Mobile Store | Premium Streetwear, Hoodies & Lifestyle Accessories',
   description: 'Explore curated heavyweight regular fit tees, oversized streetwear, 460GSM hoodies, MagSafe charging & computer docking stations.',
 };
 
@@ -22,7 +22,7 @@ export default function StorePage() {
 
           <div className="space-y-2 max-w-3xl">
             <h1 className="text-3xl sm:text-5xl font-heading font-light text-white tracking-tight leading-tight">
-              QXYRA <span className="text-brand-gold font-normal">STORE</span>
+              METHMI MOBILE <span className="text-brand-gold font-normal">STORE</span>
             </h1>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
               Heavyweight architectural apparel and precision workspace accessories. Explore our full catalog or browse by department below.

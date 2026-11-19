@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useTheme } from '@/context/ThemeContext';
 
 interface LogoProps {
@@ -10,16 +12,10 @@ interface LogoProps {
   theme?: 'dark' | 'light';
 }
 
-const iconSizes = {
-  sm: { width: 28, height: 28 },
-  md: { width: 38, height: 38 },
-  lg: { width: 56, height: 56 },
-};
-
-const textSizes = {
-  sm: 'text-base tracking-[0.25em]',
-  md: 'text-xl tracking-[0.28em]',
-  lg: 'text-2xl tracking-[0.32em]',
+const logoHeights = {
+  sm: 36,
+  md: 46,
+  lg: 60,
 };
 
 export function Logo({
@@ -37,104 +33,43 @@ export function Logo({
 
   const activeTheme = explicitTheme || (mounted ? contextTheme : 'dark');
   const isDark = activeTheme === 'dark';
-  const mainColor = isDark ? '#FFFFFF' : '#0A0A0A';
-  const redColor = '#EF4444'; // Dynamic Crimson Laser Red
+  const heightPx = logoHeights[size];
 
   return (
-    <div className={`inline-flex items-center gap-3 select-none ${className}`}>
-      {/* Precision Geometric SVG Emblem */}
-      <svg
-        width={iconSizes[size].width}
-        height={iconSizes[size].height}
-        viewBox="0 0 160 160"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="shrink-0 transition-transform duration-300 hover:scale-105"
+    <Link href="/" className={`inline-flex items-center gap-3 select-none group ${className}`}>
+      {/* 3D Metallic Emblem from Methmi Mobile Official Brand */}
+      <div 
+        className="relative shrink-0 overflow-hidden rounded-xl transition-all duration-300 group-hover:scale-105 border border-amber-500/20 shadow-md bg-black/40 flex items-center justify-center p-0.5"
+        style={{ height: `${heightPx}px`, width: `${Math.round(heightPx * 1.5)}px` }}
       >
-        {/* Outer Circular Q Ring */}
-        <circle
-          cx="80"
-          cy="75"
-          r="54"
-          stroke={mainColor}
-          strokeWidth="7"
-          className="transition-colors"
+        <Image
+          src="/methmi-logo.jpg"
+          alt="Methmi Mobile (Pvt) Ltd"
+          fill
+          priority
+          sizes="(max-width: 768px) 60px, 90px"
+          className="object-contain"
         />
-        
-        {/* Q Angular Tail (Bottom Right) */}
-        <path
-          d="M 106 100 L 132 126 L 118 126"
-          stroke={mainColor}
-          strokeWidth="7"
-          strokeLinecap="square"
-          strokeLinejoin="miter"
-        />
+      </div>
 
-        {/* Central Geometric X Strokes */}
-        {/* Top-Left to Bottom-Right Line 1 */}
-        <line
-          x1="52"
-          y1="47"
-          x2="108"
-          y2="103"
-          stroke={mainColor}
-          strokeWidth="6"
-          strokeLinecap="round"
-        />
-        {/* Top-Right to Bottom-Left */}
-        <line
-          x1="108"
-          y1="47"
-          x2="52"
-          y2="103"
-          stroke={mainColor}
-          strokeWidth="6"
-          strokeLinecap="round"
-        />
-
-        {/* Inner parallel X accents */}
-        <line
-          x1="58"
-          y1="40"
-          x2="72"
-          y2="54"
-          stroke={mainColor}
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-        <line
-          x1="88"
-          y1="96"
-          x2="102"
-          y2="110"
-          stroke={mainColor}
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-
-        {/* Dynamic Crimson Laser Red Diagonal Slash (Forming the Y intersection) */}
-        <line
-          x1="22"
-          y1="133"
-          x2="138"
-          y2="17"
-          stroke={redColor}
-          strokeWidth="5"
-          strokeLinecap="square"
-        />
-      </svg>
-
-      {/* Futuristic Clean Brand Wordmark */}
+      {/* Brand Wordmark & Tagline */}
       {showText && (
-        <span
-          className={`font-heading font-black uppercase leading-none font-mono ${
-            isDark ? 'text-white' : 'text-brand-black'
-          } ${textSizes[size]}`}
-          style={{ letterSpacing: '0.22em' }}
-        >
-          QXYRA
-        </span>
+        <div className="flex flex-col leading-none">
+          <div className="flex items-center gap-1.5 font-heading font-black tracking-[0.14em] text-base sm:text-lg">
+            <span className="text-[#D49B6A] drop-shadow-sm">METHMI</span>
+            <span className={isDark ? 'text-white' : 'text-[#0F172A]'}>MOBILE</span>
+          </div>
+          <div className="flex items-center gap-1.5 mt-1">
+            <span className="text-[9px] tracking-[0.24em] font-mono font-bold text-[#D49B6A]/85 uppercase">
+              (PVT) LTD
+            </span>
+            <span className="hidden lg:inline text-[9px] text-gray-500 font-mono">•</span>
+            <span className="hidden lg:inline text-[9px] tracking-[0.16em] text-gray-400 font-medium uppercase truncate max-w-[160px]">
+              Trusted Partner
+            </span>
+          </div>
+        </div>
       )}
-    </div>
+    </Link>
   );
 }

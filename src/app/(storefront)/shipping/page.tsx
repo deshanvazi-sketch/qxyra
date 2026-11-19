@@ -72,7 +72,7 @@ export default function ShippingPolicyPage() {
           <section className="space-y-2">
             <h2 className="text-lg font-medium text-white">4. Shipping Inquiries</h2>
             <p>
-              For questions regarding package tracking or delivery assistance, please reach out to us at <span className="text-brand-gold">support@qxyra.com</span>.
+              For questions regarding package tracking or delivery assistance, please reach out to us at <span className="text-brand-gold">support@methmimobilepvtltd.lk</span>.
             </p>
           </section>
         </div>

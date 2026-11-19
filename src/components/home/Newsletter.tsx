@@ -23,10 +23,10 @@ export function Newsletter() {
       <div className="absolute inset-0 bg-gradient-to-t from-brand-black to-zinc-900" />
       <div className="max-w-3xl mx-auto relative z-10 text-center">
         <h2 className="text-3xl md:text-4xl font-heading text-brand-white font-bold mb-4">
-          Join the Qxyra Family
+          Join the Methmi Mobile VIP Club
         </h2>
         <p className="text-brand-gray-300 font-body mb-8 text-lg">
-          Subscribe for exclusive deals, early access to new arrivals, and style inspiration.
+          Subscribe for exclusive smartphone deals, early access to new arrivals, and priority warranty service.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
           <input

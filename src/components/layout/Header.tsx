@@ -101,19 +101,19 @@ export function Header() {
           : "bg-[#0A0A0A] border-b border-gray-800/40"
       )}>
         {/* Top Announcement & Currency Bar */}
-        <div className="bg-black text-brand-gold text-xs font-mono py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-gray-800/60">
+        <div className="bg-black text-[#D49B6A] text-xs font-mono py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-gray-800/60">
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline text-[11px] text-gray-400 font-medium">
-              Qxyra Global • Store & Labs
+              Methmi Mobile (Pvt) Ltd • Your Trusted Partner
             </span>
             <CurrencySelector showRateBadge={false} />
           </div>
           <div className="flex items-center gap-4 text-[11px] text-gray-400 font-sans">
             <Link href="/labs" className="hover:text-blue-400 transition-colors hidden md:inline">
-              ⚡ Qxyra Labs (Software/Web)
+              ⚡ Methmi Labs (Cloud POS & Systems)
             </Link>
             <span className="text-gray-700 hidden md:inline">|</span>
-            <span>Support: <span className="text-brand-gold">support@qxyra.com</span></span>
+            <span>Support: <span className="text-[#D49B6A]">info@methmimobilepvtltd.lk</span></span>
           </div>
         </div>
 
@@ -130,9 +130,9 @@ export function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0 flex items-center hover:opacity-90 transition-opacity">
+            <div className="flex-shrink-0 flex items-center">
               <Logo size="md" />
-            </Link>
+            </div>
 
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center space-x-7">

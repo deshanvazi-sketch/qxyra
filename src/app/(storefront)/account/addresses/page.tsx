@@ -30,7 +30,7 @@ export default function AddressesPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_user_addresses');
+      const saved = localStorage.getItem('methmi_user_addresses');
       if (saved) {
         setAddresses(JSON.parse(saved));
       }
@@ -42,7 +42,7 @@ export default function AddressesPage() {
   const saveAddresses = (list: Address[]) => {
     setAddresses(list);
     try {
-      localStorage.setItem('qxyra_user_addresses', JSON.stringify(list));
+      localStorage.setItem('methmi_user_addresses', JSON.stringify(list));
     } catch (e) {
       console.error(e);
     }

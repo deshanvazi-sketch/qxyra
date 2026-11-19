@@ -1,6 +1,6 @@
 'use client';
 
-export const ADMIN_STORAGE_KEY = 'qxyra_admin_session';
+export const ADMIN_STORAGE_KEY = 'methmi mobile_admin_session';
 
 export interface AdminSession {
   email: string;

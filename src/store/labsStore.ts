@@ -54,7 +54,7 @@ export const useLabsStore = create<LabsState>()(
       },
     }),
     {
-      name: 'qxyra_labs_software_list',
+      name: 'methmi-mobile_labs_software_list',
     }
   )
 );

@@ -14,12 +14,12 @@ export default function AccountLayout({
   
   const [user, setUser] = useState({
     name: 'Client Account',
-    email: 'client@qxyra.com',
+    email: 'client@methmimobilepvtltd.lk',
   });
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_auth_user');
+      const saved = localStorage.getItem('methmi_auth_user');
       if (saved) {
         setUser(JSON.parse(saved));
       }

@@ -19,7 +19,7 @@ export default function RegisterPage() {
     <div className="p-8">
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold font-heading mb-2">Create Account</h1>
-        <p className="text-gray-500 text-sm">Join Qxyra for a premium shopping experience</p>
+        <p className="text-gray-500 text-sm">Join Methmi Mobile for a premium shopping experience</p>
       </div>
 
       <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>

@@ -6,7 +6,7 @@ import { ServiceCard } from '@/components/labs/ServiceCard';
 import { PricingTable } from '@/components/labs/PricingTable';
 
 export const metadata: Metadata = {
-  title: 'Qxyra Labs | Point of Sale (POS) Systems & Custom Web Engineering',
+  title: 'Methmi Mobile Labs | Point of Sale (POS) Systems & Custom Web Engineering',
   description: 'Enterprise retail Point of Sale suites, real-time multi-channel inventory orchestrators, and high-performance bespoke e-commerce platforms.',
 };
 

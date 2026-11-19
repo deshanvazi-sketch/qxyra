@@ -12,7 +12,7 @@ export default function AccountOverviewPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_customer_orders');
+      const saved = localStorage.getItem('methmi_customer_orders');
       if (saved) {
         setOrders(JSON.parse(saved));
       }
@@ -32,7 +32,7 @@ export default function AccountOverviewPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-heading text-3xl mb-2">Welcome to your Qxyra Account</h1>
+        <h1 className="font-heading text-3xl mb-2">Welcome to your Methmi Mobile Account</h1>
         <p className="text-gray-600">Here is a quick overview of your orders and profile.</p>
       </div>
 

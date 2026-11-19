@@ -34,7 +34,7 @@ export function StorePreview() {
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-light text-white tracking-wide">
-              Qxyra <span className="font-normal text-brand-gold">Store</span> Collection
+              Methmi Mobile <span className="font-normal text-brand-gold">Store</span> Collection
             </h2>
             <p className="text-gray-400 text-sm max-w-xl">
               Streetwear silhouettes and minimal desk peripherals. Crafted with heavy organic textiles and precision CNC alloys.

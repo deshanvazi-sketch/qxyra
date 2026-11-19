@@ -11,9 +11,11 @@ export default function DealsPage() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('qxyra_products_list');
+      const saved = localStorage.getItem('methmi_products_list');
       if (saved) {
-        setProductsList(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        const list: Product[] = Array.isArray(parsed) ? parsed : parsed?.state?.products || [];
+        if (list.length > 0) setProductsList(list);
       }
     } catch (e) {
       console.error(e);

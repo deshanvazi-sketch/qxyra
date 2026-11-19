@@ -42,11 +42,11 @@ export async function generateMetadata({ params }: FashionSubPageProps): Promise
   const config = SUB_META[sub];
 
   if (!config) {
-    return { title: 'Category Not Found | Qxyra Store' };
+    return { title: 'Category Not Found | Methmi Store' };
   }
 
   return {
-    title: `${config.title} Collection | Qxyra Fashion`,
+    title: `${config.title} Collection | Methmi Store`,
     description: config.subtitle,
   };
 }

@@ -15,13 +15,15 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     try {
-      const savedOrders = localStorage.getItem('qxyra_admin_orders');
+      const savedOrders = localStorage.getItem('methmi_admin_orders');
       if (savedOrders) {
         setOrders(JSON.parse(savedOrders));
       }
-      const savedProducts = localStorage.getItem('qxyra_products_list');
+      const savedProducts = localStorage.getItem('methmi_products_list');
       if (savedProducts) {
-        setProductsList(JSON.parse(savedProducts));
+        const parsed = JSON.parse(savedProducts);
+        const list = Array.isArray(parsed) ? parsed : parsed?.state?.products || [];
+        if (list.length > 0) setProductsList(list);
       }
     } catch (e) {
       console.error(e);
@@ -40,14 +42,14 @@ export default function AdminDashboardPage() {
   // Platform Breakdown Analysis
   const platformStats = [
     'Daraz',
-    'Qxyra Web',
+    'Methmi Mobile Web',
     'CJ Dropshipping',
     'TikTok Shop',
     'Manual / Other'
   ].map(channel => {
     const channelOrders = orders.filter(o => {
-      const p = o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
-      return p === channel || (channel === 'Manual / Other' && !['Daraz', 'Qxyra Web', 'CJ Dropshipping', 'TikTok Shop'].includes(p));
+      const p = o.platform || (o.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web');
+      return p === channel || (channel === 'Manual / Other' && !['Daraz', 'Methmi Mobile Web', 'CJ Dropshipping', 'TikTok Shop'].includes(p));
     });
 
     const revenue = channelOrders.reduce((sum, o) => sum + (o.total || 0), 0);
@@ -61,11 +63,11 @@ export default function AdminDashboardPage() {
       cost,
       profit
     };
-  }).filter(stat => stat.count > 0 || ['Daraz', 'Qxyra Web', 'CJ Dropshipping'].includes(stat.channel));
+  }).filter(stat => stat.count > 0 || ['Daraz', 'Methmi Mobile Web', 'CJ Dropshipping'].includes(stat.channel));
 
   // Platform badge helper
   const getPlatformBadge = (platform?: string) => {
-    const p = platform || 'Qxyra Web';
+    const p = platform || 'Methmi Mobile Web';
     if (p === 'Daraz') return 'bg-[#FF6000]/15 text-[#FF6000] border-[#FF6000]/30';
     if (p === 'TikTok Shop') return 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30';
     if (p === 'CJ Dropshipping') return 'bg-blue-500/15 text-blue-400 border-blue-500/30';
@@ -194,7 +196,7 @@ export default function AdminDashboardPage() {
               <span>Multi-Platform Sales & Profit Breakdown</span>
             </h2>
             <p className="text-xs text-gray-400 mt-0.5">
-              Performance split by sales channel (Daraz, Qxyra Storefront, CJ Dropshipping, TikTok)
+              Performance split by sales channel (Daraz, Methmi Mobile Storefront, CJ Dropshipping, TikTok)
             </p>
           </div>
           <Link
@@ -289,7 +291,7 @@ export default function AdminDashboardPage() {
               </thead>
               <tbody className="divide-y divide-gray-800/60">
                 {recentOrders.map(order => {
-                  const platformName = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Qxyra Web');
+                  const platformName = order.platform || (order.cjOrderId ? 'CJ Dropshipping' : 'Methmi Mobile Web');
                   const sellVal = order.total || 0;
                   const costVal = order.costPrice || 0;
                   const profitVal = order.profit !== undefined ? order.profit : (sellVal - costVal);

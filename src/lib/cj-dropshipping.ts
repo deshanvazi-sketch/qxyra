@@ -110,9 +110,9 @@ export class CJDropshippingClient {
   }
 
   /**
-   * Transform a CJ Catalog Item into a Qxyra Store Product
+   * Transform a CJ Catalog Item into a Methmi Mobile Store Product
    */
-  public convertCJItemToQxyraProduct(cjItem: CJProductCatalogItem, categoryId: string = 'c1'): Product {
+  public convertCJItemToMethmiProduct(cjItem: CJProductCatalogItem, categoryId: string = 'c1'): Product {
     const prices = this.calculatePrice(cjItem.wholesalePrice);
     const slug = cjItem.name
       .toLowerCase()
@@ -137,7 +137,7 @@ export class CJDropshippingClient {
       id: `prod-${cjItem.id}`,
       name: cjItem.name,
       slug: slug,
-      description: `${cjItem.description}\n\n• Shipped directly with premium Qxyra courier packaging.\n• Est. Delivery: ${cjItem.shippingDays}.`,
+      description: `${cjItem.description}\n\n• Shipped directly with premium Methmi Mobile courier packaging.\n• Est. Delivery: ${cjItem.shippingDays}.`,
       basePrice: prices.basePrice,
       salePrice: prices.salePrice,
       categoryId: categoryId,
@@ -212,7 +212,7 @@ export class CJDropshippingClient {
         {
           time: '2026-09-25 11:20',
           location: 'CJ Warehouse 3, Yiwu',
-          description: 'Package picked, verified against Qxyra quality standards, and labeled.',
+          description: 'Package picked, verified against Methmi Mobile quality standards, and labeled.',
           status: 'info'
         }
       ]

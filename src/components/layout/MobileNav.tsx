@@ -93,7 +93,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             </Link>
           </div>
 
-          {/* Division 01: Qxyra Store Accordion */}
+          {/* Division 01: Methmi Mobile Store Accordion */}
           <div className="space-y-2 border-b border-gray-800/80 pb-5">
             <div 
               className="flex items-center justify-between py-2 cursor-pointer"
@@ -101,7 +101,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             >
               <div className="flex items-center gap-2">
                 <span className="text-sm">🛍️</span>
-                <span className="font-heading text-sm font-semibold text-white">Qxyra Store</span>
+                <span className="font-heading text-sm font-semibold text-white">Methmi Mobile Store</span>
                 <span className="text-[9px] bg-brand-gold/20 text-brand-gold px-1.5 py-0.2 rounded font-mono">Shop</span>
               </div>
               <span className="text-xs text-gray-400 font-mono">{storeExpanded ? '▲' : '▼'}</span>
@@ -153,7 +153,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             )}
           </div>
 
-          {/* Division 02: Qxyra Labs Accordion */}
+          {/* Division 02: Methmi Mobile Labs Accordion */}
           <div className="space-y-2 border-b border-gray-800/80 pb-5">
             <div 
               className="flex items-center justify-between py-2 cursor-pointer"
@@ -161,7 +161,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             >
               <div className="flex items-center gap-2">
                 <span className="text-sm">⚡</span>
-                <span className="font-heading text-sm font-semibold text-white">Qxyra Labs</span>
+                <span className="font-heading text-sm font-semibold text-white">Methmi Mobile Labs</span>
                 <span className="text-[9px] bg-blue-500/20 text-blue-400 px-1.5 py-0.2 rounded font-mono">Tech</span>
               </div>
               <span className="text-xs text-gray-400 font-mono">{labsExpanded ? '▲' : '▼'}</span>
@@ -191,7 +191,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
               Limited Deals
             </Link>
             <Link href="/about" onClick={onClose} className="block hover:text-white py-1">
-              About Qxyra
+              About Methmi Mobile
             </Link>
             <Link href="/contact" onClick={onClose} className="block hover:text-white py-1">
               Contact Desk
@@ -213,7 +213,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
             </Link>
           </div>
           <p className="text-[10px] text-gray-500 text-center font-mono">
-            &copy; {new Date().getFullYear()} Qxyra. Discover. Desire. Deliver.
+            &copy; {new Date().getFullYear()} Methmi Mobile. Discover. Desire. Deliver.
           </p>
         </div>
       </div>

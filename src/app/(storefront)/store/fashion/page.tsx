@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { SubCategoryGrid } from '@/components/store/SubCategoryGrid';
 
 export const metadata: Metadata = {
-  title: 'Fashion Collection | Regular Fit, Oversized Tees & Hoodies | Qxyra Store',
+  title: 'Fashion Collection | Regular Fit, Oversized Tees & Hoodies | Methmi Mobile Store',
   description: 'Precision-tailored streetwear, 240GSM regular fit tees, 280GSM heavy oversized tees, and 460GSM french terry hoodies.',
 };
 

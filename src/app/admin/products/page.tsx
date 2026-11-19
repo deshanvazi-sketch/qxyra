@@ -487,7 +487,7 @@ export default function AdminProductsPage() {
         id: editingId || `sw-${Date.now()}`,
         name: formName,
         slug,
-        tagline: formDescription.slice(0, 120) || 'Engineered by Qxyra Labs.',
+        tagline: formDescription.slice(0, 120) || 'Engineered by Methmi Mobile Labs.',
         description: formDescription || 'Enterprise digital infrastructure and point of sale automation.',
         longDescription: formDescription || 'Enterprise digital infrastructure and point of sale automation.',
         icon: softwareIcon || '🛒',
@@ -511,7 +511,7 @@ export default function AdminProductsPage() {
         showToast(`✓ Software updated: "${formName}"`);
       } else {
         addSoftware(swItem);
-        showToast(`✓ New software published to Qxyra Labs: "${formName}"`);
+        showToast(`✓ New software published to Methmi Mobile Labs: "${formName}"`);
       }
     } else {
       // Physical Store Product
@@ -566,7 +566,7 @@ export default function AdminProductsPage() {
         id: prodId,
         name: formName,
         slug,
-        description: formDescription || `${formName} engineered by Qxyra.`,
+        description: formDescription || `${formName} engineered by Methmi Mobile.`,
         basePrice: basePriceUSD,
         salePrice: salePriceUSD,
         categoryId: formCategory,
@@ -585,7 +585,7 @@ export default function AdminProductsPage() {
         showToast(`✓ Product updated: "${formName}"`);
       } else {
         addProduct(productItem);
-        showToast(`✓ New product added to Qxyra Store: "${formName}"`);
+        showToast(`✓ New product added to Methmi Mobile Store: "${formName}"`);
       }
     }
 
@@ -636,7 +636,7 @@ export default function AdminProductsPage() {
   const softwareCount = softwareList.length;
 
   if (!mounted) {
-    return <div className="p-8 text-center text-gray-500 font-mono text-xs">Loading Qxyra Unified Inventory Engine...</div>;
+    return <div className="p-8 text-center text-gray-500 font-mono text-xs">Loading Methmi Mobile Unified Inventory Engine...</div>;
   }
 
   // Live conversion calculations for the form
@@ -659,7 +659,7 @@ export default function AdminProductsPage() {
           <div className="flex items-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs font-mono uppercase tracking-widest text-brand-gold font-semibold">
-              Qxyra Global Inventory & Engineering Suite
+              Methmi Mobile Global Inventory & Engineering Suite
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-heading font-medium text-white">
@@ -1026,7 +1026,7 @@ export default function AdminProductsPage() {
             {/* Modal Top Header */}
             <div className="flex items-center justify-between border-b border-gray-800 pb-4">
               <div>
-                <span className="text-xs uppercase text-brand-gold font-mono font-semibold">Qxyra Unified Creator</span>
+                <span className="text-xs uppercase text-brand-gold font-mono font-semibold">Methmi Mobile Unified Creator</span>
                 <h3 className="text-xl font-heading text-white font-medium">
                   {editingId ? `Edit ${itemType} Item` : `Add New ${itemType} Item`}
                 </h3>
@@ -1109,10 +1109,10 @@ export default function AdminProductsPage() {
                   required
                   placeholder={
                     itemType === 'FASHION'
-                      ? 'e.g. Qxyra Heavyweight Acid Wash Oversized Tee'
+                      ? 'e.g. Methmi Mobile Heavyweight Acid Wash Oversized Tee'
                       : itemType === 'TECH'
-                      ? 'e.g. Qxyra Dual-Tilt MagSafe Fast Wireless Stand'
-                      : 'e.g. Qxyra Retail POS Suite v2.6'
+                      ? 'e.g. Methmi Mobile Dual-Tilt MagSafe Fast Wireless Stand'
+                      : 'e.g. Methmi Mobile Retail POS Suite v2.6'
                   }
                   value={formName}
                   onChange={e => handleNameChange(e.target.value)}
@@ -1127,7 +1127,7 @@ export default function AdminProductsPage() {
                   <input
                     type="text"
                     required
-                    placeholder="qxyra-item-slug"
+                    placeholder="methmi-item-slug"
                     value={formSlug}
                     onChange={e => setFormSlug(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-black/50 border border-gray-800 text-white font-mono text-xs focus:outline-none focus:border-brand-gold"

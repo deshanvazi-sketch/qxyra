@@ -12,7 +12,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_KEY = 'qxyra_theme_mode';
+const THEME_KEY = 'methmi_theme_mode';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>('dark');
@@ -21,7 +21,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // 1. Check saved user preference, else check system preference
     const saved = localStorage.getItem(THEME_KEY) as Theme | null;
-    let initialTheme: Theme = 'dark'; // Qxyra default is luxury dark
+    let initialTheme: Theme = 'dark'; // Methmi default is luxury dark
 
     if (saved === 'light' || saved === 'dark') {
       initialTheme = saved;

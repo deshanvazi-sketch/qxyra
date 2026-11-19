@@ -201,7 +201,7 @@ export default function AdminLayout({
         {/* Top Header */}
         <header className="h-16 bg-[#12151B]/80 backdrop-blur-md border-b border-gray-800/80 px-6 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2 text-sm text-gray-400">
-            <span className="text-white font-medium">Qxyra Global HQ</span>
+            <span className="text-white font-medium">Methmi Mobile Global HQ</span>
             <span>/</span>
             <span className="text-xs text-brand-gold uppercase tracking-wider font-semibold">Store Management</span>
           </div>

@@ -4,8 +4,8 @@ import { LabsHero } from '@/components/labs/LabsHero';
 import { LabsSoftwareCatalog } from '@/components/labs/LabsSoftwareCatalog';
 
 export const metadata: Metadata = {
-  title: 'Software Catalog | Point of Sale & Retail Automation | Qxyra Labs',
-  description: 'Enterprise retail POS systems, multi-channel stock orchestrators, and headless web platforms developed by Qxyra Labs.',
+  title: 'Software Catalog | Point of Sale & Retail Automation | Methmi Mobile Labs',
+  description: 'Enterprise retail POS systems, multi-channel stock orchestrators, and headless web platforms developed by Methmi Mobile Labs.',
 };
 
 export default function LabsSoftwarePage() {

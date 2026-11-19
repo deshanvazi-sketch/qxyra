@@ -259,7 +259,7 @@ export default function CJDropshippingHubPage() {
                   {isImported ? (
                     <>
                       <span>✓</span>
-                      <span>Published to Qxyra Store</span>
+                      <span>Published to Methmi Store</span>
                     </>
                   ) : isCurrentlyImporting ? (
                     <>

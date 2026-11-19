@@ -49,8 +49,8 @@ interface CurrencyContextType {
   formatAmount: (amount: number, targetCurrency?: Currency, showSign?: boolean) => string;
 }
 
-const STORAGE_KEY = 'qxyra_currency';
-const RATES_STORAGE_KEY = 'qxyra_forex_rates';
+const STORAGE_KEY = 'methmi_currency';
+const RATES_STORAGE_KEY = 'methmi_forex_rates';
 
 const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined);
 
@@ -130,7 +130,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
         const detected = detectVisitorLocation();
         setCurrencyState(detected.currency);
         setDetectedCountry(detected.country);
-        console.log(`[Qxyra Geo-Currency] Detected visitor from ${detected.country} -> Auto-selected ${detected.currency}`);
+        console.log(`[Methmi Geo-Currency] Detected visitor from ${detected.country} -> Auto-selected ${detected.currency}`);
       }
 
       // Load cached rates if available

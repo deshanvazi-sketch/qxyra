@@ -6,7 +6,7 @@ import { ServiceCard } from '@/components/labs/ServiceCard';
 import { PricingTable } from '@/components/labs/PricingTable';
 
 export const metadata: Metadata = {
-  title: 'Web & POS Solutions | Turnkey Development Packages | Qxyra Labs',
+  title: 'Web & POS Solutions | Turnkey Development Packages | Methmi Mobile Labs',
   description: 'Bespoke Point of Sale system setups, custom luxury e-commerce platforms, and tailored business web applications.',
 };
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { formatPrice } from '@/lib/utils';
 import { mockCustomers, AdminCustomer } from '@/lib/mock-admin-data';
 
-const STORAGE_KEY = 'qxyra_admin_customers';
+const STORAGE_KEY = 'methmi_admin_customers';
 
 export default function AdminCustomersPage() {
   const [customers, setCustomers] = useState<AdminCustomer[]>(mockCustomers);

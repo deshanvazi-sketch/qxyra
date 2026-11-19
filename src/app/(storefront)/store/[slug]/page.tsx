@@ -29,12 +29,12 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   if (!product) {
     return {
-      title: 'Product Not Found | Qxyra Store',
+      title: 'Product Not Found | Methmi Mobile Store',
     };
   }
 
   return {
-    title: `${product.name} | Qxyra Store`,
+    title: `${product.name} | Methmi Mobile Store`,
     description: product.description,
   };
 }
@@ -63,7 +63,7 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
   return (
     <div className="bg-[#0A0A0A] text-white min-h-screen py-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <ProductJsonLd product={product} url={`https://qxyra.com/store/${product.slug}`} />
+        <ProductJsonLd product={product} url={`https://methmimobilepvtltd.lk/store/${product.slug}`} />
 
         {/* Breadcrumb */}
         <nav className="flex items-center text-xs text-gray-400 mb-8 font-mono">
@@ -88,7 +88,7 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="text-[11px] font-mono uppercase tracking-widest text-brand-gold block">
-                  Qxyra {catName} Drop
+                  Methmi Mobile {catName} Drop
                 </span>
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-medium text-white leading-tight">
                   {product.name}

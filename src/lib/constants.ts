@@ -1,33 +1,34 @@
-export const BRAND_NAME = 'Qxyra';
-export const BRAND_TAGLINE = 'Discover. Desire. Deliver.';
-export const BRAND_DESCRIPTION = 'Qxyra represents modern innovation and style across two distinct divisions: Qxyra Store (curated streetwear and smart lifestyle accessories) and Qxyra Labs (tailored software, Web, and POS solutions).';
+export const BRAND_NAME = 'Methmi Mobile';
+export const BRAND_FULL_NAME = 'Methmi Mobile (Pvt) Ltd';
+export const BRAND_TAGLINE = 'Your Trusted Mobile Partner';
+export const BRAND_DESCRIPTION = 'Methmi Mobile (Pvt) Ltd is Sri Lanka’s premier tech destination for 100% genuine TRCSL-approved smartphones, premium mobile accessories, and cutting-edge retail Cloud POS software solutions.';
 
-export const CURRENCY_SYMBOL = '$';
-export const FREE_SHIPPING_THRESHOLD = 50;
+export const CURRENCY_SYMBOL = 'Rs.';
+export const FREE_SHIPPING_THRESHOLD = 50000;
 export const ITEMS_PER_PAGE = 12;
 
 export const DIVISIONS = [
   {
     id: 'store',
-    name: 'Qxyra Store',
+    name: 'Methmi Store',
     shortName: 'Store',
-    tagline: 'Premium Streetwear & Tech Lifestyle Accessories',
-    description: 'Minimalist streetwear, oversized essentials, and curated mobile and computing gear.',
+    tagline: '100% Genuine TRCSL Approved Smartphones & Gear',
+    description: 'Apple iPhones, Samsung Galaxy, Tecno, Infinix, Xiaomi Redmi, and genuine high-speed mobile peripherals with official company warranty.',
     href: '/store',
-    icon: '🛍️',
+    icon: '📱',
     accentColor: 'brand-gold',
-    badge: 'Apparel & Tech Gear',
+    badge: 'Smartphones & Gear',
   },
   {
     id: 'labs',
-    name: 'Qxyra Labs',
+    name: 'Methmi Labs',
     shortName: 'Labs',
-    tagline: 'Engineering Next-Gen Web, POS & Software Solutions',
-    description: 'Custom web platforms, smart retail POS software, and scalable digital solutions for growing enterprises.',
+    tagline: 'Retail POS, Cloud Billing & Enterprise Software',
+    description: 'Bespoke retail Point of Sale systems, multi-channel shop inventory, and custom digital software engineered for growing Sri Lankan enterprises.',
     href: '/labs',
     icon: '⚡',
     accentColor: 'labs-blue',
-    badge: 'Digital Solutions',
+    badge: 'POS & Software',
   },
 ];
 
@@ -51,48 +52,50 @@ export const NAV_LINKS: NavItem[] = [
   {
     label: 'Store',
     href: '/store',
-    badge: 'Shop',
+    badge: 'Phones',
     children: [
       {
-        label: 'Fashion',
-        href: '/store/fashion',
-        description: 'Crafted streetwear, heavy cotton silhouettes, and timeless hoodies.',
+        label: 'Smartphones',
+        href: '/store/phones',
+        description: 'Apple iPhone, Samsung Galaxy, Tecno, Infinix & Xiaomi Redmi with 100% TRCSL company warranty.',
         children: [
-          { label: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
-          { label: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
-          { label: 'Hoodie', href: '/store/fashion/hoodie' },
+          { label: 'Apple iPhone', href: '/store/phones/apple' },
+          { label: 'Samsung Galaxy', href: '/store/phones/samsung' },
+          { label: 'Tecno & Infinix', href: '/store/phones/tecno-infinix' },
+          { label: 'Xiaomi Redmi', href: '/store/phones/redmi' },
         ],
       },
       {
         label: 'Accessories',
         href: '/store/accessories',
-        description: 'Precision mobile charging, cases, ergonomic peripherals & desk setups.',
+        description: 'Original high-speed chargers, MagSafe stands, premium wireless earbuds & smartwatches.',
         children: [
-          { label: 'Mobile Accessories', href: '/store/accessories/mobile' },
-          { label: 'Computer Accessories', href: '/store/accessories/computer' },
+          { label: 'Fast Chargers & Cables', href: '/store/accessories/chargers' },
+          { label: 'Audio & Earbuds', href: '/store/accessories/audio' },
+          { label: 'Smart Watches', href: '/store/accessories/watches' },
         ],
       },
     ],
   },
   {
-    label: 'Labs',
+    label: 'Labs & POS',
     href: '/labs',
-    badge: 'Tech',
+    badge: 'Software',
     children: [
       {
-        label: 'Software Products',
+        label: 'Methmi Cloud POS Suite',
         href: '/labs/software',
-        description: 'Ready-to-deploy POS systems, inventory management engines & business tools.',
+        description: 'High-speed retail, grocery, supermarket & restaurant Point of Sale management suites.',
       },
       {
-        label: 'Web & POS Solutions',
+        label: 'Shop Reload & Cash Tracker',
         href: '/labs/solutions',
-        description: 'Full-stack enterprise e-commerce, custom web apps, and modern POS deployments.',
+        description: 'Real-time daily payment & recharge reconciliation for telecommunication dealers.',
       },
       {
-        label: 'Request a Quote',
+        label: 'VIP Device Care & Repair',
         href: '/labs/quote',
-        description: 'Tell us about your project requirements for an instant consultation.',
+        description: 'Expert hardware diagnosis, display replacement, battery health & software servicing.',
       },
     ],
   },
@@ -103,34 +106,35 @@ export const NAV_LINKS: NavItem[] = [
 
 export const FOOTER_LINKS = [
   {
-    title: 'Qxyra Store',
+    title: 'Methmi Store',
     links: [
-      { label: 'All Products', href: '/store' },
-      { label: 'Fashion Collection', href: '/store/fashion' },
-      { label: 'Accessories', href: '/store/accessories' },
-      { label: 'Limited Deals', href: '/deals' },
+      { label: 'All Smartphones', href: '/store' },
+      { label: 'Apple iPhones', href: '/store' },
+      { label: 'Samsung Galaxy', href: '/store' },
+      { label: 'Original Accessories', href: '/store/accessories' },
+      { label: 'Flash Deals', href: '/deals' },
     ],
   },
   {
-    title: 'Qxyra Labs',
+    title: 'Methmi Labs',
     links: [
-      { label: 'Software Catalog', href: '/labs/software' },
-      { label: 'Web & POS Solutions', href: '/labs/solutions' },
-      { label: 'Request a Quote', href: '/labs/quote' },
+      { label: 'Retail Cloud POS Suite', href: '/labs/software' },
+      { label: 'Shop Payment Tracker', href: '/labs/solutions' },
+      { label: 'Request a Demo / Quote', href: '/labs/quote' },
     ],
   },
   {
-    title: 'Support',
+    title: 'Support & Care',
     links: [
       { label: 'Contact Us', href: '/contact' },
-      { label: 'Shipping Policy', href: '/shipping' },
-      { label: 'Returns & Exchanges', href: '/returns' },
+      { label: 'Islandwide Delivery Policy', href: '/shipping' },
+      { label: 'TRCSL Warranty & Returns', href: '/returns' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { label: 'About Qxyra', href: '/about' },
+      { label: 'About Methmi Mobile', href: '/about' },
       { label: 'Terms of Service', href: '/terms' },
       { label: 'Privacy Policy', href: '/privacy' },
     ],
@@ -138,8 +142,7 @@ export const FOOTER_LINKS = [
 ];
 
 export const SOCIAL_LINKS = [
-  { label: 'Facebook', href: 'https://facebook.com/qxyra' },
-  { label: 'Instagram', href: 'https://instagram.com/qxyra' },
-  { label: 'TikTok', href: 'https://tiktok.com/@qxyra' },
-  { label: 'Twitter', href: 'https://twitter.com/qxyra' },
+  { label: 'Facebook', href: 'https://facebook.com/methmimobile' },
+  { label: 'WhatsApp', href: 'https://wa.me/94770000000' },
+  { label: 'TikTok', href: 'https://tiktok.com/@methmimobile' },
 ];

@@ -7,7 +7,7 @@ import {
 
 export { ADMIN_COOKIE_NAME, signSessionTokenEdge as signSessionToken, verifySessionTokenEdge as verifySessionToken };
 
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'qxyra_vault_super_secret_master_key_2026_!@#$%^';
+const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'methmi mobile_vault_super_secret_master_key_2026_!@#$%^';
 
 // Rate Limiter tracking: IP/Identifier -> Attempt Stats
 interface AttemptRecord {
@@ -114,7 +114,7 @@ export function setCustomAdminPassword(email: string, newPassword: string) {
 export function verifyServerCredentials(email: string, password: string): boolean {
   const cleanEmail = email.trim().toLowerCase();
   const defaultOwnerEmail = (process.env.ADMIN_EMAIL || 'deshanvazi@gmail.com').toLowerCase();
-  const defaultMasterPassword = process.env.ADMIN_PASSWORD || 'Qxyra@2026';
+  const defaultMasterPassword = process.env.ADMIN_PASSWORD || 'Methmi Mobile@2026';
 
   // 1. Check custom dynamically updated password
   if (dynamicCustomPassword) {
@@ -124,7 +124,7 @@ export function verifyServerCredentials(email: string, password: string): boolea
   }
 
   // 2. Check default master owner credentials using timing-safe comparison
-  const isEmailMatch = cleanEmail === defaultOwnerEmail || cleanEmail === 'admin@qxyra.com';
+  const isEmailMatch = cleanEmail === defaultOwnerEmail || cleanEmail === 'admin@methmi mobile.com';
   if (!isEmailMatch) return false;
 
   const inputHash = hashPassword(password);

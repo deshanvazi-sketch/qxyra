@@ -61,7 +61,7 @@ export const useCartStore = create<CartState>()(
       },
     }),
     {
-      name: 'qxyra-cart',
+      name: 'methmi-mobile-cart',
     }
   )
 );

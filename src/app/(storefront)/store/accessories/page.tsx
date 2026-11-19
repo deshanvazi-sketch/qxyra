@@ -5,7 +5,7 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { SubCategoryGrid } from '@/components/store/SubCategoryGrid';
 
 export const metadata: Metadata = {
-  title: 'Tech Accessories | Mobile & Computer Peripherals | Qxyra Store',
+  title: 'Tech Accessories | Mobile & Computer Peripherals | Methmi Mobile Store',
   description: 'Precision engineered MagSafe wireless stands, 65W GaN fast chargers, Kevlar cables, CNC aluminum laptop elevators and 4K USB-C docks.',
 };
 

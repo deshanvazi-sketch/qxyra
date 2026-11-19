@@ -33,7 +33,7 @@ export function QuoteForm({ initialProduct, initialPackage }: QuoteFormProps) {
 
     // Save to localStorage so admin/owner can view inquiries
     try {
-      const existing = JSON.parse(localStorage.getItem('qxyra_quote_inquiries') || '[]');
+      const existing = JSON.parse(localStorage.getItem('methmi_quote_inquiries') || '[]');
       const newInquiry = {
         id: `QT-${Date.now()}`,
         fullName,
@@ -48,7 +48,7 @@ export function QuoteForm({ initialProduct, initialPackage }: QuoteFormProps) {
         createdAt: new Date().toISOString(),
       };
       existing.unshift(newInquiry);
-      localStorage.setItem('qxyra_quote_inquiries', JSON.stringify(existing));
+      localStorage.setItem('methmi_quote_inquiries', JSON.stringify(existing));
     } catch {
       // LocalStorage fallback
     }
@@ -70,7 +70,7 @@ export function QuoteForm({ initialProduct, initialPackage }: QuoteFormProps) {
             Inquiry Dispatched to Engineering!
           </h3>
           <p className="text-gray-300 text-sm max-w-md mx-auto">
-            Thank you, <span className="text-blue-400 font-semibold">{fullName}</span>. Deshan and the Qxyra Labs engineering team have received your project scope.
+            Thank you, <span className="text-blue-400 font-semibold">{fullName}</span>. The Methmi Labs engineering team has received your project scope.
           </p>
         </div>
         <div className="p-4 rounded-xl bg-black/40 border border-gray-800 text-xs text-gray-400 max-w-sm mx-auto">
