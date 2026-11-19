@@ -11,6 +11,7 @@ import { CurrencySelector } from '@/components/currency/CurrencySelector';
 import { MegaMenu } from './MegaMenu';
 import { useCartStore } from '@/store/cartStore';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { useTheme } from '@/context/ThemeContext';
 
 const SearchIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,6 +57,8 @@ export function Header() {
   const menuTimerRef = React.useRef<NodeJS.Timeout | null>(null);
   
   const pathname = usePathname();
+  const { theme } = useTheme();
+  const isLight = mounted && theme === 'light';
   const cartItems = useCartStore((s) => s.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
@@ -96,24 +99,29 @@ export function Header() {
     <>
       <header className={cn(
         "fixed top-0 w-full z-40 transition-all duration-300",
-        isScrolled 
-          ? "bg-[#0A0A0A]/95 backdrop-blur-md border-b border-gray-800/80 shadow-2xl" 
-          : "bg-[#0A0A0A] border-b border-gray-800/40"
+        isLight
+          ? (isScrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-200/90 shadow-sm text-gray-900" : "bg-white border-b border-gray-100 text-gray-900")
+          : (isScrolled ? "bg-[#0A0A0A]/95 backdrop-blur-md border-b border-gray-800/80 shadow-2xl text-white" : "bg-[#0A0A0A] border-b border-gray-800/40 text-white")
       )}>
         {/* Top Announcement & Currency Bar */}
-        <div className="bg-black text-[#D49B6A] text-xs font-mono py-1.5 px-4 sm:px-8 flex justify-between items-center border-b border-gray-800/60">
+        <div className={cn(
+          "text-xs font-mono py-1.5 px-4 sm:px-8 flex justify-between items-center border-b transition-colors",
+          isLight 
+            ? "bg-slate-50 text-slate-700 border-slate-200" 
+            : "bg-black text-[#D49B6A] border-gray-800/60"
+        )}>
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline text-[11px] text-gray-400 font-medium">
+            <span className={cn("hidden sm:inline text-[11px] font-medium", isLight ? "text-slate-600" : "text-gray-400")}>
               Methmi Mobile (Pvt) Ltd • Your Trusted Partner
             </span>
             <CurrencySelector showRateBadge={false} />
           </div>
-          <div className="flex items-center gap-4 text-[11px] text-gray-400 font-sans">
-            <Link href="/labs" className="hover:text-blue-400 transition-colors hidden md:inline">
+          <div className={cn("flex items-center gap-4 text-[11px] font-sans", isLight ? "text-slate-600" : "text-gray-400")}>
+            <Link href="/labs" className="hover:text-blue-500 transition-colors hidden md:inline font-medium">
               ⚡ Methmi Labs (Cloud POS & Systems)
             </Link>
-            <span className="text-gray-700 hidden md:inline">|</span>
-            <span>Support: <span className="text-[#D49B6A]">info@methmimobilepvtltd.lk</span></span>
+            <span className="opacity-40 hidden md:inline">|</span>
+            <span>Support: <span className={cn("font-medium", isLight ? "text-amber-700" : "text-[#D49B6A]")}>info@methmimobilepvtltd.lk</span></span>
           </div>
         </div>
 
@@ -122,7 +130,7 @@ export function Header() {
           <div className="flex items-center justify-between h-20">
             {/* Mobile Menu Button */}
             <button 
-              className="lg:hidden p-2 -ml-2 text-white hover:text-brand-gold transition-colors"
+              className={cn("lg:hidden p-2 -ml-2 transition-colors", isLight ? "text-slate-800 hover:text-amber-700" : "text-white hover:text-brand-gold")}
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open menu"
             >
@@ -159,10 +167,10 @@ export function Header() {
                     <Link
                       href={link.href}
                       className={cn(
-                        "text-xs font-medium tracking-wide uppercase font-mono flex items-center gap-1.5 transition-colors",
+                        "text-xs font-semibold tracking-wide uppercase font-mono flex items-center gap-1.5 transition-colors",
                         isDivisionActive 
-                          ? (isLabsLink ? "text-blue-400" : "text-brand-gold") 
-                          : "text-gray-300 hover:text-white"
+                          ? (isLabsLink ? (isLight ? "text-blue-600 font-bold" : "text-blue-400 font-bold") : (isLight ? "text-amber-800 font-bold" : "text-brand-gold font-bold")) 
+                          : (isLight ? "text-slate-700 hover:text-black" : "text-gray-300 hover:text-white")
                       )}
                     >
                       <span>{link.label}</span>
@@ -173,8 +181,8 @@ export function Header() {
                         <span className={cn(
                           "text-[9px] px-1.5 py-0.2 rounded font-mono font-normal normal-case",
                           isLabsLink 
-                            ? "bg-blue-500/10 text-blue-400 border border-blue-500/30" 
-                            : "bg-brand-gold/10 text-brand-gold border border-brand-gold/30"
+                            ? (isLight ? "bg-blue-100 text-blue-700 border border-blue-200" : "bg-blue-500/10 text-blue-400 border border-blue-500/30") 
+                            : (isLight ? "bg-amber-100 text-amber-800 border border-amber-200" : "bg-brand-gold/10 text-brand-gold border border-brand-gold/30")
                         )}>
                           {link.badge}
                         </span>
@@ -186,7 +194,7 @@ export function Header() {
             </nav>
 
             {/* Icons */}
-            <div className="flex items-center space-x-3 sm:space-x-4 lg:space-x-5 text-gray-300">
+            <div className={cn("flex items-center space-x-3 sm:space-x-4 lg:space-x-5", isLight ? "text-slate-700" : "text-gray-300")}>
               <ThemeToggle />
               <Link 
                 href="/search" 

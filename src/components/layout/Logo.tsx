@@ -39,16 +39,16 @@ export function Logo({
     <Link href="/" className={`inline-flex items-center gap-3 select-none group ${className}`}>
       {/* 3D Metallic Emblem from Methmi Mobile Official Brand */}
       <div 
-        className="relative shrink-0 overflow-hidden rounded-xl transition-all duration-300 group-hover:scale-105 border border-amber-500/20 shadow-md bg-black/40 flex items-center justify-center p-0.5"
-        style={{ height: `${heightPx}px`, width: `${Math.round(heightPx * 1.5)}px` }}
+        className="relative shrink-0 transition-transform duration-300 group-hover:scale-105 flex items-center justify-center"
+        style={{ height: `${heightPx}px`, width: `${heightPx}px` }}
       >
         <Image
-          src="/methmi-logo.jpg"
+          src="/methmi-emblem.png"
           alt="Methmi Mobile (Pvt) Ltd"
           fill
           priority
-          sizes="(max-width: 768px) 60px, 90px"
-          className="object-contain"
+          sizes="(max-width: 768px) 48px, 60px"
+          className="object-contain filter drop-shadow-[0_2px_8px_rgba(212,155,106,0.25)]"
         />
       </div>
 
@@ -56,15 +56,15 @@ export function Logo({
       {showText && (
         <div className="flex flex-col leading-none">
           <div className="flex items-center gap-1.5 font-heading font-black tracking-[0.14em] text-base sm:text-lg">
-            <span className="text-[#D49B6A] drop-shadow-sm">METHMI</span>
-            <span className={isDark ? 'text-white' : 'text-[#0F172A]'}>MOBILE</span>
+            <span className="text-[#C58348] dark:text-[#D49B6A] drop-shadow-sm font-extrabold">METHMI</span>
+            <span className={isDark ? 'text-white' : 'text-[#121D33]'}>MOBILE</span>
           </div>
           <div className="flex items-center gap-1.5 mt-1">
-            <span className="text-[9px] tracking-[0.24em] font-mono font-bold text-[#D49B6A]/85 uppercase">
+            <span className="text-[9px] tracking-[0.22em] font-mono font-bold text-[#C58348] dark:text-[#D49B6A] uppercase">
               (PVT) LTD
             </span>
-            <span className="hidden lg:inline text-[9px] text-gray-500 font-mono">•</span>
-            <span className="hidden lg:inline text-[9px] tracking-[0.16em] text-gray-400 font-medium uppercase truncate max-w-[160px]">
+            <span className={isDark ? 'text-gray-500 font-mono text-[9px]' : 'text-gray-400 font-mono text-[9px]'}>•</span>
+            <span className={`text-[9px] tracking-[0.14em] font-semibold uppercase truncate max-w-[170px] ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               Trusted Partner
             </span>
           </div>

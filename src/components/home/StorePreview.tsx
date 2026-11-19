@@ -6,20 +6,27 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { useProductStore } from '@/store/productStore';
 
 export function StorePreview() {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'fashion' | 'accessories'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'phones' | 'accessories' | 'fashion'>('all');
   const products = useProductStore((s) => s.products);
 
   const filteredProducts = products.filter((p) => {
     if (!p.isActive) return false;
     if (activeCategory === 'all') return true;
-    if (activeCategory === 'fashion') {
-      return ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId);
+    if (activeCategory === 'phones') {
+      return ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId);
     }
     if (activeCategory === 'accessories') {
       return ['mobile', 'computer'].includes(p.categoryId);
     }
+    if (activeCategory === 'fashion') {
+      return ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId);
+    }
     return true;
   }).slice(0, 8);
+
+  const phoneCount = products.filter((p) => ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)).length;
+  const accessoryCount = products.filter((p) => ['mobile', 'computer'].includes(p.categoryId)).length;
+  const fashionCount = products.filter((p) => ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId)).length;
 
   return (
     <section className="py-20 bg-[#0A0A0A] border-b border-gray-800/80">
@@ -28,50 +35,60 @@ export function StorePreview() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-brand-gold" />
+              <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
               <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
-                Division 01 Drop
+                Division 01 • Official Store
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-heading font-light text-white tracking-wide">
-              Methmi Mobile <span className="font-normal text-brand-gold">Store</span> Collection
+              Methmi Mobile <span className="font-normal text-brand-gold">Flagship</span> Collection
             </h2>
             <p className="text-gray-400 text-sm max-w-xl">
-              Streetwear silhouettes and minimal desk peripherals. Crafted with heavy organic textiles and precision CNC alloys.
+              100% Genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix, high-speed mobile power, and curated lifestyle apparel.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-2 bg-[#141820] p-1.5 rounded-xl border border-gray-800 self-start md:self-auto">
+          <div className="flex flex-wrap items-center gap-2 bg-[#141820] p-1.5 rounded-xl border border-gray-800 self-start md:self-auto">
             <button
               onClick={() => setActiveCategory('all')}
               className={`px-4 py-2 text-xs font-medium rounded-lg transition-all ${
                 activeCategory === 'all'
-                  ? 'bg-brand-gold text-brand-black shadow-md'
+                  ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
               All Items ({products.length})
             </button>
             <button
-              onClick={() => setActiveCategory('fashion')}
+              onClick={() => setActiveCategory('phones')}
               className={`px-4 py-2 text-xs font-medium rounded-lg transition-all ${
-                activeCategory === 'fashion'
-                  ? 'bg-brand-gold text-brand-black shadow-md'
+                activeCategory === 'phones'
+                  ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Fashion (Tees & Hoodies)
+              📱 Phones ({phoneCount})
             </button>
             <button
               onClick={() => setActiveCategory('accessories')}
               className={`px-4 py-2 text-xs font-medium rounded-lg transition-all ${
                 activeCategory === 'accessories'
-                  ? 'bg-brand-gold text-brand-black shadow-md'
+                  ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              Accessories (Mobile & PC)
+              ⚡ Accessories ({accessoryCount})
+            </button>
+            <button
+              onClick={() => setActiveCategory('fashion')}
+              className={`px-4 py-2 text-xs font-medium rounded-lg transition-all ${
+                activeCategory === 'fashion'
+                  ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              👕 Apparel ({fashionCount})
             </button>
           </div>
         </div>
@@ -80,7 +97,11 @@ export function StorePreview() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => {
             let catLabel = 'Product';
-            if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
+            if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
+            else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
+            else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
+            else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
+            else if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
             else if (product.categoryId === 'oversized-tee') catLabel = 'Oversized Tee';
             else if (product.categoryId === 'hoodie') catLabel = 'Hoodie';
             else if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';

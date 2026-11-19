@@ -19,10 +19,10 @@ export function PromoBar() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Link 
-              href="/store" 
+              href="/store/phones" 
               className="inline-block px-8 py-3.5 bg-[#D49B6A] text-black font-semibold rounded-xl hover:bg-[#e2ac7e] transition-all shadow-md text-sm"
             >
-              Explore Flagships
+              Explore Smartphones
             </Link>
             <Link 
               href="/deals" 
@@ -39,14 +39,14 @@ export function PromoBar() {
           <div className="absolute w-80 h-80 bg-gradient-to-tr from-[#D49B6A]/25 via-blue-600/15 to-transparent rounded-full blur-3xl pointer-events-none" />
 
           {/* Logo Showcase Card */}
-          <div className="relative z-10 p-3 sm:p-5 rounded-3xl bg-gradient-to-b from-white/10 to-white/[0.02] border border-[#D49B6A]/30 shadow-2xl backdrop-blur-md group hover:border-[#D49B6A] transition-all duration-500">
+          <div className="relative z-10 p-4 sm:p-6 rounded-3xl bg-white shadow-2xl group hover:scale-[1.02] transition-all duration-500 max-w-sm">
             <Image
               src="/methmi-logo.jpg"
               alt="Methmi Mobile (Pvt) Ltd Official Brand"
-              width={420}
-              height={235}
+              width={380}
+              height={380}
               priority
-              className="rounded-2xl object-contain shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
+              className="rounded-2xl object-contain shadow-sm"
             />
           </div>
         </div>

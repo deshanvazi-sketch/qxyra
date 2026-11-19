@@ -127,7 +127,7 @@ export function GatewayHero() {
             {/* Subcategory Pills */}
             <div className="flex flex-wrap gap-2 pt-1 text-xs">
               <Link 
-                href="/store"
+                href="/store/phones/apple"
                 className={cn(
                   "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
                   isLight 
@@ -138,7 +138,7 @@ export function GatewayHero() {
                 Apple iPhones
               </Link>
               <Link 
-                href="/store"
+                href="/store/phones/samsung"
                 className={cn(
                   "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
                   isLight 
@@ -149,7 +149,7 @@ export function GatewayHero() {
                 Samsung Galaxy
               </Link>
               <Link 
-                href="/store"
+                href="/store/phones/tecno-infinix"
                 className={cn(
                   "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
                   isLight 
@@ -160,7 +160,7 @@ export function GatewayHero() {
                 Tecno & Infinix
               </Link>
               <Link 
-                href="/store"
+                href="/store/phones/redmi"
                 className={cn(
                   "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
                   isLight 
@@ -186,10 +186,10 @@ export function GatewayHero() {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
-                href="/store"
+                href="/store/phones"
                 className="px-7 py-3.5 bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold text-xs rounded-xl shadow-lg shadow-[#D49B6A]/20 hover:opacity-95 transition-all flex items-center gap-2 group/btn cursor-pointer"
               >
-                <span>Explore Store</span>
+                <span>Explore Smartphones</span>
                 <span className="group-hover/btn:translate-x-1 transition-transform duration-200">→</span>
               </Link>
               <Link

@@ -8,8 +8,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Static core routes
   const staticRoutes = [
     '',
-    '/shop',
-    '/categories',
+    '/store',
+    '/store/phones',
+    '/store/phones/apple',
+    '/store/phones/samsung',
+    '/store/phones/tecno-infinix',
+    '/store/phones/redmi',
+    '/store/accessories',
+    '/store/accessories/mobile',
+    '/store/accessories/computer',
+    '/store/fashion',
+    '/labs',
+    '/labs/software',
+    '/labs/solutions',
+    '/labs/quote',
     '/deals',
     '/about',
     '/contact',
@@ -22,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Dynamic product routes
   const productRoutes = products.map((product) => ({
-    url: `${baseUrl}/shop/${product.slug}`,
+    url: `${baseUrl}/store/${product.slug}`,
     lastModified: product.updatedAt || currentDate,
     changeFrequency: 'weekly' as const,
     priority: 0.9,

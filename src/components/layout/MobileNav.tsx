@@ -109,14 +109,61 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
             {storeExpanded && (
               <div className="pl-6 space-y-3 pt-1 text-xs">
-                {/* Fashion */}
+                {/* Smartphones */}
                 <div className="space-y-1.5">
+                  <Link 
+                    href="/store/phones" 
+                    onClick={onClose}
+                    className="font-semibold text-brand-gold hover:underline block flex items-center gap-1.5"
+                  >
+                    <span>📱</span>
+                    <span>Smartphones (TRCSL) →</span>
+                  </Link>
+                  <div className="pl-3 space-y-1 text-gray-400 border-l border-brand-gold/30">
+                    <Link href="/store/phones/apple" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Apple iPhone
+                    </Link>
+                    <Link href="/store/phones/samsung" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Samsung Galaxy
+                    </Link>
+                    <Link href="/store/phones/tecno-infinix" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Tecno & Infinix
+                    </Link>
+                    <Link href="/store/phones/redmi" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Xiaomi Redmi
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Accessories */}
+                <div className="space-y-1.5 pt-2">
+                  <Link 
+                    href="/store/accessories" 
+                    onClick={onClose}
+                    className="font-semibold text-gray-300 hover:text-brand-gold hover:underline block flex items-center gap-1.5"
+                  >
+                    <span>⚡</span>
+                    <span>Tech Accessories →</span>
+                  </Link>
+                  <div className="pl-3 space-y-1 text-gray-400 border-l border-gray-800">
+                    <Link href="/store/accessories/mobile" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Mobile Accessories
+                    </Link>
+                    <Link href="/store/accessories/computer" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Computer Accessories
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Fashion */}
+                <div className="space-y-1.5 pt-2">
                   <Link 
                     href="/store/fashion" 
                     onClick={onClose}
-                    className="font-semibold text-brand-gold hover:underline block"
+                    className="font-semibold text-gray-300 hover:text-brand-gold hover:underline block flex items-center gap-1.5"
                   >
-                    Fashion Collection →
+                    <span>👕</span>
+                    <span>Lifestyle & Apparel →</span>
                   </Link>
                   <div className="pl-3 space-y-1 text-gray-400 border-l border-gray-800">
                     <Link href="/store/fashion/regular-fit-tee" onClick={onClose} className="block hover:text-white py-0.5">
@@ -127,25 +174,6 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     </Link>
                     <Link href="/store/fashion/hoodie" onClick={onClose} className="block hover:text-white py-0.5">
                       • Hoodies
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Accessories */}
-                <div className="space-y-1.5 pt-2">
-                  <Link 
-                    href="/store/accessories" 
-                    onClick={onClose}
-                    className="font-semibold text-brand-gold hover:underline block"
-                  >
-                    Tech Accessories →
-                  </Link>
-                  <div className="pl-3 space-y-1 text-gray-400 border-l border-gray-800">
-                    <Link href="/store/accessories/mobile" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Mobile Accessories
-                    </Link>
-                    <Link href="/store/accessories/computer" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Computer Accessories
                     </Link>
                   </div>
                 </div>

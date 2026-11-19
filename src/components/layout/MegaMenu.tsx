@@ -25,7 +25,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
       >
         <div 
           className={cn(
-            "w-full max-w-2xl rounded-2xl p-5 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-1",
+            "w-full max-w-4xl rounded-2xl p-6 shadow-2xl transition-all duration-200 animate-in fade-in slide-in-from-top-1",
             isLight 
               ? "bg-white/98 border border-gray-200 text-gray-900 shadow-black/10" 
               : "bg-[#0E121A]/95 border border-brand-gold/30 text-white shadow-black/80 backdrop-blur-xl"
@@ -37,7 +37,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
             isLight ? "border-gray-200" : "border-gray-800"
           )}>
             <div className="flex items-center gap-2.5">
-              <span className="text-lg">🛍️</span>
+              <span className="text-lg">📱</span>
               <div>
                 <h3 className={cn("text-sm font-semibold flex items-center gap-2", isLight ? "text-gray-900" : "text-white")}>
                   <span>Methmi Mobile Store</span>
@@ -45,7 +45,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                     "text-[10px] px-2 py-0.5 rounded-full font-mono font-medium uppercase",
                     isLight ? "bg-amber-100 text-amber-800" : "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
                   )}>
-                    Curated Apparel & Tech
+                    Flagship Smartphones & Gear
                   </span>
                 </h3>
               </div>
@@ -63,24 +63,24 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
             </Link>
           </div>
 
-          {/* 2-Column Compact Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {/* Column 1: Fashion */}
+          {/* 3-Column Compact Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {/* Column 1: Flagship Smartphones */}
             <div className="space-y-2">
               <Link
-                href="/store/fashion"
+                href="/store/phones"
                 onClick={onClose}
                 className={cn(
                   "text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors",
-                  isLight ? "text-gray-800 hover:text-amber-700" : "text-gray-300 hover:text-brand-gold"
+                  isLight ? "text-amber-800 hover:text-amber-950" : "text-brand-gold hover:text-white"
                 )}
               >
-                <span>👕</span>
-                <span>Fashion Drops</span>
+                <span>📱</span>
+                <span>Smartphones (TRCSL)</span>
               </Link>
               <div className="space-y-1.5 pl-1">
                 <Link
-                  href="/store/fashion/regular-fit-tee"
+                  href="/store/phones/apple"
                   onClick={onClose}
                   className={cn(
                     "p-2 rounded-xl transition-all flex items-center justify-between group",
@@ -91,41 +91,17 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 >
                   <div>
                     <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Regular Fit Tee
+                      Apple iPhone
                     </h4>
                     <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      240GSM combed cotton everyday cut
+                      iPhone 16 Pro Max, 16 & 15 Series
                     </p>
                   </div>
                   <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
                 </Link>
 
                 <Link
-                  href="/store/fashion/oversized-tee"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                        Oversized Tee
-                      </h4>
-                      <span className={cn("text-[9px] px-1.5 py-0.2 rounded font-mono", isLight ? "bg-amber-100 text-amber-800" : "bg-brand-gold/20 text-brand-gold")}>Hot</span>
-                    </div>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      280GSM heavy boxy streetwear drape
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/fashion/hoodie"
+                  href="/store/phones/samsung"
                   onClick={onClose}
                   className={cn(
                     "p-2 rounded-xl transition-all flex items-center justify-between group",
@@ -136,10 +112,52 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 >
                   <div>
                     <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      French Terry Hoodie
+                      Samsung Galaxy
                     </h4>
                     <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      460GSM double-fleece structured hood
+                      Galaxy S24 Ultra, Z Fold & A-Series
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/phones/tecno-infinix"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Tecno & Infinix
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      Camon 30 Premier, Note 40 Pro 5G
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/phones/redmi"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Xiaomi Redmi
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      Redmi Note 13 Pro+ & 13C
                     </p>
                   </div>
                   <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
@@ -158,7 +176,7 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 )}
               >
                 <span>⚡</span>
-                <span>Tech Peripherals</span>
+                <span>Tech Accessories</span>
               </Link>
               <div className="space-y-1.5 pl-1">
                 <Link
@@ -198,6 +216,85 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                     </h4>
                     <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
                       CNC aluminum riser stands, 7-in-1 4K hubs
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Column 3: Lifestyle Apparel */}
+            <div className="space-y-2">
+              <Link
+                href="/store/fashion"
+                onClick={onClose}
+                className={cn(
+                  "text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors",
+                  isLight ? "text-gray-800 hover:text-amber-700" : "text-gray-300 hover:text-brand-gold"
+                )}
+              >
+                <span>👕</span>
+                <span>Lifestyle Drops</span>
+              </Link>
+              <div className="space-y-1.5 pl-1">
+                <Link
+                  href="/store/fashion/regular-fit-tee"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Regular Fit Tee
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      240GSM combed cotton everyday cut
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/fashion/oversized-tee"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Oversized Tee
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      280GSM heavy boxy drape
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/fashion/hoodie"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      French Terry Hoodie
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      460GSM double-fleece hood
                     </p>
                   </div>
                   <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>

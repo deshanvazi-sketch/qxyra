@@ -29,9 +29,13 @@ const FASHION_CATEGORIES = [
 ];
 
 const TECH_CATEGORIES = [
-  { id: 'mobile', label: 'Mobile Gear (MagSafe Chargers, Braided Cables & Cases)' },
+  { id: 'apple', label: 'Apple iPhone (TRCSL Approved Flagships)' },
+  { id: 'samsung', label: 'Samsung Galaxy (S24 Ultra / Z-Fold / A-Series)' },
+  { id: 'tecno-infinix', label: 'Tecno & Infinix (Camon 30 / Note 40 Series)' },
+  { id: 'redmi', label: 'Xiaomi Redmi (Note 13 Pro+ & Series)' },
+  { id: 'mobile', label: 'Mobile Gear (MagSafe Chargers, Braided Cables & Power)' },
   { id: 'computer', label: 'Computer Gear (CNC Aluminum Stands, Docks & Desk Mats)' },
-  { id: 'audio-desk', label: 'Audio & Workspace Lighting Accessories' },
+  { id: 'audio-desk', label: 'Audio & Wireless Earbuds' },
 ];
 
 const SOFTWARE_CATEGORIES = [
@@ -394,7 +398,7 @@ export default function AdminProductsPage() {
   };
 
   const openEditProduct = (p: Product) => {
-    const isTech = ['mobile', 'computer', 'audio-desk'].includes(p.categoryId);
+    const isTech = ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones', 'mobile', 'computer', 'audio-desk'].includes(p.categoryId);
     const chosenType = isTech ? 'TECH' : 'FASHION';
     
     setEditingId(p.id);
@@ -609,7 +613,7 @@ export default function AdminProductsPage() {
   // Filter lists
   const filteredProducts = products.filter(p => {
     const isFashion = ['regular-fit-tee', 'oversized-tee', 'hoodie', 'sweatshirt', 'track-short'].includes(p.categoryId);
-    const isTech = ['mobile', 'computer', 'audio-desk'].includes(p.categoryId);
+    const isTech = ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones', 'mobile', 'computer', 'audio-desk'].includes(p.categoryId);
 
     if (activeTab === 'FASHION' && !isFashion) return false;
     if (activeTab === 'TECH' && !isTech) return false;
@@ -632,7 +636,7 @@ export default function AdminProductsPage() {
   });
 
   const fashionCount = products.filter(p => ['regular-fit-tee', 'oversized-tee', 'hoodie', 'sweatshirt', 'track-short'].includes(p.categoryId)).length;
-  const techCount = products.filter(p => ['mobile', 'computer', 'audio-desk'].includes(p.categoryId)).length;
+  const techCount = products.filter(p => ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones', 'mobile', 'computer', 'audio-desk'].includes(p.categoryId)).length;
   const softwareCount = softwareList.length;
 
   if (!mounted) {

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { StoreCatalog } from '@/components/store/StoreCatalog';
 
 export const metadata: Metadata = {
-  title: 'Methmi Mobile Store | Premium Streetwear, Hoodies & Lifestyle Accessories',
-  description: 'Explore curated heavyweight regular fit tees, oversized streetwear, 460GSM hoodies, MagSafe charging & computer docking stations.',
+  title: 'Methmi Mobile Store | 100% Genuine Smartphones & Tech Gear',
+  description: 'Explore 100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix, Redmi & high-speed mobile accessories with official company warranty.',
 };
 
 export default function StorePage() {
@@ -25,25 +25,32 @@ export default function StorePage() {
               METHMI MOBILE <span className="text-brand-gold font-normal">STORE</span>
             </h1>
             <p className="text-gray-300 text-sm sm:text-base leading-relaxed font-light">
-              Heavyweight architectural apparel and precision workspace accessories. Explore our full catalog or browse by department below.
+              Sri Lanka’s trusted tech flagship. 100% genuine TRCSL-approved smartphones, high-speed mobile peripherals, and lifestyle gear with official company warranty.
             </p>
           </div>
 
           {/* Quick Department Jump */}
           <div className="flex flex-wrap gap-3 pt-2">
             <Link
-              href="/store/fashion"
-              className="px-5 py-2.5 rounded-xl bg-brand-gold text-brand-black text-xs font-semibold hover:opacity-95 transition-opacity flex items-center gap-2"
+              href="/store/phones"
+              className="px-5 py-2.5 rounded-xl bg-brand-gold text-brand-black text-xs font-semibold hover:opacity-95 transition-opacity flex items-center gap-2 shadow-lg shadow-brand-gold/20"
             >
-              <span>👕</span>
-              <span>Fashion Collection (Tees & Hoodies)</span>
+              <span>📱</span>
+              <span>Smartphones (Apple, Samsung, Tecno, Infinix, Redmi)</span>
             </Link>
             <Link
               href="/store/accessories"
               className="px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-white text-xs font-medium transition-all flex items-center gap-2"
             >
-              <span>📱</span>
-              <span>Tech Accessories (Mobile & PC)</span>
+              <span>⚡</span>
+              <span>Tech Accessories (Chargers, Audio & Gear)</span>
+            </Link>
+            <Link
+              href="/store/fashion"
+              className="px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-gray-300 text-xs font-medium transition-all flex items-center gap-2"
+            >
+              <span>👕</span>
+              <span>Lifestyle Apparel</span>
             </Link>
           </div>
         </div>

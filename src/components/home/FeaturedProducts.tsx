@@ -38,7 +38,7 @@ export function FeaturedProducts() {
               Featured Products
             </h2>
           </div>
-          <Link href="/shop" className="text-brand-gold font-semibold hover:underline hidden sm:block text-sm">
+          <Link href="/store" className="text-brand-gold font-semibold hover:underline hidden sm:block text-sm">
             View All →
           </Link>
         </div>
@@ -60,7 +60,7 @@ export function FeaturedProducts() {
         )}
 
         <div className="mt-10 text-center sm:hidden">
-          <Link href="/shop" className="inline-block px-6 py-3 border border-brand-black text-brand-black font-semibold rounded hover:bg-brand-black hover:text-brand-white transition-colors text-sm">
+          <Link href="/store" className="inline-block px-6 py-3 border border-brand-black text-brand-black font-semibold rounded hover:bg-brand-black hover:text-brand-white transition-colors text-sm">
             View All Products
           </Link>
         </div>

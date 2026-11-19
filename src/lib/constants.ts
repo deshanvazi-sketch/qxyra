@@ -75,6 +75,16 @@ export const NAV_LINKS: NavItem[] = [
           { label: 'Smart Watches', href: '/store/accessories/watches' },
         ],
       },
+      {
+        label: 'Lifestyle & Apparel',
+        href: '/store/fashion',
+        description: 'Heavyweight regular fit tees, oversized streetwear & 460GSM french terry hoodies.',
+        children: [
+          { label: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
+          { label: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
+          { label: 'Hoodies', href: '/store/fashion/hoodie' },
+        ],
+      },
     ],
   },
   {

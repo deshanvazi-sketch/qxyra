@@ -17,6 +17,10 @@ export function StoreCatalog() {
 
   const activeProducts = (mounted ? storeProducts : fallbackProducts).filter((p) => p.isActive);
 
+  const phoneProducts = activeProducts.filter((p) =>
+    ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
+  );
+
   const fashionProducts = activeProducts.filter((p) =>
     ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId)
   );
@@ -28,17 +32,18 @@ export function StoreCatalog() {
   return (
     <>
       {/* Department Feature Banners */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StoreCategoryCard
-          title="Fashion"
-          subtitle="240GSM regular fit tees, 280GSM oversized drop-shoulder cuts, and 460GSM french terry hoodies."
-          href="/store/fashion"
-          image="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1000"
-          itemCount={fashionProducts.length}
+          title="Smartphones"
+          subtitle="100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix & Xiaomi Redmi."
+          href="/store/phones"
+          image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1000"
+          itemCount={phoneProducts.length}
           subcategories={[
-            { name: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
-            { name: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
-            { name: 'Hoodie', href: '/store/fashion/hoodie' },
+            { name: 'Apple iPhone', href: '/store/phones/apple' },
+            { name: 'Samsung Galaxy', href: '/store/phones/samsung' },
+            { name: 'Tecno & Infinix', href: '/store/phones/tecno-infinix' },
+            { name: 'Xiaomi Redmi', href: '/store/phones/redmi' },
           ]}
         />
 
@@ -51,6 +56,19 @@ export function StoreCatalog() {
           subcategories={[
             { name: 'Mobile Accessories', href: '/store/accessories/mobile' },
             { name: 'Computer Accessories', href: '/store/accessories/computer' },
+          ]}
+        />
+
+        <StoreCategoryCard
+          title="Lifestyle & Apparel"
+          subtitle="240GSM regular fit tees, 280GSM oversized drop-shoulder cuts, and 460GSM french terry hoodies."
+          href="/store/fashion"
+          image="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1000"
+          itemCount={fashionProducts.length}
+          subcategories={[
+            { name: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
+            { name: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
+            { name: 'Hoodie', href: '/store/fashion/hoodie' },
           ]}
         />
       </div>
