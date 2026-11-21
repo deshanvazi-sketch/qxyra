@@ -28,7 +28,7 @@ const SUB_META: Record<string, { title: string; subtitle: string; categoryId: st
   },
   'infinix': {
     title: 'Infinix Smartphones',
-    subtitle: '100% Genuine TRCSL Approved Infinix Hot 70 & Note 40 Pro smartphones with 1-Year Official Infinix Sri Lanka Company Warranty.',
+    subtitle: '100% Genuine TRCSL Approved Infinix Hot 70, Smart 20 & Note series with 1-Year Official Infinix Sri Lanka Company Warranty.',
     categoryId: 'tecno-infinix',
   },
   'redmi': {
