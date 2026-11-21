@@ -93,6 +93,8 @@ export interface Product {
   isActive: boolean;
   isFeatured: boolean;
   cjProductId?: string;
+  specsHighlights?: string[];
+  colorOptions?: { name: string; hex: string; image?: string }[];
   createdAt: string;
   updatedAt: string;
 }

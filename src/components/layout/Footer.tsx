@@ -2,7 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { BRAND_NAME, BRAND_TAGLINE, FOOTER_LINKS, SOCIAL_LINKS } from '@/lib/constants';
+import {
+  BRAND_NAME,
+  BRAND_TAGLINE,
+  FOOTER_LINKS,
+  SOCIAL_LINKS,
+  WHATSAPP_NUMBER,
+  WHATSAPP_DISPLAY_NUMBER,
+  STORE_ADDRESS,
+} from '@/lib/constants';
 import { Logo } from './Logo';
 
 export function Footer() {
@@ -47,8 +55,27 @@ export function Footer() {
               <Logo size="md" />
             </Link>
             <p className="text-gray-400 text-xs leading-relaxed max-w-sm">
-              {BRAND_TAGLINE}. We operate across two dedicated divisions: Methmi Store (TRCSL-approved smartphones & mobile accessories) and Methmi Labs (Point of Sale software & cloud business systems).
+              {BRAND_TAGLINE}. 100% genuine TRCSL-approved smartphones with official company warranty, premium mobile accessories, and bespoke Cloud POS solutions.
             </p>
+
+            {/* Quick Contact & Hotline */}
+            <div className="space-y-1.5 text-xs font-mono">
+              <p className="text-gray-300">
+                <span className="text-[#D49B6A]">📍</span> {STORE_ADDRESS}
+              </p>
+              <p className="text-gray-300 flex items-center gap-2">
+                <span className="text-[#25D366]">💬</span>
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 hover:underline font-bold"
+                >
+                  WhatsApp: {WHATSAPP_DISPLAY_NUMBER}
+                </a>
+              </p>
+            </div>
+
             <div className="flex space-x-3">
               {SOCIAL_LINKS.map((social) => (
                 <a 
@@ -56,7 +83,11 @@ export function Footer() {
                   href={social.href} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-brand-gold hover:text-brand-black transition-colors"
+                  className={`w-9 h-9 rounded-xl border flex items-center justify-center transition-all ${
+                    social.label === 'WhatsApp'
+                      ? 'bg-[#25D366]/20 border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366] hover:text-white'
+                      : 'bg-white/5 border-white/10 text-gray-400 hover:bg-brand-gold hover:text-brand-black'
+                  }`}
                   aria-label={social.label}
                 >
                   <span className="text-xs font-mono font-semibold">{social.label.charAt(0)}</span>

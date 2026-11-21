@@ -4,6 +4,7 @@ import "./globals.css";
 import { TrackingPixels } from "@/components/analytics/TrackingPixels";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { WhatsAppFloatingButton } from "@/components/common/WhatsAppFloatingButton";
 
 const inter = Inter({
   variable: "--font-heading",
@@ -102,6 +103,7 @@ export default function RootLayout({
           <CurrencyProvider>
             <TrackingPixels />
             {children}
+            <WhatsAppFloatingButton />
           </CurrencyProvider>
         </ThemeProvider>
       </body>

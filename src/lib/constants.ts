@@ -140,8 +140,17 @@ export const FOOTER_LINKS = [
   },
 ];
 
+export const WHATSAPP_NUMBER = '94743031990';
+export const WHATSAPP_DISPLAY_NUMBER = '074 303 1990';
+export const HOTLINE_PHONE = '074 303 1990';
+export const SUPPORT_EMAIL = 'info@methmimobilepvtltd.lk';
+export const STORE_ADDRESS = 'Main Street, Mutur / Batticaloa Road, Periya Palam, Trincomalee, Sri Lanka';
+export const STORE_HOURS = 'Monday – Saturday: 8:30 AM – 8:30 PM | Sunday: 9:00 AM – 5:00 PM';
+export const STORE_MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15777.625624795777!2d81.2581!3d8.4552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3afb955a8227e9f3%3A0x6a053c846d0a7935!2sMutur!5e0!3m2!1sen!2slk!4v1700000000000!5m2!1sen!2slk';
+export const STORE_MAP_DIRECTIONS_URL = 'https://maps.google.com/?q=Mutur,+Sri+Lanka';
+
 export const SOCIAL_LINKS = [
   { label: 'Facebook', href: 'https://facebook.com/methmimobile' },
-  { label: 'WhatsApp', href: 'https://wa.me/94770000000' },
+  { label: 'WhatsApp', href: `https://wa.me/${WHATSAPP_NUMBER}` },
   { label: 'TikTok', href: 'https://tiktok.com/@methmimobile' },
 ];
