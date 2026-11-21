@@ -33,9 +33,40 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     };
   }
 
+  const primaryImage = product.images?.[0]?.url || '/methmi-logo.jpg';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://methmimobilepvtltd.lk';
+
   return {
-    title: `${product.name} | Methmi Mobile Store`,
+    title: `${product.name} Price in Sri Lanka | 100% TRCSL Approved — Methmi Mobile`,
     description: product.description,
+    keywords: [
+      product.name,
+      `${product.name} Sri Lanka`,
+      `${product.name} Price in Sri Lanka`,
+      'TRCSL Approved Phones',
+      'Methmi Mobile',
+      'Original Phone Warranty Sri Lanka'
+    ],
+    openGraph: {
+      title: `${product.name} | Methmi Mobile Sri Lanka`,
+      description: product.description,
+      url: `${siteUrl}/store/${product.slug}`,
+      images: [
+        {
+          url: primaryImage.startsWith('/') ? `${siteUrl}${primaryImage}` : primaryImage,
+          width: 800,
+          height: 800,
+          alt: product.name,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} | Methmi Mobile`,
+      description: product.description,
+      images: [primaryImage.startsWith('/') ? `${siteUrl}${primaryImage}` : primaryImage],
+    },
   };
 }
 
@@ -50,7 +81,7 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
   // Find category info
   let catName = 'Store';
   let catHref = '/store';
-  if (['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(product.categoryId)) {
+  if (['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(product.categoryId)) {
     catName = 'Smartphones';
     catHref = '/store/phones';
   } else if (['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(product.categoryId)) {

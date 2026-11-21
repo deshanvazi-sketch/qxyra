@@ -16,6 +16,11 @@ const SUB_META: Record<string, { title: string; subtitle: string; categoryId: st
     subtitle: 'Galaxy S24 Ultra, S24+, Z Fold, and Galaxy A-series with official Samsung Sri Lanka 1-Year Company Warranty.',
     categoryId: 'samsung',
   },
+  'vivo': {
+    title: 'Vivo Smartphones',
+    subtitle: '100% Genuine TRCSL Approved Vivo Y-series & V-series smartphones including Vivo Y05 with 1-Year Official Vivo Sri Lanka Company Warranty.',
+    categoryId: 'vivo',
+  },
   'tecno-infinix': {
     title: 'Tecno & Infinix',
     subtitle: 'Tecno Camon 30 Premier 5G, Spark series, and Infinix Note 40 Pro with 70W FastCharge and 100% local agent warranty.',
@@ -38,6 +43,7 @@ export function generateStaticParams() {
   return [
     { sub: 'apple' },
     { sub: 'samsung' },
+    { sub: 'vivo' },
     { sub: 'tecno-infinix' },
     { sub: 'redmi' },
   ];
@@ -81,6 +87,13 @@ export default async function PhonesSubCategoryPage({ params }: PhonesSubPagePro
       slug: 'samsung',
       href: '/store/phones/samsung',
       count: products.filter((p) => p.categoryId === 'samsung').length,
+    },
+    {
+      id: 'vivo',
+      name: 'Vivo',
+      slug: 'vivo',
+      href: '/store/phones/vivo',
+      count: products.filter((p) => p.categoryId === 'vivo').length,
     },
     {
       id: 'tecno-infinix',

@@ -126,6 +126,9 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     <Link href="/store/phones/samsung" onClick={onClose} className="block hover:text-white py-0.5">
                       • Samsung Galaxy
                     </Link>
+                    <Link href="/store/phones/vivo" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Vivo Smartphones
+                    </Link>
                     <Link href="/store/phones/tecno-infinix" onClick={onClose} className="block hover:text-white py-0.5">
                       • Tecno & Infinix
                     </Link>

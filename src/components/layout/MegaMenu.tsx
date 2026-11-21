@@ -122,6 +122,27 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 </Link>
 
                 <Link
+                  href="/store/phones/vivo"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Vivo Smartphones
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      Vivo Y05, Y-Series & V-Series Flagships
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
                   href="/store/phones/tecno-infinix"
                   onClick={onClose}
                   className={cn(

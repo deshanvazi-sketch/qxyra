@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PhonesCategoryPage() {
   const phoneProducts = products.filter((p) =>
-    ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
+    ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
   );
 
   const subcategories = [
@@ -28,6 +28,13 @@ export default function PhonesCategoryPage() {
       slug: 'samsung',
       href: '/store/phones/samsung',
       count: products.filter((p) => p.categoryId === 'samsung').length,
+    },
+    {
+      id: 'vivo',
+      name: 'Vivo',
+      slug: 'vivo',
+      href: '/store/phones/vivo',
+      count: products.filter((p) => p.categoryId === 'vivo').length,
     },
     {
       id: 'tecno-infinix',
@@ -92,6 +99,7 @@ export default function PhonesCategoryPage() {
               let catLabel = 'Smartphone';
               if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
               else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
+              else if (product.categoryId === 'vivo') catLabel = 'Vivo';
               else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
               else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
 

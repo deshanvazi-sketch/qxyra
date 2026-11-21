@@ -28,6 +28,15 @@ export const categories: Category[] = [
         productCount: 3,
       },
       {
+        id: 'vivo',
+        name: 'Vivo',
+        slug: 'vivo',
+        parentId: 'phones',
+        description: 'Vivo Y-series & V-series smartphones with 100% TRCSL approval and official company warranty in Sri Lanka.',
+        image: '/products/vivo-y05-summit-platinum.jpg',
+        productCount: 1,
+      },
+      {
         id: 'tecno-infinix',
         name: 'Tecno & Infinix',
         slug: 'tecno-infinix',
@@ -116,6 +125,34 @@ export const categories: Category[] = [
 
 export const products: Product[] = [
   // ─── PHONES: FLAGSHIP SMARTPHONES (TRCSL APPROVED) ─────────────
+  {
+    id: 'prod-vivo-y05',
+    name: 'Vivo Y05 (4GB RAM | 64GB / 128GB Storage)',
+    slug: 'vivo-y05',
+    description: '100% Genuine TRCSL Approved brand new sealed Vivo Y05 smartphone in Sri Lanka. Engineered with a smooth 90Hz Sunlight Display, massive 5000mAh long-lasting all-day battery, 13MP AI dual rear camera, IP54 dust and splash resistance, and expandable memory. Includes 1-Year Official Vivo Sri Lanka Company Warranty and islandwide fast delivery.',
+    basePrice: 199.72,
+    salePrice: 181.56,
+    images: [
+      { id: 'img-vivo-y05-1', productId: 'prod-vivo-y05', url: '/products/vivo-y05-summit-platinum.jpg', alt: 'Vivo Y05 Summit Platinum Sri Lanka', isPrimary: true, sortOrder: 0 },
+      { id: 'img-vivo-y05-2', productId: 'prod-vivo-y05', url: '/products/vivo-y05-haze-blue.jpg', alt: 'Vivo Y05 Haze Blue Dual Camera Phone', isPrimary: false, sortOrder: 1 },
+      { id: 'img-vivo-y05-3', productId: 'prod-vivo-y05', url: '/products/vivo-y05-voyage-black.jpg', alt: 'Vivo Y05 Voyage Black Matte Finish', isPrimary: false, sortOrder: 2 },
+    ],
+    categoryId: 'vivo',
+    variants: [
+      { id: 'v-vy05-64-sp', productId: 'prod-vivo-y05', size: '4GB+64GB', color: 'Summit Platinum', price: 181.56, stock: 15, sku: 'MM-VIVO-Y05-64-SP' },
+      { id: 'v-vy05-64-hb', productId: 'prod-vivo-y05', size: '4GB+64GB', color: 'Haze Blue', price: 181.56, stock: 15, sku: 'MM-VIVO-Y05-64-HB' },
+      { id: 'v-vy05-64-vb', productId: 'prod-vivo-y05', size: '4GB+64GB', color: 'Voyage Black', price: 181.56, stock: 20, sku: 'MM-VIVO-Y05-64-VB' },
+      { id: 'v-vy05-128-sp', productId: 'prod-vivo-y05', size: '4GB+128GB', color: 'Summit Platinum', price: 199.72, stock: 25, sku: 'MM-VIVO-Y05-128-SP' },
+      { id: 'v-vy05-128-hb', productId: 'prod-vivo-y05', size: '4GB+128GB', color: 'Haze Blue', price: 199.72, stock: 20, sku: 'MM-VIVO-Y05-128-HB' },
+      { id: 'v-vy05-128-vb', productId: 'prod-vivo-y05', size: '4GB+128GB', color: 'Voyage Black', price: 199.72, stock: 30, sku: 'MM-VIVO-Y05-128-VB' },
+    ],
+    rating: 4.9,
+    totalSold: 42,
+    isActive: true,
+    isFeatured: true,
+    createdAt: '2026-11-20T00:00:00Z',
+    updatedAt: '2026-11-21T00:00:00Z',
+  },
   {
     id: 'prod-ph-01',
     name: 'Apple iPhone 16 Pro Max (256GB - Desert Titanium)',

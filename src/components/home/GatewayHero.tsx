@@ -184,6 +184,17 @@ export function GatewayHero() {
                 Samsung Galaxy
               </Link>
               <Link 
+                href="/store/phones/vivo"
+                className={cn(
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
+                  isLight 
+                    ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
+                    : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
+                )}
+              >
+                Vivo
+              </Link>
+              <Link 
                 href="/store/phones/tecno-infinix"
                 className={cn(
                   "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",

@@ -13,7 +13,7 @@ export function StorePreview() {
     if (!p.isActive) return false;
     if (activeCategory === 'all') return true;
     if (activeCategory === 'phones') {
-      return ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId);
+      return ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId);
     }
     if (activeCategory === 'accessories') {
       return ['mobile', 'computer'].includes(p.categoryId);
@@ -24,7 +24,7 @@ export function StorePreview() {
     return true;
   }).slice(0, 8);
 
-  const phoneCount = products.filter((p) => ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)).length;
+  const phoneCount = products.filter((p) => ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)).length;
   const accessoryCount = products.filter((p) => ['mobile', 'computer'].includes(p.categoryId)).length;
   const fashionCount = products.filter((p) => ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId)).length;
 
@@ -99,6 +99,7 @@ export function StorePreview() {
             let catLabel = 'Product';
             if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
             else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
+            else if (product.categoryId === 'vivo') catLabel = 'Vivo';
             else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
             else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
             else if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';

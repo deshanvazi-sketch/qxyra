@@ -18,7 +18,7 @@ export function StoreCatalog() {
   const activeProducts = (mounted ? storeProducts : fallbackProducts).filter((p) => p.isActive);
 
   const phoneProducts = activeProducts.filter((p) =>
-    ['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
+    ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
   );
 
   const fashionProducts = activeProducts.filter((p) =>
@@ -35,13 +35,14 @@ export function StoreCatalog() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StoreCategoryCard
           title="Smartphones"
-          subtitle="100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix & Xiaomi Redmi."
+          subtitle="100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Vivo, Tecno, Infinix & Xiaomi Redmi."
           href="/store/phones"
           image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1000"
           itemCount={phoneProducts.length}
           subcategories={[
             { name: 'Apple iPhone', href: '/store/phones/apple' },
             { name: 'Samsung Galaxy', href: '/store/phones/samsung' },
+            { name: 'Vivo', href: '/store/phones/vivo' },
             { name: 'Tecno & Infinix', href: '/store/phones/tecno-infinix' },
             { name: 'Xiaomi Redmi', href: '/store/phones/redmi' },
           ]}
