@@ -34,7 +34,7 @@ export const categories: Category[] = [
         parentId: 'phones',
         description: 'Vivo Y-series & V-series smartphones with 100% TRCSL approval and official company warranty in Sri Lanka.',
         image: '/products/vivo-y05-summit-platinum.jpg',
-        productCount: 1,
+        productCount: 2,
       },
       {
         id: 'tecno-infinix',
@@ -151,6 +151,29 @@ export const products: Product[] = [
     isActive: true,
     isFeatured: true,
     createdAt: '2026-11-20T00:00:00Z',
+    updatedAt: '2026-11-21T00:00:00Z',
+  },
+  {
+    id: 'prod-vivo-y11d',
+    name: 'Vivo Y11D (4GB RAM | 128GB Storage)',
+    slug: 'vivo-y11d',
+    description: '100% Genuine TRCSL Approved brand new sealed Vivo Y11D smartphone in Sri Lanka. Engineered with a vivid 6.56-inch Sunlight Display, massive 5000mAh long-lasting battery, high-resolution AI dual rear camera system, IP54 dust and splash resistance, and expandable storage. Includes 1-Year Official Vivo Sri Lanka Company Warranty and islandwide fast delivery.',
+    basePrice: 236.04,
+    salePrice: 217.88,
+    images: [
+      { id: 'img-vivo-y11d-1', productId: 'prod-vivo-y11d', url: '/products/vivo-y11d-sunrise-gold.jpg', alt: 'Vivo Y11D Sunrise Gold Sri Lanka', isPrimary: true, sortOrder: 0 },
+      { id: 'img-vivo-y11d-2', productId: 'prod-vivo-y11d', url: '/products/vivo-y11d-voyage-black.jpg', alt: 'Vivo Y11D Voyage Black Matte Finish Sri Lanka', isPrimary: false, sortOrder: 1 },
+    ],
+    categoryId: 'vivo',
+    variants: [
+      { id: 'v-vy11d-128-sg', productId: 'prod-vivo-y11d', size: '4GB+128GB', color: 'Sunrise Gold', price: 217.88, stock: 25, sku: 'MM-VIVO-Y11D-128-SG' },
+      { id: 'v-vy11d-128-vb', productId: 'prod-vivo-y11d', size: '4GB+128GB', color: 'Voyage Black', price: 217.88, stock: 30, sku: 'MM-VIVO-Y11D-128-VB' },
+    ],
+    rating: 4.8,
+    totalSold: 28,
+    isActive: true,
+    isFeatured: true,
+    createdAt: '2026-11-21T00:00:00Z',
     updatedAt: '2026-11-21T00:00:00Z',
   },
   {
