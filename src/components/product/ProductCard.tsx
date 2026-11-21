@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { useCurrency } from '@/context/CurrencyContext';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
+import { useTheme } from '@/context/ThemeContext';
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +19,8 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
   const { format } = useCurrency();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const addItem = useCartStore((s) => s.addItem);
   const { isInWishlist, addItem: addWishlist, removeItem: removeWishlist } = useWishlistStore();
 
@@ -58,12 +61,20 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
 
   return (
     <div 
-      className="group relative flex flex-col bg-[#141820] rounded-2xl border border-gray-800/80 hover:border-brand-gold/40 shadow-lg hover:shadow-2xl hover:shadow-black/60 transition-all duration-300 overflow-hidden"
+      className={cn(
+        "group relative flex flex-col rounded-2xl border transition-all duration-300 overflow-hidden",
+        isLight
+          ? "bg-white border-gray-200/90 shadow-sm hover:shadow-xl hover:border-amber-400"
+          : "bg-[#141820] border-gray-800/80 hover:border-brand-gold/40 shadow-lg hover:shadow-2xl hover:shadow-black/60"
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image Area */}
-      <div className="relative aspect-[4/5] bg-black/40 overflow-hidden">
+      {/* Image Area - Aspect Square, perfectly fits 1000x1000 phone shots with equal size and zero cropping */}
+      <div className={cn(
+        "relative aspect-square w-full overflow-hidden transition-colors flex items-center justify-center p-3 sm:p-4",
+        isLight ? "bg-white border-b border-gray-100" : "bg-white/[0.04] border-b border-gray-800/50"
+      )}>
         {/* Sale Badge */}
         {hasDiscount && (
           <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20 bg-brand-gold text-brand-black text-[9px] sm:text-[11px] font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-md uppercase tracking-wider">
@@ -74,22 +85,27 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
         {/* Wishlist Button */}
         <button 
           onClick={handleToggleWishlist}
-          className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white hover:text-red-400 hover:scale-110 transition-all cursor-pointer"
+          className={cn(
+            "absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center rounded-full backdrop-blur-md transition-all cursor-pointer shadow-sm hover:scale-110",
+            isLight
+              ? "bg-white/90 border border-gray-200 text-gray-700 hover:text-red-500"
+              : "bg-black/60 border border-white/10 text-white hover:text-red-400"
+          )}
           aria-label="Toggle Wishlist"
         >
-          <span className={cn("text-xs sm:text-base", isWishlisted ? "text-red-500 scale-110" : "text-white/70")}>
+          <span className={cn("text-xs sm:text-base", isWishlisted ? "text-red-500 scale-110" : isLight ? "text-gray-500" : "text-white/70")}>
             {isWishlisted ? "♥" : "♡"}
           </span>
         </button>
 
-        {/* Product Image */}
-        <Link href={`/store/${product.slug}`} className="block w-full h-full">
+        {/* Product Image - object-contain ensures ZERO cropping and uniform size */}
+        <Link href={`/store/${product.slug}`} className="relative block w-full h-full">
           <Image
             src={primaryImage}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
           />
         </Link>
 
@@ -118,45 +134,69 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
       </div>
 
       {/* Product Details */}
-      <div className="p-2.5 sm:p-4 flex flex-col flex-grow bg-[#141820]">
+      <div className={cn(
+        "p-2.5 sm:p-4 flex flex-col flex-grow transition-colors",
+        isLight ? "bg-white" : "bg-[#141820]"
+      )}>
         {categoryName && (
-          <p className="text-[9px] sm:text-[11px] uppercase tracking-wider text-brand-gold/80 mb-0.5 sm:mb-1 font-mono font-medium truncate">
+          <p className={cn(
+            "text-[9px] sm:text-[11px] uppercase tracking-wider mb-0.5 sm:mb-1 font-mono font-semibold truncate",
+            isLight ? "text-amber-800" : "text-brand-gold/80"
+          )}>
             {categoryName}
           </p>
         )}
         <Link href={`/store/${product.slug}`} className="block mb-1 sm:mb-2 flex-grow">
-          <h3 className="font-heading text-xs sm:text-sm font-medium text-white line-clamp-2 h-8 sm:h-10 hover:text-brand-gold transition-colors leading-snug">
+          <h3 className={cn(
+            "font-heading text-xs sm:text-sm font-semibold line-clamp-2 h-8 sm:h-10 transition-colors leading-snug",
+            isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold"
+          )}>
             {product.name}
           </h3>
         </Link>
         
         {/* Rating */}
         <div className="flex items-center gap-1 sm:gap-1.5 mb-2">
-          <div className="flex text-brand-gold text-[10px] sm:text-xs">
+          <div className="flex text-amber-500 text-[10px] sm:text-xs">
             {Array.from({ length: 5 }).map((_, i) => (
               <span key={i}>
                 {i < Math.floor(product.rating || 5) ? '★' : '☆'}
               </span>
             ))}
           </div>
-          <span className="text-[10px] sm:text-[11px] text-gray-400 font-mono">
+          <span className={cn(
+            "text-[10px] sm:text-[11px] font-mono",
+            isLight ? "text-gray-600 font-medium" : "text-gray-400"
+          )}>
             ({product.rating?.toFixed(1) || '5.0'})
           </span>
           {product.totalSold ? (
-            <span className="text-[9px] sm:text-[10px] text-gray-500 ml-auto hidden sm:inline">
+            <span className={cn(
+              "text-[9px] sm:text-[10px] ml-auto hidden sm:inline font-mono",
+              isLight ? "text-gray-500" : "text-gray-500"
+            )}>
               {product.totalSold}+ sold
             </span>
           ) : null}
         </div>
 
         {/* Price & Action */}
-        <div className="flex items-center justify-between pt-1.5 sm:pt-2 border-t border-gray-800/80 gap-1.5">
+        <div className={cn(
+          "flex items-center justify-between pt-1.5 sm:pt-2 border-t gap-1.5",
+          isLight ? "border-gray-100" : "border-gray-800/80"
+        )}>
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 min-w-0">
-            <span className="font-bold text-xs sm:text-base text-white font-mono truncate">
+            <span className={cn(
+              "font-bold text-xs sm:text-base font-mono truncate",
+              isLight ? "text-gray-950 font-extrabold" : "text-white"
+            )}>
               {format(displayPrice)}
             </span>
             {hasDiscount && (
-              <span className="text-[10px] sm:text-xs text-gray-500 line-through font-mono">
+              <span className={cn(
+                "text-[10px] sm:text-xs line-through font-mono",
+                isLight ? "text-gray-400" : "text-gray-500"
+              )}>
                 {format(product.basePrice)}
               </span>
             )}
@@ -179,7 +219,10 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
           {/* Desktop Link */}
           <Link
             href={`/store/${product.slug}`}
-            className="hidden md:inline text-xs text-brand-gold hover:underline font-medium whitespace-nowrap"
+            className={cn(
+              "hidden md:inline text-xs font-semibold whitespace-nowrap transition-colors",
+              isLight ? "text-amber-800 hover:text-amber-950 hover:underline" : "text-brand-gold hover:underline"
+            )}
           >
             Details →
           </Link>

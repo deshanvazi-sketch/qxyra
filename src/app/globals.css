@@ -159,8 +159,67 @@ html.light .border-white\/20,
 html.light .border-gray-800,
 html.light .border-gray-800\/80,
 html.light .border-gray-800\/60,
-html.light .border-gray-800\/40 {
+html.light .border-gray-800\/50,
+html.light .border-gray-800\/40,
+html.light .border-gray-700 {
   border-color: #E5E7EB !important;
+}
+
+/* ==========================================================================
+   TEXT CONTRAST IN LIGHT MODE
+   Ensure all headings and text on light surfaces have high contrast & readability
+   ========================================================================== */
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6 {
+  color: #111827;
+}
+
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light h4.text-white,
+html.light h5.text-white,
+html.light h6.text-white {
+  color: #111827 !important;
+}
+
+/* Transform generic white text into dark text in light mode,
+   safely preserving white text inside gold buttons, green success badges, etc. */
+html.light .text-white:not(.bg-brand-gold *):not(.bg-brand-gold):not(button.bg-brand-gold *):not(.bg-green-500 *):not(button.bg-green-500 *):not(.bg-blue-600 *):not([class*="bg-brand-gold"] *):not([class*="from-brand-gold"] *):not(.badge *) {
+  color: #111827 !important;
+}
+
+html.light p.text-gray-300,
+html.light span.text-gray-300,
+html.light div.text-gray-300,
+html.light .text-gray-300 {
+  color: #374151 !important;
+}
+
+html.light p.text-gray-400,
+html.light span.text-gray-400,
+html.light div.text-gray-400,
+html.light .text-gray-400 {
+  color: #4B5563 !important;
+}
+
+html.light .text-gray-500 {
+  color: #6B7280 !important;
+}
+
+/* Translucent dark overlays and pills in light mode */
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/60,
+html.light .bg-black\/70 {
+  background-color: #F3F4F6 !important;
+  border-color: #E5E7EB !important;
+  color: #111827 !important;
 }
 
 /* Form inputs */

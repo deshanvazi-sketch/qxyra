@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { ProductImage } from '@/types';
 import { cn } from '@/lib/utils';
 import { ImageIcon } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface ProductGalleryProps {
   images: ProductImage[];
@@ -21,6 +22,8 @@ const GRADIENTS = [
 
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   const displayImages = images.length > 0
     ? images
@@ -38,12 +41,15 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   return (
     <div className="flex flex-col gap-3 sm:gap-4 w-full">
       {/* Main Active Image Canvas */}
-      <div className="relative aspect-square w-full overflow-hidden bg-black/50 rounded-2xl border border-gray-800/80 shadow-xl">
+      <div className={cn(
+        "relative aspect-square w-full overflow-hidden rounded-2xl border transition-colors flex items-center justify-center p-4 sm:p-6",
+        isLight ? "bg-white border-gray-200 shadow-md" : "bg-black/50 border-gray-800/80 shadow-xl"
+      )}>
         {displayImages.map((img, idx) => (
           <div
             key={img.id || idx}
             className={cn(
-              "absolute inset-0 transition-opacity duration-500",
+              "absolute inset-0 transition-opacity duration-500 flex items-center justify-center p-3 sm:p-5",
               idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           >
@@ -54,7 +60,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                 fill
                 priority={idx === 0}
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
             ) : (
               <div className={cn(
@@ -81,10 +87,13 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               key={img.id || idx}
               onClick={() => setActiveIndex(idx)}
               className={cn(
-                "relative flex-none w-16 sm:w-20 aspect-square rounded-xl overflow-hidden transition-all duration-300 border cursor-pointer",
+                "relative flex-none w-16 sm:w-20 aspect-square rounded-xl overflow-hidden transition-all duration-300 border cursor-pointer p-1",
+                isLight ? "bg-white" : "bg-black/40",
                 idx === activeIndex 
                   ? "border-brand-gold ring-2 ring-brand-gold/40 opacity-100" 
-                  : "border-gray-800 opacity-60 hover:opacity-100"
+                  : isLight 
+                    ? "border-gray-200 opacity-60 hover:opacity-100"
+                    : "border-gray-800 opacity-60 hover:opacity-100"
               )}
             >
               {img.url ? (
@@ -93,7 +102,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                   alt={img.alt || productName}
                   fill
                   sizes="80px"
-                  className="object-cover"
+                  className="object-contain p-1"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-zinc-900">

@@ -13,7 +13,7 @@ export function FeaturedProducts() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('methmi_products_list') || localStorage.getItem('methmi mobile_products_list');
+      const saved = localStorage.getItem('methmi_products_list_v2') || localStorage.getItem('methmi_products_list') || localStorage.getItem('methmi mobile_products_list');
       if (saved) {
         const parsed = JSON.parse(saved);
         const list: Product[] = Array.isArray(parsed) ? parsed : parsed?.state?.products || [];

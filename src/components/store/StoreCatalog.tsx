@@ -6,10 +6,14 @@ import { useProductStore } from '@/store/productStore';
 import { ProductCard } from '@/components/product/ProductCard';
 import { StoreCategoryCard } from '@/components/store/StoreCategoryCard';
 import { products as fallbackProducts } from '@/lib/mock-data';
+import { useTheme } from '@/context/ThemeContext';
+import { cn } from '@/lib/utils';
 
 export function StoreCatalog() {
   const storeProducts = useProductStore((s) => s.products);
   const [mounted, setMounted] = useState(false);
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
 
   useEffect(() => {
     setMounted(true);
@@ -66,16 +70,32 @@ export function StoreCatalog() {
 
       {/* All Products Grid */}
       <div className="space-y-8 pt-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800 pb-4">
+        <div className={cn(
+          "flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 transition-colors",
+          isLight ? "border-gray-200" : "border-gray-800"
+        )}>
           <div>
-            <h2 className="text-xl sm:text-2xl font-heading font-medium text-white">
+            <h2 className={cn(
+              "text-xl sm:text-2xl font-heading font-medium tracking-tight",
+              isLight ? "text-gray-950 font-semibold" : "text-white"
+            )}>
               All Available Smartphones ({activeProducts.length})
             </h2>
-            <p className="text-gray-400 text-xs mt-1">100% Genuine TRCSL Approved Brand New Sealed Packs</p>
+            <p className={cn(
+              "text-xs mt-1",
+              isLight ? "text-gray-600" : "text-gray-400"
+            )}>
+              100% Genuine TRCSL Approved Brand New Sealed Packs
+            </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-gray-400">
-            <span>Showing:</span>
-            <span className="font-mono text-brand-gold">{activeProducts.length} In-Stock</span>
+          <div className="flex items-center gap-2 text-xs">
+            <span className={isLight ? "text-gray-500" : "text-gray-400"}>Showing:</span>
+            <span className={cn(
+              "font-mono font-semibold px-2.5 py-1 rounded-full text-xs",
+              isLight ? "bg-amber-100 text-amber-900" : "text-brand-gold bg-brand-gold/10 border border-brand-gold/30"
+            )}>
+              {activeProducts.length} In-Stock
+            </span>
           </div>
         </div>
 
