@@ -23,7 +23,12 @@ const SUB_META: Record<string, { title: string; subtitle: string; categoryId: st
   },
   'tecno-infinix': {
     title: 'Tecno & Infinix',
-    subtitle: 'Tecno Camon 30 Premier 5G, Spark series, and Infinix Note 40 Pro with 70W FastCharge and 100% local agent warranty.',
+    subtitle: 'Tecno Camon 30 Premier 5G, Spark series, and Infinix Hot 70 & Note 40 Pro with 100% local agent warranty.',
+    categoryId: 'tecno-infinix',
+  },
+  'infinix': {
+    title: 'Infinix Smartphones',
+    subtitle: '100% Genuine TRCSL Approved Infinix Hot 70 & Note 40 Pro smartphones with 1-Year Official Infinix Sri Lanka Company Warranty.',
     categoryId: 'tecno-infinix',
   },
   'redmi': {
@@ -45,6 +50,7 @@ export function generateStaticParams() {
     { sub: 'samsung' },
     { sub: 'vivo' },
     { sub: 'tecno-infinix' },
+    { sub: 'infinix' },
     { sub: 'redmi' },
   ];
 }
@@ -71,7 +77,9 @@ export default async function PhonesSubCategoryPage({ params }: PhonesSubPagePro
     notFound();
   }
 
-  const subProducts = products.filter((p) => p.categoryId === config.categoryId);
+  const subProducts = sub === 'infinix'
+    ? products.filter((p) => p.categoryId === 'tecno-infinix' && p.name.toLowerCase().includes('infinix'))
+    : products.filter((p) => p.categoryId === config.categoryId);
 
   const subcategories = [
     {
