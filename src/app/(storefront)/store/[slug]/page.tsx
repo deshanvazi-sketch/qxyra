@@ -50,7 +50,10 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
   // Find category info
   let catName = 'Store';
   let catHref = '/store';
-  if (['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(product.categoryId)) {
+  if (['apple', 'samsung', 'tecno-infinix', 'redmi', 'phones'].includes(product.categoryId)) {
+    catName = 'Smartphones';
+    catHref = '/store/phones';
+  } else if (['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(product.categoryId)) {
     catName = 'Fashion';
     catHref = '/store/fashion';
   } else if (['mobile', 'computer'].includes(product.categoryId)) {
@@ -61,23 +64,23 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
   const productReviews = reviews.filter((r) => r.productId === product.id);
 
   return (
-    <div className="bg-[#0A0A0A] text-white min-h-screen py-10">
+    <div className="bg-[#0A0A0A] text-white min-h-screen py-6 sm:py-10">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <ProductJsonLd product={product} url={`https://methmimobilepvtltd.lk/store/${product.slug}`} />
 
         {/* Breadcrumb */}
-        <nav className="flex items-center text-xs text-gray-400 mb-8 font-mono">
+        <nav className="flex items-center text-xs text-gray-400 mb-6 sm:mb-8 font-mono overflow-x-auto no-scrollbar whitespace-nowrap">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
+          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600 shrink-0" />
           <Link href="/store" className="hover:text-white transition-colors">Store</Link>
-          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
+          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600 shrink-0" />
           <Link href={catHref} className="hover:text-brand-gold transition-colors">{catName}</Link>
-          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600" />
-          <span className="text-white truncate max-w-[200px] sm:max-w-xs">{product.name}</span>
+          <ChevronRight className="w-3.5 h-3.5 mx-2 text-gray-600 shrink-0" />
+          <span className="text-white truncate max-w-[140px] sm:max-w-xs">{product.name}</span>
         </nav>
 
         {/* Top Section: Gallery + Info */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-20 bg-[#121620] p-6 sm:p-10 rounded-3xl border border-gray-800">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-12 sm:mb-20 bg-[#121620] p-4 sm:p-10 rounded-2xl sm:rounded-3xl border border-gray-800">
           {/* Left: Gallery */}
           <div className="w-full">
             <ProductGallery images={product.images} productName={product.name} />

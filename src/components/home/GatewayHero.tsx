@@ -47,7 +47,7 @@ export function GatewayHero() {
             ==================================================================== */}
         <div 
           className={cn(
-            "relative flex flex-col justify-between p-8 sm:p-12 lg:p-16 border-b lg:border-b-0 lg:border-r overflow-hidden transition-all duration-300 ease-out",
+            "relative flex flex-col justify-between p-5 sm:p-8 lg:p-16 border-b lg:border-b-0 lg:border-r overflow-hidden transition-all duration-300 ease-out",
             isLight 
               ? "border-gray-200 bg-gradient-to-br from-white via-[#FCFBF9] to-[#F7F4EE]" 
               : "border-gray-800/80 bg-black/90",
@@ -91,7 +91,7 @@ export function GatewayHero() {
               </span>
             </div>
             <span className={cn(
-              "text-[11px] font-mono px-3 py-1 rounded-full font-medium transition-all duration-200",
+              "text-[10px] sm:text-[11px] font-mono px-2.5 sm:px-3 py-1 rounded-full font-medium transition-all duration-200",
               isLight 
                 ? "bg-amber-100/90 text-amber-950 border border-amber-200 shadow-sm" 
                 : "bg-[#D49B6A]/10 text-[#D49B6A] border border-[#D49B6A]/30"
@@ -101,16 +101,16 @@ export function GatewayHero() {
           </div>
 
           {/* Core Store Content */}
-          <div className="relative z-10 my-auto py-8 space-y-6 max-w-xl">
-            <div className="space-y-2">
+          <div className="relative z-10 my-auto py-6 sm:py-8 space-y-4 sm:space-y-6 max-w-xl">
+            <div className="space-y-1.5 sm:space-y-2">
               <span className={cn(
-                "text-xs font-mono uppercase tracking-widest font-medium transition-colors",
+                "text-[11px] sm:text-xs font-mono uppercase tracking-widest font-medium transition-colors block",
                 isLight ? "text-gray-600" : "text-gray-400"
               )}>
                 100% Genuine TRCSL Approved Stock
               </span>
               <h1 className={cn(
-                "text-4xl sm:text-5xl lg:text-6xl font-heading font-light tracking-tight leading-[1.08] transition-colors",
+                "text-3xl sm:text-5xl lg:text-6xl font-heading font-light tracking-tight leading-[1.08] transition-colors",
                 isLight ? "text-gray-950" : "text-white"
               )}>
                 METHMI <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D49B6A] via-amber-300 to-[#e2ac7e] font-normal">STORE</span>
@@ -118,18 +118,18 @@ export function GatewayHero() {
             </div>
 
             <p className={cn(
-              "text-sm sm:text-base leading-relaxed font-body font-light transition-colors",
+              "text-xs sm:text-base leading-relaxed font-body font-light transition-colors",
               isLight ? "text-gray-700" : "text-gray-300"
             )}>
               Sri Lanka&apos;s premier destination for brand new Apple iPhones, Samsung Galaxy, Tecno, Infinix, Xiaomi Redmi, and genuine fast-charging accessories with official company warranty.
             </p>
 
-            {/* Subcategory Pills */}
-            <div className="flex flex-wrap gap-2 pt-1 text-xs">
+            {/* Subcategory Pills - Mobile horizontal swipeable, desktop wrap */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 flex-nowrap sm:flex-wrap text-xs">
               <Link 
                 href="/store/phones/apple"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
@@ -140,7 +140,7 @@ export function GatewayHero() {
               <Link 
                 href="/store/phones/samsung"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
@@ -151,7 +151,7 @@ export function GatewayHero() {
               <Link 
                 href="/store/phones/tecno-infinix"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
@@ -162,7 +162,7 @@ export function GatewayHero() {
               <Link 
                 href="/store/phones/redmi"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
@@ -173,7 +173,7 @@ export function GatewayHero() {
               <Link 
                 href="/store/accessories"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-amber-50 border border-gray-200 hover:border-[#D49B6A] text-gray-800 hover:text-amber-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-[#D49B6A] text-gray-300 hover:text-white"
@@ -184,10 +184,10 @@ export function GatewayHero() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
               <Link
                 href="/store/phones"
-                className="px-7 py-3.5 bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold text-xs rounded-xl shadow-lg shadow-[#D49B6A]/20 hover:opacity-95 transition-all flex items-center gap-2 group/btn cursor-pointer"
+                className="px-6 py-3.5 bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold text-xs rounded-xl shadow-lg shadow-[#D49B6A]/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
               >
                 <span>Explore Smartphones</span>
                 <span className="group-hover/btn:translate-x-1 transition-transform duration-200">→</span>
@@ -195,7 +195,7 @@ export function GatewayHero() {
               <Link
                 href="/deals"
                 className={cn(
-                  "px-6 py-3.5 text-xs font-medium rounded-xl transition-all duration-200",
+                  "px-5 py-3.5 text-xs font-medium rounded-xl transition-all duration-200 text-center justify-center flex items-center",
                   isLight 
                     ? "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 hover:border-[#D49B6A] shadow-sm" 
                     : "bg-black/50 hover:bg-black/80 text-white border border-gray-700 hover:border-[#D49B6A]"
@@ -223,7 +223,7 @@ export function GatewayHero() {
             ==================================================================== */}
         <div 
           className={cn(
-            "relative flex flex-col justify-between p-8 sm:p-12 lg:p-16 overflow-hidden transition-all duration-300 ease-out",
+            "relative flex flex-col justify-between p-5 sm:p-8 lg:p-16 overflow-hidden transition-all duration-300 ease-out",
             isLight 
               ? "bg-gradient-to-bl from-white via-[#F7FAFD] to-[#EDF4FB]" 
               : "bg-[#080C14]/95",
@@ -267,7 +267,7 @@ export function GatewayHero() {
               </span>
             </div>
             <span className={cn(
-              "text-[11px] font-mono px-3 py-1 rounded-full font-medium transition-all duration-200",
+              "text-[10px] sm:text-[11px] font-mono px-2.5 sm:px-3 py-1 rounded-full font-medium transition-all duration-200",
               isLight 
                 ? "bg-blue-100/80 text-blue-900 border border-blue-200 shadow-sm" 
                 : "bg-blue-500/10 text-blue-400 border border-blue-500/30"
@@ -277,16 +277,16 @@ export function GatewayHero() {
           </div>
 
           {/* Core Labs Content */}
-          <div className="relative z-10 my-auto py-8 space-y-6 max-w-xl">
-            <div className="space-y-2">
+          <div className="relative z-10 my-auto py-6 sm:py-8 space-y-4 sm:space-y-6 max-w-xl">
+            <div className="space-y-1.5 sm:space-y-2">
               <span className={cn(
-                "text-xs font-mono uppercase tracking-widest font-medium transition-colors",
+                "text-[11px] sm:text-xs font-mono uppercase tracking-widest font-medium transition-colors block",
                 isLight ? "text-gray-600" : "text-gray-400"
               )}>
                 Retail POS & Business Engineering
               </span>
               <h2 className={cn(
-                "text-4xl sm:text-5xl lg:text-6xl font-heading font-light tracking-tight leading-[1.08] transition-colors",
+                "text-3xl sm:text-5xl lg:text-6xl font-heading font-light tracking-tight leading-[1.08] transition-colors",
                 isLight ? "text-gray-950" : "text-white"
               )}>
                 METHMI <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 font-normal">LABS</span>
@@ -294,18 +294,18 @@ export function GatewayHero() {
             </div>
 
             <p className={cn(
-              "text-sm sm:text-base leading-relaxed font-body font-light transition-colors",
+              "text-xs sm:text-base leading-relaxed font-body font-light transition-colors",
               isLight ? "text-gray-700" : "text-gray-300"
             )}>
               High-speed retail Point of Sale (POS) suites, multi-counter shop billing, real-time reload trackers, and enterprise digital solutions tailored for growing Sri Lankan businesses.
             </p>
 
-            {/* Subcategory Pills */}
-            <div className="flex flex-wrap gap-2 pt-1 text-xs">
+            {/* Subcategory Pills - Mobile horizontal swipeable, desktop wrap */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 flex-nowrap sm:flex-wrap text-xs">
               <Link 
                 href="/labs/software"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-500 text-gray-800 hover:text-blue-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white"
@@ -316,7 +316,7 @@ export function GatewayHero() {
               <Link 
                 href="/labs/solutions"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-500 text-gray-800 hover:text-blue-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white"
@@ -327,7 +327,7 @@ export function GatewayHero() {
               <Link 
                 href="/labs/solutions"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-500 text-gray-800 hover:text-blue-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white"
@@ -338,7 +338,7 @@ export function GatewayHero() {
               <Link 
                 href="/labs/quote"
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium",
+                  "px-3 py-1.5 rounded-lg transition-all duration-200 font-medium whitespace-nowrap shrink-0",
                   isLight 
                     ? "bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-500 text-gray-800 hover:text-blue-800 shadow-sm" 
                     : "bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-blue-500 text-gray-300 hover:text-white"
@@ -349,10 +349,10 @@ export function GatewayHero() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3">
               <Link
                 href="/labs"
-                className="px-7 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-500/20 hover:opacity-95 transition-all flex items-center gap-2 group/btn cursor-pointer"
+                className="px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold text-xs rounded-xl shadow-lg shadow-blue-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
               >
                 <span>Explore Tech Solutions</span>
                 <span className="group-hover/btn:translate-x-1 transition-transform duration-200">→</span>
@@ -360,7 +360,7 @@ export function GatewayHero() {
               <Link
                 href="/labs/quote"
                 className={cn(
-                  "px-6 py-3.5 text-xs font-medium rounded-xl transition-all duration-200",
+                  "px-5 py-3.5 text-xs font-medium rounded-xl transition-all duration-200 text-center justify-center flex items-center",
                   isLight 
                     ? "bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 hover:border-blue-500 shadow-sm" 
                     : "bg-black/50 hover:bg-black/80 text-white border border-gray-700 hover:border-blue-500"

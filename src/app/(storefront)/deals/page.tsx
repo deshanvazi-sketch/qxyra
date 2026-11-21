@@ -55,16 +55,16 @@ export default function DealsPage() {
       </section>
 
       {/* Sale Products Grid */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-10">
+      <section className="py-10 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-6 sm:mb-10">
           <div>
-            <h2 className="text-3xl font-heading font-bold">Flash Sale & Promotions</h2>
-            <p className="text-gray-500 mt-2">Special promotional pricing on selected items</p>
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold">Flash Sale & Promotions</h2>
+            <p className="text-gray-500 text-xs sm:text-sm mt-1 sm:mt-2">Special promotional pricing on selected items</p>
           </div>
         </div>
 
         {saleProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {saleProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -77,7 +77,7 @@ export default function DealsPage() {
               Exclusive promotional items and discounts will appear here once added to inventory.
             </p>
             <Link
-              href="/shop"
+              href="/store"
               className="inline-block px-6 py-2.5 bg-brand-gold text-brand-black font-semibold text-xs rounded-xl hover:opacity-90 transition-all"
             >
               Browse Catalog

@@ -27,14 +27,14 @@ export function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-brand-gray-50">
+    <section className="py-12 sm:py-20 px-4 md:px-8 bg-brand-gray-50">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-12">
+        <div className="flex justify-between items-end mb-8 sm:mb-12">
           <div>
             <span className="text-xs uppercase text-brand-gold font-semibold tracking-widest block mb-1">
               Curated Selection
             </span>
-            <h2 className="text-3xl md:text-4xl font-heading text-brand-black font-bold">
+            <h2 className="text-2xl sm:text-4xl font-heading text-brand-black font-bold">
               Featured Products
             </h2>
           </div>
@@ -44,7 +44,7 @@ export function FeaturedProducts() {
         </div>
 
         {items.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {items.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

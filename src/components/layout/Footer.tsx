@@ -7,15 +7,15 @@ import { Logo } from './Logo';
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white pt-20 pb-10 border-t border-gray-800 font-body">
+    <footer className="bg-black text-white pt-12 sm:pt-20 pb-8 sm:pb-10 border-t border-gray-800 font-body">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
         {/* Newsletter Banner */}
-        <div className="mb-16 p-8 sm:p-12 rounded-3xl bg-[#0E131E] border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mb-10 sm:mb-16 p-5 sm:p-12 rounded-3xl bg-[#0E131E] border border-gray-800 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-xs uppercase tracking-widest text-[#D49B6A] font-mono font-medium">
               Join the Methmi Mobile VIP Club
             </span>
-            <h3 className="font-heading text-2xl font-light text-white">
+            <h3 className="font-heading text-xl sm:text-2xl font-light text-white">
               Latest smartphone drops & tech innovations in your inbox.
             </h3>
             <p className="text-gray-400 text-xs max-w-md">
@@ -23,7 +23,7 @@ export function Footer() {
             </p>
           </div>
 
-          <form className="flex w-full md:w-auto max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col sm:flex-row w-full md:w-auto max-w-md gap-2.5" onSubmit={(e) => e.preventDefault()}>
             <input 
               type="email" 
               placeholder="Enter your email address" 
@@ -32,7 +32,7 @@ export function Footer() {
             />
             <button 
               type="submit" 
-              className="bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold px-5 py-3 text-xs rounded-xl hover:opacity-95 transition-opacity whitespace-nowrap cursor-pointer shadow-md"
+              className="bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black font-semibold px-5 py-3 text-xs rounded-xl hover:opacity-95 transition-opacity whitespace-nowrap cursor-pointer shadow-md text-center justify-center"
             >
               Subscribe
             </button>
@@ -40,9 +40,9 @@ export function Footer() {
         </div>
 
         {/* 5-Column Navigation Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 pb-16 border-b border-gray-800/80">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 sm:gap-10 pb-12 sm:pb-16 border-b border-gray-800/80">
           {/* Brand Info (2 cols on lg) */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="col-span-2 space-y-4 sm:space-y-6">
             <Link href="/" className="inline-block hover:opacity-90 transition-opacity">
               <Logo size="md" />
             </Link>
@@ -67,11 +67,11 @@ export function Footer() {
 
           {/* Dynamic Link Groups from constants */}
           {FOOTER_LINKS.map((group) => (
-            <div key={group.title} className="space-y-4">
+            <div key={group.title} className="space-y-3 sm:space-y-4">
               <h4 className="font-heading font-medium text-xs text-white uppercase tracking-wider font-mono">
                 {group.title}
               </h4>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2 sm:space-y-2.5">
                 {group.links.map((link) => (
                   <li key={link.label}>
                     <Link 
@@ -88,9 +88,9 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs font-mono">
+        <div className="pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs font-mono text-center md:text-left">
           <p>&copy; {new Date().getFullYear()} {BRAND_NAME} Worldwide. All rights reserved.</p>
-          <div className="flex space-x-6 text-[11px]">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-[11px]">
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link href="/shipping" className="hover:text-white transition-colors">Shipping Policy</Link>

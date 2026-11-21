@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ProductImage } from '@/types';
 import { cn } from '@/lib/utils';
 import { ImageIcon } from 'lucide-react';
@@ -21,64 +22,88 @@ const GRADIENTS = [
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const displayImages = images.length >= 4 
-    ? images 
+  const displayImages = images.length > 0
+    ? images
     : [
-        ...images,
-        ...Array.from({ length: Math.max(0, 4 - images.length) }).map((_, i) => ({
-          id: `placeholder-${i}`,
+        {
+          id: 'placeholder-0',
           productId: 'placeholder',
-          url: '',
-          alt: `${productName} view ${images.length + i + 1}`,
-          isPrimary: false,
-          sortOrder: images.length + i
-        }))
+          url: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1000',
+          alt: productName,
+          isPrimary: true,
+          sortOrder: 0,
+        },
       ];
 
   return (
-    <div className="flex flex-col gap-4 w-full">
-      <div className="relative aspect-[4/5] md:aspect-square w-full overflow-hidden bg-brand-gray-50 rounded-2xl">
+    <div className="flex flex-col gap-3 sm:gap-4 w-full">
+      {/* Main Active Image Canvas */}
+      <div className="relative aspect-square w-full overflow-hidden bg-black/50 rounded-2xl border border-gray-800/80 shadow-xl">
         {displayImages.map((img, idx) => (
           <div
             key={img.id || idx}
             className={cn(
-              "absolute inset-0 transition-opacity duration-700 flex flex-col items-center justify-center p-8 text-center",
-              "bg-gradient-to-br",
-              GRADIENTS[idx % GRADIENTS.length],
-              idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+              "absolute inset-0 transition-opacity duration-500",
+              idx === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
             )}
           >
-            <div className="w-20 h-20 mb-6 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
-              <ImageIcon className="w-8 h-8 text-white/50" />
-            </div>
-            <h3 className="font-heading text-3xl md:text-4xl font-light text-white tracking-wider mb-4 leading-tight">
-              {productName}
-            </h3>
-            <p className="text-white/60 font-body text-xs tracking-[0.2em] uppercase mt-4">
-              View {idx + 1}
-            </p>
+            {img.url ? (
+              <Image
+                src={img.url}
+                alt={img.alt || productName}
+                fill
+                priority={idx === 0}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover object-center"
+              />
+            ) : (
+              <div className={cn(
+                "w-full h-full flex flex-col items-center justify-center p-8 text-center bg-gradient-to-br",
+                GRADIENTS[idx % GRADIENTS.length]
+              )}>
+                <div className="w-16 h-16 mb-4 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
+                  <ImageIcon className="w-8 h-8 text-white/50" />
+                </div>
+                <h3 className="font-heading text-2xl font-light text-white tracking-wider mb-2">
+                  {productName}
+                </h3>
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      <div className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory hide-scrollbar">
-        {displayImages.map((img, idx) => (
-          <button
-            key={img.id || idx}
-            onClick={() => setActiveIndex(idx)}
-            className={cn(
-              "relative flex-none w-20 md:w-24 aspect-square rounded-xl overflow-hidden transition-all duration-300 snap-center",
-              "flex items-center justify-center bg-gradient-to-br",
-              GRADIENTS[idx % GRADIENTS.length],
-              idx === activeIndex 
-                ? "ring-2 ring-brand-gold ring-offset-2 ring-offset-white opacity-100" 
-                : "opacity-50 hover:opacity-100"
-            )}
-          >
-            <ImageIcon className="w-6 h-6 text-white/40" />
-          </button>
-        ))}
-      </div>
+      {/* Thumbnails list */}
+      {displayImages.length > 1 && (
+        <div className="flex gap-2.5 overflow-x-auto pb-1 no-scrollbar">
+          {displayImages.map((img, idx) => (
+            <button
+              key={img.id || idx}
+              onClick={() => setActiveIndex(idx)}
+              className={cn(
+                "relative flex-none w-16 sm:w-20 aspect-square rounded-xl overflow-hidden transition-all duration-300 border cursor-pointer",
+                idx === activeIndex 
+                  ? "border-brand-gold ring-2 ring-brand-gold/40 opacity-100" 
+                  : "border-gray-800 opacity-60 hover:opacity-100"
+              )}
+            >
+              {img.url ? (
+                <Image
+                  src={img.url}
+                  alt={img.alt || productName}
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-zinc-900">
+                  <ImageIcon className="w-5 h-5 text-white/40" />
+                </div>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

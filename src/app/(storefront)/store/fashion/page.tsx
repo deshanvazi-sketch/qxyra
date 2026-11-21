@@ -39,8 +39,8 @@ export default function FashionCategoryPage() {
   ];
 
   return (
-    <div className="bg-[#0A0A0A] text-white min-h-screen py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="bg-[#0A0A0A] text-white min-h-screen py-6 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-12">
         {/* Breadcrumb */}
         <nav className="flex items-center text-xs text-gray-400 font-mono">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -51,17 +51,17 @@ export default function FashionCategoryPage() {
         </nav>
 
         {/* Category Hero */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#141820] to-black border border-brand-gold/30 shadow-2xl space-y-4">
+        <div className="p-5 sm:p-12 rounded-3xl bg-gradient-to-r from-[#141820] to-black border border-brand-gold/30 shadow-2xl space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-gold" />
             <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
               Department 01
             </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-heading font-light text-white tracking-tight">
+          <h1 className="text-2xl sm:text-5xl font-heading font-light text-white tracking-tight">
             Fashion <span className="text-brand-gold font-normal">Collection</span>
           </h1>
-          <p className="text-gray-300 text-sm max-w-2xl leading-relaxed font-light">
+          <p className="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed font-light">
             Architectural cuts, pre-shrunk organic cottons, and structured double-needle finishes across regular fit tees, oversized streetwear, and luxury hoodies.
           </p>
         </div>
@@ -74,13 +74,13 @@ export default function FashionCategoryPage() {
         />
 
         {/* Product Grid */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between text-xs text-gray-400 border-b border-gray-800 pb-3">
             <span>Showing All Fashion Pieces</span>
             <span className="font-mono text-brand-gold">{fashionProducts.length} Items</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {fashionProducts.map((product) => {
               let catLabel = 'Fashion';
               if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';

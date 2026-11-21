@@ -88,10 +88,14 @@ export function StoreCatalog() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {activeProducts.map((product) => {
             let catLabel = 'Product';
-            if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
+            if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
+            else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
+            else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
+            else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
+            else if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
             else if (product.categoryId === 'oversized-tee') catLabel = 'Oversized Tee';
             else if (product.categoryId === 'hoodie') catLabel = 'Hoodie';
             else if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';

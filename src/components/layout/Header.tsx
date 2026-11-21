@@ -105,29 +105,32 @@ export function Header() {
       )}>
         {/* Top Announcement & Currency Bar */}
         <div className={cn(
-          "text-xs font-mono py-1.5 px-4 sm:px-8 flex justify-between items-center border-b transition-colors",
+          "text-xs font-mono py-1 px-3 sm:px-8 flex justify-between items-center border-b transition-colors",
           isLight 
             ? "bg-slate-50 text-slate-700 border-slate-200" 
             : "bg-black text-[#D49B6A] border-gray-800/60"
         )}>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span className={cn("hidden sm:inline text-[11px] font-medium", isLight ? "text-slate-600" : "text-gray-400")}>
               Methmi Mobile (Pvt) Ltd • Your Trusted Partner
             </span>
             <CurrencySelector showRateBadge={false} />
           </div>
-          <div className={cn("flex items-center gap-4 text-[11px] font-sans", isLight ? "text-slate-600" : "text-gray-400")}>
+          <div className={cn("flex items-center gap-2 sm:gap-4 text-[10px] sm:text-[11px] font-sans", isLight ? "text-slate-600" : "text-gray-400")}>
+            <span className="inline-flex items-center gap-1 font-mono text-[#D49B6A] bg-[#D49B6A]/10 px-2 py-0.5 rounded text-[10px] sm:hidden">
+              🇱🇰 TRCSL Approved
+            </span>
             <Link href="/labs" className="hover:text-blue-500 transition-colors hidden md:inline font-medium">
               ⚡ Methmi Labs (Cloud POS & Systems)
             </Link>
             <span className="opacity-40 hidden md:inline">|</span>
-            <span>Support: <span className={cn("font-medium", isLight ? "text-amber-700" : "text-[#D49B6A]")}>info@methmimobilepvtltd.lk</span></span>
+            <span className="hidden sm:inline">Support: <span className={cn("font-medium", isLight ? "text-amber-700" : "text-[#D49B6A]")}>info@methmimobilepvtltd.lk</span></span>
           </div>
         </div>
 
         {/* Main Navigation Bar */}
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Mobile Menu Button */}
             <button 
               className={cn("lg:hidden p-2 -ml-2 transition-colors", isLight ? "text-slate-800 hover:text-amber-700" : "text-white hover:text-brand-gold")}
@@ -251,7 +254,7 @@ export function Header() {
       />
       
       {/* Spacer to prevent content from hiding under fixed header */}
-      <div className="h-[110px]" />
+      <div className="h-[90px] sm:h-[110px]" />
     </>
   );
 }

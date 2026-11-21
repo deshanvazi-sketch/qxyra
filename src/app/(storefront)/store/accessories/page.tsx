@@ -32,8 +32,8 @@ export default function AccessoriesCategoryPage() {
   ];
 
   return (
-    <div className="bg-[#0A0A0A] text-white min-h-screen py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="bg-[#0A0A0A] text-white min-h-screen py-6 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-12">
         {/* Breadcrumb */}
         <nav className="flex items-center text-xs text-gray-400 font-mono">
           <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -44,17 +44,17 @@ export default function AccessoriesCategoryPage() {
         </nav>
 
         {/* Category Hero */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#141820] to-black border border-brand-gold/30 shadow-2xl space-y-4">
+        <div className="p-5 sm:p-12 rounded-3xl bg-gradient-to-r from-[#141820] to-black border border-brand-gold/30 shadow-2xl space-y-3 sm:space-y-4">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-brand-gold" />
             <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
               Department 02
             </span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-heading font-light text-white tracking-tight">
+          <h1 className="text-2xl sm:text-5xl font-heading font-light text-white tracking-tight">
             Tech <span className="text-brand-gold font-normal">Accessories</span>
           </h1>
-          <p className="text-gray-300 text-sm max-w-2xl leading-relaxed font-light">
+          <p className="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed font-light">
             Minimalist workspace tools, high-speed GaN gallium nitride charging, Kevlar ballistic cables, and sandblasted aluminum ergonomics.
           </p>
         </div>
@@ -67,13 +67,13 @@ export default function AccessoriesCategoryPage() {
         />
 
         {/* Product Grid */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           <div className="flex items-center justify-between text-xs text-gray-400 border-b border-gray-800 pb-3">
             <span>Showing All Tech Accessories</span>
             <span className="font-mono text-brand-gold">{accessoryProducts.length} Items</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {accessoryProducts.map((product) => {
               let catLabel = 'Accessories';
               if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';
