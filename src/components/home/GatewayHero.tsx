@@ -8,6 +8,7 @@ import { useTheme } from '@/context/ThemeContext';
 
 export function GatewayHero() {
   const [hoveredSide, setHoveredSide] = useState<'none' | 'store' | 'labs'>('none');
+  const [activeTab, setActiveTab] = useState<'store' | 'labs'>('store');
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
 
@@ -16,11 +17,12 @@ export function GatewayHero() {
   }, []);
 
   const isLight = mounted && theme === 'light';
+  const currentHighlight = hoveredSide !== 'none' ? hoveredSide : activeTab;
 
   return (
     <section 
       className={cn(
-        "relative w-full min-h-[85vh] lg:min-h-[90vh] overflow-hidden flex flex-col justify-center select-none transition-colors duration-300",
+        "relative w-full overflow-hidden flex flex-col justify-center select-none transition-colors duration-300",
         isLight ? "bg-[#F8F9FA]" : "bg-black"
       )}
       onMouseLeave={() => setHoveredSide('none')}
@@ -30,24 +32,57 @@ export function GatewayHero() {
         <div 
           className={cn(
             "w-[550px] h-[550px] rounded-full blur-3xl transition-all duration-500 ease-out",
-            hoveredSide === 'store' 
-              ? "bg-[#D49B6A]/35 -translate-x-1/4 scale-110" 
-              : hoveredSide === 'labs' 
-                ? "bg-blue-600/35 translate-x-1/4 scale-110" 
+            currentHighlight === 'store' 
+              ? "bg-[#D49B6A]/35 lg:-translate-x-1/4 scale-110" 
+              : currentHighlight === 'labs' 
+                ? "bg-blue-600/35 lg:translate-x-1/4 scale-110" 
                 : "bg-gradient-to-r from-[#D49B6A]/20 to-blue-600/20"
           )} 
         />
       </div>
 
-      {/* Main Stationary 50/50 Split Container */}
-      <div className="relative w-full h-full min-h-[85vh] lg:min-h-[90vh] grid grid-cols-1 lg:grid-cols-2">
+      {/* Mobile Interactive Segmented Switcher (Tabs) */}
+      <div className="lg:hidden px-4 pt-3 pb-1 z-20">
+        <div className="flex p-1 bg-[#141820]/90 border border-gray-800 rounded-2xl shadow-xl max-w-sm mx-auto backdrop-blur-md">
+          <button
+            type="button"
+            onClick={() => setActiveTab('store')}
+            className={cn(
+              "flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-300 cursor-pointer",
+              activeTab === 'store'
+                ? "bg-gradient-to-r from-[#D49B6A] to-[#e2ac7e] text-black shadow-lg shadow-[#D49B6A]/20 font-bold"
+                : "text-gray-400 hover:text-white"
+            )}
+          >
+            <span>📱</span>
+            <span>Methmi Store</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('labs')}
+            className={cn(
+              "flex-1 py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-300 cursor-pointer",
+              activeTab === 'labs'
+                ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20 font-bold"
+                : "text-gray-400 hover:text-white"
+            )}
+          >
+            <span>⚡</span>
+            <span>Methmi Labs</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Split Container: 50/50 on Desktop, Single Active Tab on Mobile */}
+      <div className="relative w-full h-full min-h-[500px] sm:min-h-[580px] lg:min-h-[90vh] grid grid-cols-1 lg:grid-cols-2">
         
         {/* ====================================================================
             LEFT SIDE: METHMI STORE (Smartphones & Mobile Gear)
             ==================================================================== */}
         <div 
           className={cn(
-            "relative flex flex-col justify-between p-5 sm:p-8 lg:p-16 border-b lg:border-b-0 lg:border-r overflow-hidden transition-all duration-300 ease-out",
+            "relative flex-col justify-between p-5 sm:p-8 lg:p-16 border-b lg:border-b-0 lg:border-r overflow-hidden transition-all duration-300 ease-out",
+            activeTab === 'store' ? "flex" : "hidden lg:flex",
             isLight 
               ? "border-gray-200 bg-gradient-to-br from-white via-[#FCFBF9] to-[#F7F4EE]" 
               : "border-gray-800/80 bg-black/90",
@@ -223,7 +258,8 @@ export function GatewayHero() {
             ==================================================================== */}
         <div 
           className={cn(
-            "relative flex flex-col justify-between p-5 sm:p-8 lg:p-16 overflow-hidden transition-all duration-300 ease-out",
+            "relative flex-col justify-between p-5 sm:p-8 lg:p-16 overflow-hidden transition-all duration-300 ease-out",
+            activeTab === 'labs' ? "flex" : "hidden lg:flex",
             isLight 
               ? "bg-gradient-to-bl from-white via-[#F7FAFD] to-[#EDF4FB]" 
               : "bg-[#080C14]/95",
