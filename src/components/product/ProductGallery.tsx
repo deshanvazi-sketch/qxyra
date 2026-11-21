@@ -2,14 +2,16 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ProductImage } from '@/types';
+import { Product, ProductImage } from '@/types';
 import { cn } from '@/lib/utils';
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, Sparkles } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import { Phone3DModal } from '@/components/3d/Phone3DModal';
 
 interface ProductGalleryProps {
   images: ProductImage[];
   productName: string;
+  product?: Product;
 }
 
 const GRADIENTS = [
@@ -20,8 +22,9 @@ const GRADIENTS = [
   'from-gray-800 to-gray-900',
 ];
 
-export function ProductGallery({ images, productName }: ProductGalleryProps) {
+export function ProductGallery({ images, productName, product }: ProductGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [is3DOpen, setIs3DOpen] = useState(false);
   const { theme } = useTheme();
   const isLight = theme === 'light';
 
@@ -77,6 +80,22 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             )}
           </div>
         ))}
+
+        {/* 3D Interactive Launch Button */}
+        {product && (
+          <button
+            onClick={() => setIs3DOpen(true)}
+            className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-black/80 hover:bg-black text-brand-gold hover:text-white border border-brand-gold/50 shadow-xl backdrop-blur-md text-xs font-mono font-semibold transition-all flex items-center gap-2 group cursor-pointer hover:scale-105 active:scale-95"
+            title="Open 360° Interactive 3D Model"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+            </span>
+            <Sparkles className="w-3.5 h-3.5 text-brand-gold group-hover:rotate-45 transition-transform" />
+            <span>View in 3D (360°)</span>
+          </button>
+        )}
       </div>
 
       {/* Thumbnails list */}
@@ -112,6 +131,15 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             </button>
           ))}
         </div>
+      )}
+
+      {/* 3D Modal Dialog */}
+      {product && (
+        <Phone3DModal
+          product={product}
+          isOpen={is3DOpen}
+          onClose={() => setIs3DOpen(false)}
+        />
       )}
     </div>
   );

@@ -9,6 +9,7 @@ import { useCurrency } from '@/context/CurrencyContext';
 import { useCartStore } from '@/store/cartStore';
 import { useWishlistStore } from '@/store/wishlistStore';
 import { useTheme } from '@/context/ThemeContext';
+import { Phone3DModal } from '@/components/3d/Phone3DModal';
 
 interface ProductCardProps {
   product: Product;
@@ -18,6 +19,7 @@ interface ProductCardProps {
 export function ProductCard({ product, categoryName }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
+  const [is3DOpen, setIs3DOpen] = useState(false);
   const { format } = useCurrency();
   const { theme } = useTheme();
   const isLight = theme === 'light';
@@ -108,6 +110,25 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
             className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
           />
         </Link>
+
+        {/* 3D Interactive Launch Pill */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIs3DOpen(true);
+          }}
+          className={cn(
+            "absolute bottom-2 left-2 sm:bottom-3 sm:left-3 z-20 px-2.5 py-1 rounded-full backdrop-blur-md border text-[10px] font-mono font-semibold transition-all flex items-center gap-1 shadow-md hover:scale-105 active:scale-95 cursor-pointer",
+            isLight
+              ? "bg-white/90 border-amber-300 text-amber-800 hover:bg-amber-50"
+              : "bg-black/70 border-brand-gold/50 text-brand-gold hover:bg-black/90 hover:text-white"
+          )}
+          title="Inspect in Interactive 3D"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
+          <span>3D View</span>
+        </button>
 
         {/* Desktop Quick Add To Cart Bar (Hover-based) */}
         <div className={cn(
@@ -228,6 +249,13 @@ export function ProductCard({ product, categoryName }: ProductCardProps) {
           </Link>
         </div>
       </div>
+
+      {/* 3D Interactive Modal */}
+      <Phone3DModal
+        product={product}
+        isOpen={is3DOpen}
+        onClose={() => setIs3DOpen(false)}
+      />
     </div>
   );
 }

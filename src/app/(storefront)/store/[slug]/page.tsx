@@ -114,7 +114,7 @@ export default async function StoreProductDetailPage({ params }: ProductPageProp
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-12 sm:mb-20 bg-[#121620] p-4 sm:p-10 rounded-2xl sm:rounded-3xl border border-gray-800">
           {/* Left: Gallery */}
           <div className="w-full">
-            <ProductGallery images={product.images} productName={product.name} />
+            <ProductGallery images={product.images} productName={product.name} product={product} />
           </div>
 
           {/* Right: Info */}
