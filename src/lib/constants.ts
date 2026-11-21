@@ -55,34 +55,23 @@ export const NAV_LINKS: NavItem[] = [
     badge: 'Phones',
     children: [
       {
-        label: 'Smartphones',
+        label: 'Smartphones (TRCSL)',
         href: '/store/phones',
-        description: 'Apple iPhone, Samsung Galaxy, Tecno, Infinix & Xiaomi Redmi with 100% TRCSL company warranty.',
+        description: 'Vivo, Infinix & Tecno smartphones with 100% genuine TRCSL approval and 1-Year Company Warranty.',
         children: [
-          { label: 'Apple iPhone', href: '/store/phones/apple' },
-          { label: 'Samsung Galaxy', href: '/store/phones/samsung' },
-          { label: 'Tecno & Infinix', href: '/store/phones/tecno-infinix' },
-          { label: 'Xiaomi Redmi', href: '/store/phones/redmi' },
+          { label: 'Vivo Smartphones', href: '/store/phones/vivo' },
+          { label: 'Infinix Mobile', href: '/store/phones/infinix' },
+          { label: 'Tecno Smartphones', href: '/store/phones/tecno' },
+          { label: 'All Smartphones', href: '/store/phones' },
         ],
       },
       {
         label: 'Accessories',
         href: '/store/accessories',
-        description: 'Original high-speed chargers, MagSafe stands, premium wireless earbuds & smartwatches.',
+        description: 'Original high-speed fast chargers, MagSafe stands, premium cables and accessories.',
         children: [
-          { label: 'Fast Chargers & Cables', href: '/store/accessories/chargers' },
-          { label: 'Audio & Earbuds', href: '/store/accessories/audio' },
-          { label: 'Smart Watches', href: '/store/accessories/watches' },
-        ],
-      },
-      {
-        label: 'Lifestyle & Apparel',
-        href: '/store/fashion',
-        description: 'Heavyweight regular fit tees, oversized streetwear & 460GSM french terry hoodies.',
-        children: [
-          { label: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
-          { label: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
-          { label: 'Hoodies', href: '/store/fashion/hoodie' },
+          { label: 'Mobile Accessories', href: '/store/accessories/mobile' },
+          { label: 'Computer Accessories', href: '/store/accessories/computer' },
         ],
       },
     ],
@@ -118,11 +107,11 @@ export const FOOTER_LINKS = [
   {
     title: 'Methmi Store',
     links: [
-      { label: 'All Smartphones', href: '/store' },
-      { label: 'Apple iPhones', href: '/store' },
-      { label: 'Samsung Galaxy', href: '/store' },
+      { label: 'Vivo Smartphones', href: '/store/phones/vivo' },
+      { label: 'Infinix Smartphones', href: '/store/phones/infinix' },
+      { label: 'Tecno Flagships', href: '/store/phones/tecno' },
+      { label: 'All Smartphones', href: '/store/phones' },
       { label: 'Original Accessories', href: '/store/accessories' },
-      { label: 'Flash Deals', href: '/deals' },
     ],
   },
   {

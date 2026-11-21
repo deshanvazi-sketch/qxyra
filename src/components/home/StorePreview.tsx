@@ -6,27 +6,21 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { useProductStore } from '@/store/productStore';
 
 export function StorePreview() {
-  const [activeCategory, setActiveCategory] = useState<'all' | 'phones' | 'accessories' | 'fashion'>('all');
+  const [activeCategory, setActiveCategory] = useState<'all' | 'vivo' | 'infinix' | 'tecno'>('all');
   const products = useProductStore((s) => s.products);
 
   const filteredProducts = products.filter((p) => {
     if (!p.isActive) return false;
     if (activeCategory === 'all') return true;
-    if (activeCategory === 'phones') {
-      return ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId);
-    }
-    if (activeCategory === 'accessories') {
-      return ['mobile', 'computer'].includes(p.categoryId);
-    }
-    if (activeCategory === 'fashion') {
-      return ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId);
-    }
+    if (activeCategory === 'vivo') return p.categoryId === 'vivo';
+    if (activeCategory === 'infinix') return p.name.toLowerCase().includes('infinix');
+    if (activeCategory === 'tecno') return p.name.toLowerCase().includes('tecno');
     return true;
-  }).slice(0, 8);
+  });
 
-  const phoneCount = products.filter((p) => ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)).length;
-  const accessoryCount = products.filter((p) => ['mobile', 'computer'].includes(p.categoryId)).length;
-  const fashionCount = products.filter((p) => ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId)).length;
+  const vivoCount = products.filter((p) => p.categoryId === 'vivo').length;
+  const infinixCount = products.filter((p) => p.name.toLowerCase().includes('infinix')).length;
+  const tecnoCount = products.filter((p) => p.name.toLowerCase().includes('tecno')).length;
 
   return (
     <section className="py-12 sm:py-20 bg-[#0A0A0A] border-b border-gray-800/80">
@@ -37,14 +31,14 @@ export function StorePreview() {
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
               <span className="text-xs uppercase tracking-widest text-brand-gold font-mono font-medium">
-                Division 01 • Official Store
+                Official Smartphone Collection
               </span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-heading font-light text-white tracking-wide">
               Methmi Mobile <span className="font-normal text-brand-gold">Flagship</span> Collection
             </h2>
             <p className="text-gray-400 text-xs sm:text-sm max-w-xl">
-              100% Genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix, high-speed mobile power, and curated lifestyle apparel.
+              100% Genuine TRCSL-approved Vivo, Infinix, and Tecno smartphones with 1-Year Official Company Warranty and fast islandwide delivery.
             </p>
           </div>
 
@@ -58,37 +52,37 @@ export function StorePreview() {
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              All Items ({products.length})
+              All Phones ({products.length})
             </button>
             <button
-              onClick={() => setActiveCategory('phones')}
+              onClick={() => setActiveCategory('vivo')}
               className={`px-3 sm:px-4 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
-                activeCategory === 'phones'
+                activeCategory === 'vivo'
                   ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              📱 Phones ({phoneCount})
+              📱 Vivo ({vivoCount})
             </button>
             <button
-              onClick={() => setActiveCategory('accessories')}
+              onClick={() => setActiveCategory('infinix')}
               className={`px-3 sm:px-4 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
-                activeCategory === 'accessories'
+                activeCategory === 'infinix'
                   ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              ⚡ Accessories ({accessoryCount})
+              ⚡ Infinix ({infinixCount})
             </button>
             <button
-              onClick={() => setActiveCategory('fashion')}
+              onClick={() => setActiveCategory('tecno')}
               className={`px-3 sm:px-4 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
-                activeCategory === 'fashion'
+                activeCategory === 'tecno'
                   ? 'bg-brand-gold text-brand-black shadow-md font-semibold'
                   : 'text-gray-400 hover:text-white'
               }`}
             >
-              👕 Apparel ({fashionCount})
+              📸 Tecno ({tecnoCount})
             </button>
           </div>
         </div>
@@ -96,17 +90,10 @@ export function StorePreview() {
         {/* Product Grid - 2 columns on mobile, 4 on desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredProducts.map((product) => {
-            let catLabel = 'Product';
-            if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
-            else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
-            else if (product.categoryId === 'vivo') catLabel = 'Vivo';
-            else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
-            else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
-            else if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
-            else if (product.categoryId === 'oversized-tee') catLabel = 'Oversized Tee';
-            else if (product.categoryId === 'hoodie') catLabel = 'Hoodie';
-            else if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';
-            else if (product.categoryId === 'computer') catLabel = 'Computer Gear';
+            let catLabel = 'Smartphone';
+            if (product.categoryId === 'vivo') catLabel = 'Vivo';
+            else if (product.name.toLowerCase().includes('infinix')) catLabel = 'Infinix';
+            else if (product.name.toLowerCase().includes('tecno')) catLabel = 'Tecno';
 
             return (
               <ProductCard
@@ -121,8 +108,8 @@ export function StorePreview() {
         {/* Bottom CTA Banner */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-2xl bg-[#141820] border border-brand-gold/20">
           <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-heading text-base font-medium text-white">Looking for the full drop?</h4>
-            <p className="text-gray-400 text-xs">Explore all tees, heavy winter hoodies, MagSafe charging & computer docking stations.</p>
+            <h4 className="font-heading text-base font-medium text-white">Looking for the full catalog?</h4>
+            <p className="text-gray-400 text-xs">Explore all Vivo, Infinix, and Tecno smartphone series with official 1-Year Company Warranty.</p>
           </div>
           <Link
             href="/store"

@@ -65,7 +65,86 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
 
           {/* 3-Column Compact Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {/* Column 1: Flagship Smartphones */}
+            {/* Column 1: Vivo Smartphones */}
+            <div className="space-y-2">
+              <Link
+                href="/store/phones/vivo"
+                onClick={onClose}
+                className={cn(
+                  "text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors",
+                  isLight ? "text-amber-800 hover:text-amber-950" : "text-brand-gold hover:text-white"
+                )}
+              >
+                <span>📱</span>
+                <span>Vivo Smartphones (3)</span>
+              </Link>
+              <div className="space-y-1.5 pl-1">
+                <Link
+                  href="/store/vivo-y05"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Vivo Y05
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      4+64GB & 4+128GB • From Rs. 59,990
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/vivo-y11d"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Vivo Y11D
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      4+128GB • Rs. 71,990
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/vivo-y31d"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Vivo Y31D
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      6+128GB & 8+256GB • From Rs. 94,990
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Column 2: Infinix & Tecno */}
             <div className="space-y-2">
               <Link
                 href="/store/phones"
@@ -75,133 +154,12 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                   isLight ? "text-amber-800 hover:text-amber-950" : "text-brand-gold hover:text-white"
                 )}
               >
-                <span>📱</span>
-                <span>Smartphones (TRCSL)</span>
-              </Link>
-              <div className="space-y-1.5 pl-1">
-                <Link
-                  href="/store/phones/apple"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Apple iPhone
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      iPhone 16 Pro Max, 16 & 15 Series
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/phones/samsung"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Samsung Galaxy
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      Galaxy S24 Ultra, Z Fold & A-Series
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/phones/vivo"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Vivo Smartphones
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      Vivo Y05, Y-Series & V-Series Flagships
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/phones/tecno-infinix"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Tecno & Infinix
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      Camon 30 Premier, Note 40 Pro 5G
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/phones/redmi"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Xiaomi Redmi
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      Redmi Note 13 Pro+ & 13C
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Column 2: Tech Accessories */}
-            <div className="space-y-2">
-              <Link
-                href="/store/accessories"
-                onClick={onClose}
-                className={cn(
-                  "text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors",
-                  isLight ? "text-gray-800 hover:text-amber-700" : "text-gray-300 hover:text-brand-gold"
-                )}
-              >
                 <span>⚡</span>
-                <span>Tech Accessories</span>
+                <span>Infinix & Tecno (4)</span>
               </Link>
               <div className="space-y-1.5 pl-1">
                 <Link
-                  href="/store/accessories/mobile"
+                  href="/store/infinix-hot-70"
                   onClick={onClose}
                   className={cn(
                     "p-2 rounded-xl transition-all flex items-center justify-between group",
@@ -212,17 +170,17 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 >
                   <div>
                     <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Mobile Accessories
+                      Infinix Hot 70
                     </h4>
                     <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      MagSafe stands, 65W GaN fast chargers
+                      4+128GB & 6+128GB • From Rs. 74,999
                     </p>
                   </div>
                   <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
                 </Link>
 
                 <Link
-                  href="/store/accessories/computer"
+                  href="/store/infinix-smart-20"
                   onClick={onClose}
                   className={cn(
                     "p-2 rounded-xl transition-all flex items-center justify-between group",
@@ -233,10 +191,52 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
                 >
                   <div>
                     <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Computer Accessories
+                      Infinix Smart 20
                     </h4>
                     <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      CNC aluminum riser stands, 7-in-1 4K hubs
+                      4+64GB & 4+128GB • From Rs. 54,999
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/infinix-note-60-pro"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Infinix Note 60 Pro 5G
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      8+256GB AMOLED • Rs. 169,999
+                    </p>
+                  </div>
+                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                </Link>
+
+                <Link
+                  href="/store/tecno-camon-50-pro"
+                  onClick={onClose}
+                  className={cn(
+                    "p-2 rounded-xl transition-all flex items-center justify-between group",
+                    isLight 
+                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
+                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                  )}
+                >
+                  <div>
+                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
+                      Tecno Camon 50 Pro 5G
+                    </h4>
+                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
+                      8+256GB Flagship Camera • Rs. 159,999
                     </p>
                   </div>
                   <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
@@ -244,81 +244,55 @@ export function MegaMenu({ division, onClose, onMouseEnter, onMouseLeave }: Mega
               </div>
             </div>
 
-            {/* Column 3: Lifestyle Apparel */}
+            {/* Column 3: Trust & Quick Links */}
             <div className="space-y-2">
               <Link
-                href="/store/fashion"
+                href="/store/phones"
                 onClick={onClose}
                 className={cn(
                   "text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors",
                   isLight ? "text-gray-800 hover:text-amber-700" : "text-gray-300 hover:text-brand-gold"
                 )}
               >
-                <span>👕</span>
-                <span>Lifestyle Drops</span>
+                <span>🛡️</span>
+                <span>Guarantee & Delivery</span>
               </Link>
-              <div className="space-y-1.5 pl-1">
-                <Link
-                  href="/store/fashion/regular-fit-tee"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Regular Fit Tee
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      240GSM combed cotton everyday cut
-                    </p>
+              <div className="space-y-2 pl-1">
+                <div className={cn(
+                  "p-3 rounded-xl border text-xs space-y-1.5",
+                  isLight ? "bg-amber-50/50 border-amber-200/60 text-gray-800" : "bg-white/5 border-gray-800 text-gray-300"
+                )}>
+                  <div className="flex items-center gap-2 font-medium text-brand-gold">
+                    <span>✓</span>
+                    <span>100% Genuine TRCSL Approved</span>
                   </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
+                  <p className="text-[11px] text-gray-400">
+                    All phones carry verified official Sri Lanka TRCSL approval with 1-Year Company Warranty.
+                  </p>
+                </div>
+
+                <div className={cn(
+                  "p-3 rounded-xl border text-xs space-y-1.5",
+                  isLight ? "bg-blue-50/50 border-blue-200/60 text-gray-800" : "bg-white/5 border-gray-800 text-gray-300"
+                )}>
+                  <div className="flex items-center gap-2 font-medium text-emerald-400">
+                    <span>🚚</span>
+                    <span>Islandwide Express Delivery</span>
+                  </div>
+                  <p className="text-[11px] text-gray-400">
+                    Fast door-step delivery across Sri Lanka. Cash on Delivery (COD) available.
+                  </p>
+                </div>
 
                 <Link
-                  href="/store/fashion/oversized-tee"
+                  href="/store/phones"
                   onClick={onClose}
                   className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
+                    "block text-center py-2 px-3 rounded-xl text-xs font-medium transition-all",
+                    isLight ? "bg-amber-500 hover:bg-amber-600 text-white" : "bg-brand-gold hover:bg-brand-gold/90 text-black font-semibold"
                   )}
                 >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      Oversized Tee
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      280GSM heavy boxy drape
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
-                </Link>
-
-                <Link
-                  href="/store/fashion/hoodie"
-                  onClick={onClose}
-                  className={cn(
-                    "p-2 rounded-xl transition-all flex items-center justify-between group",
-                    isLight 
-                      ? "hover:bg-amber-50/80 border border-transparent hover:border-amber-200" 
-                      : "hover:bg-black/50 border border-transparent hover:border-gray-800"
-                  )}
-                >
-                  <div>
-                    <h4 className={cn("text-xs font-medium", isLight ? "text-gray-900 group-hover:text-amber-800" : "text-white group-hover:text-brand-gold")}>
-                      French Terry Hoodie
-                    </h4>
-                    <p className={cn("text-[11px]", isLight ? "text-gray-500" : "text-gray-400")}>
-                      460GSM double-fleece hood
-                    </p>
-                  </div>
-                  <span className={cn("text-xs", isLight ? "text-gray-400 group-hover:text-amber-800" : "text-gray-500 group-hover:text-brand-gold")}>→</span>
+                  View All 7 Smartphone Deals →
                 </Link>
               </div>
             </div>

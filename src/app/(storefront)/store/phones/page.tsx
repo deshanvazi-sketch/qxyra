@@ -5,30 +5,16 @@ import { ProductCard } from '@/components/product/ProductCard';
 import { SubCategoryGrid } from '@/components/store/SubCategoryGrid';
 
 export const metadata: Metadata = {
-  title: 'Smartphones | Apple, Samsung, Tecno, Infinix, Redmi | Methmi Mobile Store',
-  description: '100% Genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Tecno, Infinix & Xiaomi Redmi with official company warranty in Sri Lanka.',
+  title: 'Smartphones | Vivo, Infinix, Tecno | Methmi Mobile Store',
+  description: '100% Genuine TRCSL-approved Vivo, Infinix & Tecno smartphones with official 1-Year Company Warranty in Sri Lanka.',
 };
 
 export default function PhonesCategoryPage() {
   const phoneProducts = products.filter((p) =>
-    ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
+    ['vivo', 'tecno-infinix', 'phones'].includes(p.categoryId)
   );
 
   const subcategories = [
-    {
-      id: 'apple',
-      name: 'Apple iPhone',
-      slug: 'apple',
-      href: '/store/phones/apple',
-      count: products.filter((p) => p.categoryId === 'apple').length,
-    },
-    {
-      id: 'samsung',
-      name: 'Samsung Galaxy',
-      slug: 'samsung',
-      href: '/store/phones/samsung',
-      count: products.filter((p) => p.categoryId === 'samsung').length,
-    },
     {
       id: 'vivo',
       name: 'Vivo',
@@ -37,18 +23,25 @@ export default function PhonesCategoryPage() {
       count: products.filter((p) => p.categoryId === 'vivo').length,
     },
     {
+      id: 'infinix',
+      name: 'Infinix',
+      slug: 'infinix',
+      href: '/store/phones/infinix',
+      count: products.filter((p) => p.categoryId === 'tecno-infinix' && p.name.toLowerCase().includes('infinix')).length,
+    },
+    {
+      id: 'tecno',
+      name: 'Tecno',
+      slug: 'tecno',
+      href: '/store/phones/tecno',
+      count: products.filter((p) => p.categoryId === 'tecno-infinix' && p.name.toLowerCase().includes('tecno')).length,
+    },
+    {
       id: 'tecno-infinix',
       name: 'Tecno & Infinix',
       slug: 'tecno-infinix',
       href: '/store/phones/tecno-infinix',
       count: products.filter((p) => p.categoryId === 'tecno-infinix').length,
-    },
-    {
-      id: 'redmi',
-      name: 'Xiaomi Redmi',
-      slug: 'redmi',
-      href: '/store/phones/redmi',
-      count: products.filter((p) => p.categoryId === 'redmi').length,
     },
   ];
 
@@ -73,10 +66,10 @@ export default function PhonesCategoryPage() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-5xl font-heading font-light text-white tracking-tight">
-            Flagship <span className="text-brand-gold font-normal">Smartphones</span>
+            Flagship & Budget <span className="text-brand-gold font-normal">Smartphones</span>
           </h1>
           <p className="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed font-light">
-            Sri Lanka’s premier authorized smartphone showroom. Explore sealed Apple iPhones with Apple Care, Samsung Galaxy flagship S-series, Tecno Camon camera phones, Infinix Note series, and Xiaomi Redmi devices with official company warranty.
+            Explore brand new sealed Vivo, Infinix, and Tecno smartphones with 1-Year Official Company Warranty, TRCSL approval, and fast islandwide delivery.
           </p>
         </div>
 
@@ -97,11 +90,9 @@ export default function PhonesCategoryPage() {
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {phoneProducts.map((product) => {
               let catLabel = 'Smartphone';
-              if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
-              else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
-              else if (product.categoryId === 'vivo') catLabel = 'Vivo';
-              else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
-              else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
+              if (product.categoryId === 'vivo') catLabel = 'Vivo';
+              else if (product.name.toLowerCase().includes('infinix')) catLabel = 'Infinix';
+              else if (product.name.toLowerCase().includes('tecno')) catLabel = 'Tecno';
 
               return (
                 <ProductCard

@@ -36,21 +36,28 @@ export default function StorePage() {
               className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-brand-gold text-brand-black text-xs font-semibold hover:opacity-95 transition-opacity flex items-center justify-center gap-2 shadow-lg shadow-brand-gold/20"
             >
               <span>📱</span>
-              <span>Smartphones (Apple, Samsung, Tecno, Infinix, Redmi)</span>
+              <span>All Smartphones (7 TRCSL Models)</span>
             </Link>
             <Link
-              href="/store/accessories"
+              href="/store/phones/vivo"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-white text-xs font-medium transition-all flex items-center justify-center gap-2"
+            >
+              <span>✨</span>
+              <span>Vivo Series (3)</span>
+            </Link>
+            <Link
+              href="/store/phones/infinix"
               className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-white text-xs font-medium transition-all flex items-center justify-center gap-2"
             >
               <span>⚡</span>
-              <span>Tech Accessories (Chargers, Audio & Gear)</span>
+              <span>Infinix Series (3)</span>
             </Link>
             <Link
-              href="/store/fashion"
-              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-gray-300 text-xs font-medium transition-all flex items-center justify-center gap-2"
+              href="/store/phones/tecno"
+              className="w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/90 border border-gray-700 hover:border-brand-gold text-white text-xs font-medium transition-all flex items-center justify-center gap-2"
             >
-              <span>👕</span>
-              <span>Lifestyle Apparel</span>
+              <span>📸</span>
+              <span>Tecno Camon 50 Pro</span>
             </Link>
           </div>
         </div>

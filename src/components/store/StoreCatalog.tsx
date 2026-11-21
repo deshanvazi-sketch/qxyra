@@ -17,59 +17,49 @@ export function StoreCatalog() {
 
   const activeProducts = (mounted ? storeProducts : fallbackProducts).filter((p) => p.isActive);
 
-  const phoneProducts = activeProducts.filter((p) =>
-    ['apple', 'samsung', 'vivo', 'tecno-infinix', 'redmi', 'phones'].includes(p.categoryId)
-  );
-
-  const fashionProducts = activeProducts.filter((p) =>
-    ['regular-fit-tee', 'oversized-tee', 'hoodie'].includes(p.categoryId)
-  );
-
-  const accessoryProducts = activeProducts.filter((p) =>
-    ['mobile', 'computer'].includes(p.categoryId)
-  );
+  const vivoProducts = activeProducts.filter((p) => p.categoryId === 'vivo');
+  const infinixProducts = activeProducts.filter((p) => p.name.toLowerCase().includes('infinix'));
+  const tecnoProducts = activeProducts.filter((p) => p.name.toLowerCase().includes('tecno'));
 
   return (
     <>
-      {/* Department Feature Banners */}
+      {/* Brand Feature Banners */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StoreCategoryCard
-          title="Smartphones"
-          subtitle="100% genuine TRCSL-approved Apple iPhones, Samsung Galaxy, Vivo, Tecno, Infinix & Xiaomi Redmi."
-          href="/store/phones"
-          image="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=1000"
-          itemCount={phoneProducts.length}
+          title="Vivo Smartphones"
+          subtitle="100% genuine TRCSL-approved Vivo Y-series smartphones with 1-Year Official Company Warranty."
+          href="/store/phones/vivo"
+          image="/products/vivo-y05-summit-platinum.jpg"
+          itemCount={vivoProducts.length}
           subcategories={[
-            { name: 'Apple iPhone', href: '/store/phones/apple' },
-            { name: 'Samsung Galaxy', href: '/store/phones/samsung' },
-            { name: 'Vivo', href: '/store/phones/vivo' },
-            { name: 'Tecno & Infinix', href: '/store/phones/tecno-infinix' },
-            { name: 'Xiaomi Redmi', href: '/store/phones/redmi' },
+            { name: 'Vivo Y05', href: '/store/vivo-y05' },
+            { name: 'Vivo Y11D', href: '/store/vivo-y11d' },
+            { name: 'Vivo Y31D', href: '/store/vivo-y31d' },
           ]}
         />
 
         <StoreCategoryCard
-          title="Accessories"
-          subtitle="MagSafe leather stands, 65W GaN charging, Kevlar cables, and CNC aluminum desktop elevators."
-          href="/store/accessories"
-          image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=1000"
-          itemCount={accessoryProducts.length}
+          title="Infinix Smartphones"
+          subtitle="Flagship Note 60 Pro 5G, Hot 70, and Smart 20 series with 100W FastCharge and TRCSL approval."
+          href="/store/phones/infinix"
+          image="/products/infinix-note-60-pro-solar-orange.jpg"
+          itemCount={infinixProducts.length}
           subcategories={[
-            { name: 'Mobile Accessories', href: '/store/accessories/mobile' },
-            { name: 'Computer Accessories', href: '/store/accessories/computer' },
+            { name: 'Infinix Note 60 Pro', href: '/store/infinix-note-60-pro' },
+            { name: 'Infinix Hot 70', href: '/store/infinix-hot-70' },
+            { name: 'Infinix Smart 20', href: '/store/infinix-smart-20' },
           ]}
         />
 
         <StoreCategoryCard
-          title="Lifestyle & Apparel"
-          subtitle="240GSM regular fit tees, 280GSM oversized drop-shoulder cuts, and 460GSM french terry hoodies."
-          href="/store/fashion"
-          image="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1000"
-          itemCount={fashionProducts.length}
+          title="Tecno Smartphones"
+          subtitle="Flagship mobile photography with Tecno Camon 50 Pro 5G and official local warranty."
+          href="/store/phones/tecno"
+          image="/products/tecno-camon-50-pro-malachite-green.jpg"
+          itemCount={tecnoProducts.length}
           subcategories={[
-            { name: 'Regular Fit Tee', href: '/store/fashion/regular-fit-tee' },
-            { name: 'Oversized Tee', href: '/store/fashion/oversized-tee' },
-            { name: 'Hoodie', href: '/store/fashion/hoodie' },
+            { name: 'Tecno Camon 50 Pro', href: '/store/tecno-camon-50-pro' },
+            { name: 'All Tecno Models', href: '/store/phones/tecno' },
           ]}
         />
       </div>
@@ -79,28 +69,22 @@ export function StoreCatalog() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-800 pb-4">
           <div>
             <h2 className="text-xl sm:text-2xl font-heading font-medium text-white">
-              All Store Products ({activeProducts.length})
+              All Available Smartphones ({activeProducts.length})
             </h2>
-            <p className="text-gray-400 text-xs mt-1">Filtered by curated launch order</p>
+            <p className="text-gray-400 text-xs mt-1">100% Genuine TRCSL Approved Brand New Sealed Packs</p>
           </div>
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <span>Showing:</span>
-            <span className="font-mono text-brand-gold">{activeProducts.length} Items</span>
+            <span className="font-mono text-brand-gold">{activeProducts.length} In-Stock</span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {activeProducts.map((product) => {
-            let catLabel = 'Product';
-            if (product.categoryId === 'apple') catLabel = 'Apple iPhone';
-            else if (product.categoryId === 'samsung') catLabel = 'Samsung Galaxy';
-            else if (product.categoryId === 'tecno-infinix') catLabel = 'Tecno / Infinix';
-            else if (product.categoryId === 'redmi') catLabel = 'Xiaomi Redmi';
-            else if (product.categoryId === 'regular-fit-tee') catLabel = 'Regular Fit Tee';
-            else if (product.categoryId === 'oversized-tee') catLabel = 'Oversized Tee';
-            else if (product.categoryId === 'hoodie') catLabel = 'Hoodie';
-            else if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';
-            else if (product.categoryId === 'computer') catLabel = 'Computer Gear';
+            let catLabel = 'Smartphone';
+            if (product.categoryId === 'vivo') catLabel = 'Vivo';
+            else if (product.name.toLowerCase().includes('infinix')) catLabel = 'Infinix';
+            else if (product.name.toLowerCase().includes('tecno')) catLabel = 'Tecno';
 
             return (
               <ProductCard

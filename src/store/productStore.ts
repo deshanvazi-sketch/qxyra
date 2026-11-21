@@ -53,7 +53,7 @@ export const useProductStore = create<ProductState>()(
       },
     }),
     {
-      name: 'methmi_products_list',
+      name: 'methmi_products_list_v2',
     }
   )
 );

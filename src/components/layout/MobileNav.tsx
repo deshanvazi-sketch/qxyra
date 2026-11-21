@@ -120,20 +120,17 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     <span>Smartphones (TRCSL) →</span>
                   </Link>
                   <div className="pl-3 space-y-1 text-gray-400 border-l border-brand-gold/30">
-                    <Link href="/store/phones/apple" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Apple iPhone
-                    </Link>
-                    <Link href="/store/phones/samsung" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Samsung Galaxy
-                    </Link>
                     <Link href="/store/phones/vivo" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Vivo Smartphones
+                      • Vivo (Y05, Y11D, Y31D)
                     </Link>
-                    <Link href="/store/phones/tecno-infinix" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Tecno & Infinix
+                    <Link href="/store/phones/infinix" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Infinix (Hot 70, Smart 20, Note 60 Pro)
                     </Link>
-                    <Link href="/store/phones/redmi" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Xiaomi Redmi
+                    <Link href="/store/phones/tecno" onClick={onClose} className="block hover:text-white py-0.5">
+                      • Tecno (Camon 50 Pro 5G)
+                    </Link>
+                    <Link href="/store/phones" onClick={onClose} className="block text-brand-gold hover:underline py-0.5 font-medium">
+                      • View All Smartphones →
                     </Link>
                   </div>
                 </div>
@@ -146,37 +143,14 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     className="font-semibold text-gray-300 hover:text-brand-gold hover:underline block flex items-center gap-1.5"
                   >
                     <span>⚡</span>
-                    <span>Tech Accessories →</span>
+                    <span>Mobile & Tech Accessories →</span>
                   </Link>
                   <div className="pl-3 space-y-1 text-gray-400 border-l border-gray-800">
                     <Link href="/store/accessories/mobile" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Mobile Accessories
+                      • Fast Chargers & MagSafe Stands
                     </Link>
                     <Link href="/store/accessories/computer" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Computer Accessories
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Fashion */}
-                <div className="space-y-1.5 pt-2">
-                  <Link 
-                    href="/store/fashion" 
-                    onClick={onClose}
-                    className="font-semibold text-gray-300 hover:text-brand-gold hover:underline block flex items-center gap-1.5"
-                  >
-                    <span>👕</span>
-                    <span>Lifestyle & Apparel →</span>
-                  </Link>
-                  <div className="pl-3 space-y-1 text-gray-400 border-l border-gray-800">
-                    <Link href="/store/fashion/regular-fit-tee" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Regular Fit Tee
-                    </Link>
-                    <Link href="/store/fashion/oversized-tee" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Oversized Tee
-                    </Link>
-                    <Link href="/store/fashion/hoodie" onClick={onClose} className="block hover:text-white py-0.5">
-                      • Hoodies
+                      • Computer & Desk Accessories
                     </Link>
                   </div>
                 </div>
