@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/store/phones/samsung',
     '/store/phones/vivo',
     '/store/phones/tecno-infinix',
+    '/store/phones/tecno',
     '/store/phones/infinix',
     '/store/phones/redmi',
     '/store/accessories',
