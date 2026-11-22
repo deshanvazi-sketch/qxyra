@@ -97,6 +97,49 @@ function LoginForm() {
         </p>
       </div>
 
+      {/* Quick Fill Helper Buttons for Store Owner */}
+      <div className="mb-6 p-3.5 rounded-2xl bg-brand-gold/10 border border-brand-gold/30 space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-semibold text-brand-gold uppercase tracking-wider flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>Quick Login for Store Owner</span>
+          </span>
+          <span className="text-[10px] text-gray-400">One-click auto fill</span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('admin@methmimobilepvtltd.lk');
+              setPassword('Methmi@2026');
+              setErrorMessage(null);
+              setIsLocked(false);
+            }}
+            className="p-2.5 rounded-xl bg-black/60 border border-brand-gold/40 hover:border-brand-gold text-left transition-all cursor-pointer group"
+          >
+            <div className="text-[10px] text-gray-400">Official Admin Email</div>
+            <div className="text-xs font-mono font-medium text-white group-hover:text-brand-gold truncate">
+              admin@methmimobilepvtltd.lk
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('deshanvazi@gmail.com');
+              setPassword('Methmi@2026');
+              setErrorMessage(null);
+              setIsLocked(false);
+            }}
+            className="p-2.5 rounded-xl bg-black/60 border border-brand-gold/40 hover:border-brand-gold text-left transition-all cursor-pointer group"
+          >
+            <div className="text-[10px] text-gray-400">Deshan Owner Email</div>
+            <div className="text-xs font-mono font-medium text-white group-hover:text-brand-gold truncate">
+              deshanvazi@gmail.com
+            </div>
+          </button>
+        </div>
+      </div>
+
       {/* Error or Lockout Banner */}
       {errorMessage && (
         <div className={`mb-6 p-4 rounded-xl border text-xs flex items-start gap-3 animate-in fade-in ${
@@ -105,28 +148,27 @@ function LoginForm() {
             : 'bg-red-950/40 border-red-500/30 text-red-300'
         }`}>
           <span className="text-base shrink-0">{isLocked ? '🛑' : '⚠️'}</span>
-          <div>
+          <div className="flex-1">
             <div className="font-semibold">{isLocked ? 'Security Lockout' : 'Access Denied'}</div>
             <div className="mt-0.5 opacity-90">{errorMessage}</div>
+            {isLocked && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLocked(false);
+                  setErrorMessage(null);
+                }}
+                className="mt-2 text-[11px] underline text-amber-300 hover:text-white"
+              >
+                Reset & Try Again
+              </button>
+            )}
           </div>
         </div>
       )}
 
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5 text-xs">
-        {/* Quick Fill Helper Button for Store Owner */}
-        <button
-          type="button"
-          onClick={() => {
-            setEmail('admin@methmimobilepvtltd.lk');
-            setPassword('Methmi@2026');
-            setErrorMessage(null);
-          }}
-          className="w-full py-2.5 px-3 rounded-xl bg-brand-gold/15 border border-brand-gold/40 text-brand-gold text-xs font-mono font-medium hover:bg-brand-gold/25 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-        >
-          <span>⚡</span>
-          <span>Click to Auto-Fill Store Owner Credentials</span>
-        </button>
 
         {/* Hidden Honeypot trap to catch automated hacking bots */}
         <input

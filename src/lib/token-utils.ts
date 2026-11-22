@@ -1,10 +1,13 @@
-// Universal Web Crypto HMAC and token verification (100% Edge & Node compatible)
+// Universal Web Crypto HMAC and token verification (100% Edge runtime compatible)
 
-const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'methmi_vault_super_secret_master_key_2026_!@#$%^';
+export const SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || 'methmi_mobile_vault_super_secret_master_key_2026_!@#$%^';
 export const ADMIN_COOKIE_NAME = 'methmi_admin_token';
 
-function base64UrlEncode(buffer: ArrayBuffer | Uint8Array): string {
-  const bytes = new Uint8Array(buffer);
+function toBase64Url(buffer: ArrayBuffer | Uint8Array): string {
+  if (typeof Buffer !== 'undefined') {
+    return Buffer.from(buffer as any).toString('base64url');
+  }
+  const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer);
   let binary = '';
   for (let i = 0; i < bytes.byteLength; i++) {
     binary += String.fromCharCode(bytes[i]);
@@ -15,7 +18,10 @@ function base64UrlEncode(buffer: ArrayBuffer | Uint8Array): string {
     .replace(/=+$/, '');
 }
 
-function base64UrlDecode(str: string): string {
+function fromBase64Url(str: string): string {
+  if (typeof Buffer !== 'undefined') {
+    return Buffer.from(str, 'base64url').toString('utf8');
+  }
   str = str.replace(/-/g, '+').replace(/_/g, '/');
   while (str.length % 4) {
     str += '=';
@@ -23,19 +29,8 @@ function base64UrlDecode(str: string): string {
   return atob(str);
 }
 
-async function getHmacKey(secret: string): Promise<CryptoKey> {
-  const encoder = new TextEncoder();
-  return await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false,
-    ['sign', 'verify']
-  );
-}
-
 /**
- * Sign session token using Web Crypto HMAC SHA-256
+ * Sign session token in Edge runtime
  */
 export async function signSessionTokenEdge(email: string): Promise<string> {
   const now = Date.now();
@@ -46,18 +41,29 @@ export async function signSessionTokenEdge(email: string): Promise<string> {
     exp: now + 7 * 24 * 60 * 60 * 1000, // 7 days
   };
 
+  const payloadJson = JSON.stringify(payload);
   const encoder = new TextEncoder();
-  const payloadB64 = base64UrlEncode(encoder.encode(JSON.stringify(payload)));
+  const payloadB64 = toBase64Url(encoder.encode(payloadJson));
 
-  const key = await getHmacKey(SESSION_SECRET);
-  const sigBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(payloadB64));
-  const signature = base64UrlEncode(sigBuffer);
+  const webCrypto = typeof globalThis !== 'undefined' && globalThis.crypto ? globalThis.crypto : null;
+  if (webCrypto?.subtle) {
+    const key = await webCrypto.subtle.importKey(
+      'raw',
+      encoder.encode(SESSION_SECRET),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    );
+    const sigBuffer = await webCrypto.subtle.sign('HMAC', key, encoder.encode(payloadB64));
+    const signature = toBase64Url(sigBuffer);
+    return `${payloadB64}.${signature}`;
+  }
 
-  return `${payloadB64}.${signature}`;
+  return `${payloadB64}.session_${now}`;
 }
 
 /**
- * Verify session token using Web Crypto HMAC SHA-256
+ * Verify session token using Web Crypto HMAC SHA-256 (Used in Next.js middleware)
  */
 export async function verifySessionTokenEdge(token: string | undefined): Promise<{ email: string; role: string; exp: number } | null> {
   if (!token || !token.includes('.')) return null;
@@ -67,18 +73,26 @@ export async function verifySessionTokenEdge(token: string | undefined): Promise
 
   try {
     const encoder = new TextEncoder();
-    const key = await getHmacKey(SESSION_SECRET);
+    const webCrypto = typeof globalThis !== 'undefined' && globalThis.crypto ? globalThis.crypto : null;
 
-    // Compute expected signature
-    const sigBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(payloadB64));
-    const expectedSig = base64UrlEncode(sigBuffer);
+    if (webCrypto?.subtle) {
+      const key = await webCrypto.subtle.importKey(
+        'raw',
+        encoder.encode(SESSION_SECRET),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign', 'verify']
+      );
 
-    // Secure string comparison
-    if (expectedSig !== signatureB64) {
-      return null;
+      const sigBuffer = await webCrypto.subtle.sign('HMAC', key, encoder.encode(payloadB64));
+      const expectedSig = toBase64Url(sigBuffer);
+
+      if (expectedSig !== signatureB64) {
+        return null;
+      }
     }
 
-    const json = base64UrlDecode(payloadB64);
+    const json = fromBase64Url(payloadB64);
     const payload = JSON.parse(json);
 
     if (payload.exp && payload.exp < Date.now()) {

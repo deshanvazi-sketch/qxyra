@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
     console.error('Admin Auth Error:', error);
     return NextResponse.json({
       success: false,
-      error: 'Internal server verification error. Please try again.'
+      error: error instanceof Error ? error.message : 'Internal server verification error. Please try again.'
     }, { status: 500 });
   }
 }
