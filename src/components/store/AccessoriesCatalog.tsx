@@ -23,9 +23,12 @@ export function AccessoriesCatalog({ categoryId }: AccessoriesCatalogProps) {
   const accessoryProducts = allProducts.filter((p) => {
     if (!p.isActive) return false;
     if (categoryId) {
-      return p.categoryId === categoryId;
+      return p.categoryId === categoryId || p.categoryId?.startsWith(`${categoryId}-`);
     }
-    return ['mobile', 'computer', 'audio-desk'].includes(p.categoryId);
+    return ['mobile', 'computer', 'audio-desk', 'accessories', 'audio_wearables'].includes(p.categoryId) || 
+      p.categoryId?.startsWith('mobile-') || 
+      p.categoryId?.startsWith('acc-') ||
+      p.categoryId?.startsWith('computer-');
   });
 
   const subcategories = [
@@ -34,14 +37,14 @@ export function AccessoriesCatalog({ categoryId }: AccessoriesCatalogProps) {
       name: 'Mobile Accessories',
       slug: 'mobile',
       href: '/store/accessories/mobile',
-      count: allProducts.filter((p) => p.categoryId === 'mobile' && p.isActive).length,
+      count: allProducts.filter((p) => (p.categoryId === 'mobile' || p.categoryId?.startsWith('mobile-') || p.categoryId === 'audio_wearables') && p.isActive).length,
     },
     {
       id: 'computer',
       name: 'Computer Accessories',
       slug: 'computer',
       href: '/store/accessories/computer',
-      count: allProducts.filter((p) => p.categoryId === 'computer' && p.isActive).length,
+      count: allProducts.filter((p) => (p.categoryId === 'computer' || p.categoryId?.startsWith('computer-')) && p.isActive).length,
     },
   ];
 
