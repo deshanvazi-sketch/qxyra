@@ -112,14 +112,21 @@ export default function AdminLayout({
 
           <Link
             href="/admin/products"
-            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
+            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
               pathname === '/admin/products'
                 ? 'bg-brand-gold text-brand-black font-semibold'
                 : 'text-gray-200 hover:text-white hover:bg-white/5'
             }`}
           >
-            <span className="text-lg">📦</span>
-            <span>Products & Inventory</span>
+            <div className="flex items-center gap-3">
+              <span className="text-lg">📦</span>
+              <span>Products & Inventory</span>
+            </div>
+            <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono font-bold transition-colors ${
+              pathname === '/admin/products' ? 'bg-black/20 text-black' : 'bg-brand-gold/20 text-brand-gold border border-brand-gold/30'
+            }`}>
+              + Add Item
+            </span>
           </Link>
 
           <Link

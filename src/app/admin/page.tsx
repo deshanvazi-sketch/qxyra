@@ -102,17 +102,25 @@ export default function AdminDashboardPage() {
 
         <div className="flex items-center gap-3 flex-wrap">
           <Link
-            href="/admin/orders"
-            className="px-4 py-2.5 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold text-brand-black font-bold text-xs rounded-xl shadow-lg shadow-brand-gold/15 hover:opacity-95 transition-all flex items-center gap-2"
+            href="/admin/products?action=new"
+            className="px-5 py-3 bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold text-brand-black font-bold text-xs uppercase tracking-wider rounded-2xl shadow-xl shadow-brand-gold/25 hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
           >
-            <span>➕</span>
-            <span>Record Multi-Channel Order</span>
+            <span className="text-base">➕</span>
+            <span>Add New Product / Accessory</span>
           </Link>
           <Link
             href="/admin/products"
-            className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-xs font-medium rounded-xl transition-all"
+            className="px-4 py-3 bg-white/10 border border-white/15 hover:bg-white/20 text-white text-xs font-semibold rounded-2xl transition-all flex items-center gap-2 cursor-pointer"
           >
-            Products ({productsList.length})
+            <span>📦</span>
+            <span>Manage Inventory ({productsList.length})</span>
+          </Link>
+          <Link
+            href="/admin/orders"
+            className="px-3.5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-gray-300 hover:text-white text-xs font-medium rounded-2xl transition-all flex items-center gap-2"
+          >
+            <span>🛍️</span>
+            <span>Orders</span>
           </Link>
         </div>
       </div>

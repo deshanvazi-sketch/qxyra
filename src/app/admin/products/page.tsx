@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { Product } from '@/types';
 import { SoftwareProduct } from '@/types/labs';
 import { useCurrency, CURRENCIES, Currency } from '@/context/CurrencyContext';
@@ -167,7 +168,8 @@ const SAMPLE_PHOTO_PRESETS: Record<ProductDepartment, { label: string; url: stri
   ],
 };
 
-export default function AdminProductsPage() {
+function AdminProductsContent() {
+  const searchParams = useSearchParams();
   const { format, currency, setCurrency, exchangeRate, rates, detectedCountry } = useCurrency();
   const { 
     products, 
@@ -269,7 +271,15 @@ export default function AdminProductsPage() {
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    const action = searchParams?.get('action');
+    if (action === 'new' || action === 'new-accessory') {
+      openCreateModal('ACCESSORIES');
+    } else if (action === 'new-phone') {
+      openCreateModal('PHONES');
+    } else if (action === 'new-software') {
+      openCreateModal('SOFTWARE');
+    }
+  }, [searchParams]);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -2103,5 +2113,13 @@ export default function AdminProductsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function AdminProductsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-gray-500 font-mono text-xs">Loading Products Command Center...</div>}>
+      <AdminProductsContent />
+    </Suspense>
   );
 }
