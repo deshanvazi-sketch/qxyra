@@ -123,12 +123,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               >
                 View Cart
               </Link>
-              <button 
+              <Link 
+                href="/checkout"
                 onClick={onClose}
                 className="block text-center bg-brand-gold text-brand-black py-3 rounded-md hover:bg-brand-black hover:text-white transition-colors font-bold text-sm shadow-md"
               >
-                Checkout
-              </button>
+                Checkout (COD)
+              </Link>
             </div>
           </div>
         )}

@@ -58,12 +58,12 @@ export function CartSummary() {
           </button>
         </div>
         
-        <button 
-          className="w-full bg-brand-gold text-brand-black font-bold py-4 rounded-md hover:bg-brand-black hover:text-white transition-colors mb-4 text-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={subtotal === 0}
+        <Link 
+          href="/checkout"
+          className="block text-center w-full bg-brand-gold text-brand-black font-bold py-4 rounded-md hover:bg-brand-black hover:text-white transition-colors mb-4 text-lg shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Proceed to Checkout
-        </button>
+          Proceed to Checkout (Cash on Delivery)
+        </Link>
         
         <div className="text-center mt-4">
           <Link href="/store" className="text-gray-500 underline hover:text-brand-gold transition-colors text-sm">

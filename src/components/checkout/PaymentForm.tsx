@@ -1,173 +1,115 @@
 'use client';
 
-import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { Truck, ShieldCheck, CheckCircle2, AlertCircle, Banknote } from 'lucide-react';
 
 interface PaymentFormProps {
   onSubmit: () => void;
 }
 
-type PaymentMethod = 'credit_card' | 'paypal' | 'bank_transfer';
-
 export function PaymentForm({ onSubmit }: PaymentFormProps) {
-  const [method, setMethod] = useState<PaymentMethod>('credit_card');
-  const [formData, setFormData] = useState({
-    cardNumber: '',
-    cardName: '',
-    expiry: '',
-    cvv: '',
-  });
-
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '');
-    const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ').slice(0, 19);
-    setFormData(prev => ({ ...prev, cardNumber: formattedValue }));
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit();
   };
 
-  const inputClasses = "w-full bg-transparent border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold transition-colors";
-  const labelClasses = "block text-sm font-medium text-brand-black mb-1";
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <h2 className="text-xl font-heading font-semibold text-brand-black mb-6">Payment Method</h2>
-
-      <div className="flex flex-col sm:flex-row gap-4">
-        <button
-          type="button"
-          onClick={() => setMethod('credit_card')}
-          className={cn(
-            "flex-1 py-4 border text-center transition-colors",
-            method === 'credit_card' ? "border-brand-gold bg-brand-gold/5" : "border-gray-200 hover:border-gray-300"
-          )}
-        >
-          <span className="block font-medium text-sm">Credit Card</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setMethod('paypal')}
-          className={cn(
-            "flex-1 py-4 border text-center transition-colors",
-            method === 'paypal' ? "border-brand-gold bg-brand-gold/5" : "border-gray-200 hover:border-gray-300"
-          )}
-        >
-          <span className="block font-medium text-sm">PayPal</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setMethod('bank_transfer')}
-          className={cn(
-            "flex-1 py-4 border text-center transition-colors",
-            method === 'bank_transfer' ? "border-brand-gold bg-brand-gold/5" : "border-gray-200 hover:border-gray-300"
-          )}
-        >
-          <span className="block font-medium text-sm">Bank Transfer</span>
-        </button>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <h2 className="text-xl font-heading font-semibold text-brand-black mb-1">
+          Payment Method
+        </h2>
+        <p className="text-xs text-gray-500">
+          Select your preferred payment option for your order.
+        </p>
       </div>
 
-      {method === 'credit_card' && (
-        <div className="space-y-6 bg-gray-50 p-6 rounded-sm border border-gray-100">
-          <div>
-            <label className={labelClasses}>Card Number</label>
-            <div className="relative">
-              <input
-                type="text"
-                name="cardNumber"
-                value={formData.cardNumber}
-                onChange={handleCardNumberChange}
-                placeholder="0000 0000 0000 0000"
-                className={inputClasses}
-                required
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-                </svg>
+      {/* Available Payment Methods */}
+      <div className="space-y-4">
+        {/* 1. Cash on Delivery (COD) - ACTIVE & DEFAULT */}
+        <div className="relative border-2 border-brand-gold bg-amber-50/20 p-5 sm:p-6 rounded-2xl shadow-sm transition-all">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-brand-gold/15 text-brand-gold flex items-center justify-center shrink-0 mt-0.5">
+                <Truck className="w-5 h-5 text-amber-800" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-gray-950">
+                    Cash on Delivery (COD)
+                  </h3>
+                  <span className="bg-emerald-500/15 text-emerald-700 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">
+                    100% Active
+                  </span>
+                </div>
+                <p className="text-xs font-medium text-amber-900 mt-0.5">
+                  දිවයින පුරා භාණ්ඩය නිවසටම ලැබුණු පසු මුදල් ගෙවන්න
+                </p>
+                <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+                  Pay in cash or transfer via Bank LankaQR directly to the courier when your sealed package arrives at your home or office.
+                </p>
+              </div>
+            </div>
+
+            <div className="shrink-0">
+              <div className="w-6 h-6 rounded-full bg-brand-gold flex items-center justify-center text-brand-black">
+                <CheckCircle2 className="w-5 h-5 fill-current" />
               </div>
             </div>
           </div>
 
-          <div>
-            <label className={labelClasses}>Cardholder Name</label>
-            <input
-              type="text"
-              name="cardName"
-              value={formData.cardName}
-              onChange={handleChange}
-              placeholder="Name on card"
-              className={inputClasses}
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className={labelClasses}>Expiry Date</label>
-              <input
-                type="text"
-                name="expiry"
-                value={formData.expiry}
-                onChange={handleChange}
-                placeholder="MM/YY"
-                maxLength={5}
-                className={inputClasses}
-                required
-              />
+          {/* Key Advantages */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-4 pt-4 border-t border-amber-200/70 text-[11px] text-gray-700">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>100% TRCSL Approved & Sealed</span>
             </div>
-            <div>
-              <label className={labelClasses}>CVV</label>
-              <input
-                type="text"
-                name="cvv"
-                value={formData.cvv}
-                onChange={handleChange}
-                placeholder="123"
-                maxLength={4}
-                className={inputClasses}
-                required
-              />
+            <div className="flex items-center gap-2">
+              <Banknote className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>No Advance Deposit Required</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Truck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <span>Doorstep Inspection on Delivery</span>
             </div>
           </div>
         </div>
-      )}
 
-      {method === 'paypal' && (
-        <div className="bg-gray-50 p-6 text-center text-gray-600 border border-gray-100">
-          You will be redirected to PayPal to complete your purchase securely.
+        {/* 2. Online Card Payment - Under Maintenance Notice */}
+        <div className="border border-gray-200 bg-gray-50/80 p-4 rounded-xl opacity-75">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-xl grayscale">💳</span>
+              <div>
+                <span className="text-xs font-medium text-gray-700 block">
+                  Online Debit / Credit Card (Visa &amp; Mastercard)
+                </span>
+                <span className="text-[11px] text-amber-700 flex items-center gap-1 mt-0.5">
+                  <AlertCircle className="w-3 h-3 inline shrink-0" />
+                  Online Card Gateway under scheduled maintenance. Please use Cash on Delivery.
+                </span>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono text-gray-400 uppercase bg-gray-200/80 px-2 py-0.5 rounded">
+              Offline
+            </span>
+          </div>
         </div>
-      )}
-
-      {method === 'bank_transfer' && (
-        <div className="bg-gray-50 p-6 text-gray-600 text-sm space-y-2 border border-gray-100">
-          <p>Please transfer the total amount to the following bank account:</p>
-          <p className="font-mono mt-2">Bank: Methmi Mobile Global Bank</p>
-          <p className="font-mono">Account No: 1234-5678-9012</p>
-          <p className="font-mono">Routing No: 987654321</p>
-        </div>
-      )}
-
-      <div className="flex items-center text-sm text-green-700 bg-green-50 p-3">
-        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-        </svg>
-        Your payment information is encrypted and secure.
       </div>
 
-      <div className="pt-4 flex gap-4">
+      <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center gap-2.5">
+        <span className="text-base">✓</span>
+        <span>
+          Your order will be verified and dispatched directly from the Methmi Mobile Mutur Flagship Showroom with 1-Year Company Warranty.
+        </span>
+      </div>
+
+      <div className="pt-2">
         <button
           type="submit"
-          className="w-full md:w-auto px-8 py-3 bg-brand-black text-white hover:bg-black/90 transition-colors font-medium text-sm"
+          className="w-full sm:w-auto px-8 py-3.5 bg-brand-gold hover:bg-brand-gold-light text-brand-black font-heading font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md hover:shadow-lg cursor-pointer"
         >
-          Review Order
+          Continue to Order Review →
         </button>
       </div>
     </form>
