@@ -450,6 +450,1266 @@ export const products: Product[] = [
     createdAt: '2026-11-22T00:00:00Z',
     updatedAt: '2026-11-22T00:00:00Z',
   },
+  {
+  "id": "daraz-196795160",
+  "name": "OMS OM-401 Auto ID Dual USB Port Charger",
+  "slug": "oms-om-401-auto-id-dual-usb-port-charger-5160",
+  "description": "OMS OM-401 Auto ID Dual USB Port Charger with 1 Year Warranty. Warranty: 1 Year Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 7.66,
+  "salePrice": 6.66,
+  "images": [
+    {
+      "id": "img-196795160-1",
+      "productId": "daraz-196795160",
+      "url": "https://static-01.daraz.lk/p/6e93e9a379ef6635e168d51f24cd8643.jpg",
+      "alt": "OMS OM-401 Auto ID Dual USB Port Charger",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-196795160-1",
+      "productId": "daraz-196795160",
+      "size": "Standard",
+      "color": "Original",
+      "price": 6.66,
+      "stock": 25,
+      "sku": "DARAZ-196795160"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 10,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 1 Year Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1754421262",
+  "name": "OMS T32 Open-Ear Sports Wireless Earbuds | 3D Stereoscopic Sound",
+  "slug": "oms-t32-open-ear-sports-wireless-earbuds-3d-stereo-1262",
+  "description": "Master Sound Quality, Ergonomic Design, Touch Control, Digital Display. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 21.23,
+  "salePrice": 18.46,
+  "images": [
+    {
+      "id": "img-1754421262-1",
+      "productId": "daraz-1754421262",
+      "url": "https://static-01.daraz.lk/p/24c62444987c2789872394db0ecc47c7.jpg",
+      "alt": "OMS T32 Open-Ear Sports Wireless Earbuds | 3D Stereoscopic Sound",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1754421262-1",
+      "productId": "daraz-1754421262",
+      "size": "Standard",
+      "color": "Original",
+      "price": 18.46,
+      "stock": 25,
+      "sku": "DARAZ-1754421262"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 13,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1754443016",
+  "name": "OMS T29 Smart LED Display Wireless Earbuds - BT 6.0",
+  "slug": "oms-t29-smart-led-display-wireless-earbuds---bt-60-3016",
+  "description": "Bluetooth 6.0, 16 Hours Playtime, Smart LED Touch Display. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 19.14,
+  "salePrice": 16.65,
+  "images": [
+    {
+      "id": "img-1754443016-1",
+      "productId": "daraz-1754443016",
+      "url": "https://static-01.daraz.lk/p/b51a33c5a7e8e5f647581faa4d9b9c7d.jpg",
+      "alt": "OMS T29 Smart LED Display Wireless Earbuds - BT 6.0",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1754443016-1",
+      "productId": "daraz-1754443016",
+      "size": "Standard",
+      "color": "Original",
+      "price": 16.65,
+      "stock": 25,
+      "sku": "DARAZ-1754443016"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 16,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1754704573",
+  "name": "OMS V20 20000mAh Power Bank with Built-in 3-in-1 Cables",
+  "slug": "oms-v20-20000mah-power-bank-with-built-in-3-in-1-c-4573",
+  "description": "Type-C, Lightning, Micro Built-in cables, 20000mAh high capacity. Warranty: 1 Year Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 25.41,
+  "salePrice": 22.09,
+  "images": [
+    {
+      "id": "img-1754704573-1",
+      "productId": "daraz-1754704573",
+      "url": "https://static-01.daraz.lk/p/bce0c8fb6d34c11e19adac42855190fb.jpg",
+      "alt": "OMS V20 20000mAh Power Bank with Built-in 3-in-1 Cables",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1754704573-1",
+      "productId": "daraz-1754704573",
+      "size": "Standard",
+      "color": "Original",
+      "price": 22.09,
+      "stock": 25,
+      "sku": "DARAZ-1754704573"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 19,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 1 Year Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1754797367",
+  "name": "M9S 4G LTE Advanced Pocket WiFi Router - All Network Support",
+  "slug": "m9s-4g-lte-advanced-pocket-wifi-router---all-netwo-7367",
+  "description": "High-Speed Mobile Hotspot, Ultra-Slim, Multi-Device connectivity. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 23.32,
+  "salePrice": 20.28,
+  "images": [
+    {
+      "id": "img-1754797367-1",
+      "productId": "daraz-1754797367",
+      "url": "https://static-01.daraz.lk/p/e75c593bc5c51281fef3b40166395f57.jpg",
+      "alt": "M9S 4G LTE Advanced Pocket WiFi Router - All Network Support",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "computer",
+  "variants": [
+    {
+      "id": "var-1754797367-1",
+      "productId": "daraz-1754797367",
+      "size": "Standard",
+      "color": "Original",
+      "price": 20.28,
+      "stock": 25,
+      "sku": "DARAZ-1754797367"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 22,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1754876852",
+  "name": "Papada A11 Wireless Neckband Bluetooth 5.3 - 50 Hours Playtime",
+  "slug": "papada-a11-wireless-neckband-bluetooth-53---50-hou-6852",
+  "description": "50 Hours Music Playtime, 400mAh battery, Bluetooth 5.3. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 12.53,
+  "salePrice": 10.9,
+  "images": [
+    {
+      "id": "img-1754876852-1",
+      "productId": "daraz-1754876852",
+      "url": "https://static-01.daraz.lk/p/afaec1e2bcf96dc3a0331991a0bfd50d.jpg",
+      "alt": "Papada A11 Wireless Neckband Bluetooth 5.3 - 50 Hours Playtime",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1754876852-1",
+      "productId": "daraz-1754876852",
+      "size": "Standard",
+      "color": "Original",
+      "price": 10.9,
+      "stock": 25,
+      "sku": "DARAZ-1754876852"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 25,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755653880",
+  "name": "OMS OM422-H 45W Super Fast Charger (SuperVOOC / Warp / Turbo)",
+  "slug": "oms-om422-h-45w-super-fast-charger-supervooc-warp--3880",
+  "description": "45W SuperVOOC / SuperDart / Warp / Xiaomi Turbo Charge support. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 10.79,
+  "salePrice": 9.38,
+  "images": [
+    {
+      "id": "img-1755653880-1",
+      "productId": "daraz-1755653880",
+      "url": "https://static-01.daraz.lk/p/ecab86f578f451edd924b7884895d7b2.jpg",
+      "alt": "OMS OM422-H 45W Super Fast Charger (SuperVOOC / Warp / Turbo)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755653880-1",
+      "productId": "daraz-1755653880",
+      "size": "Standard",
+      "color": "Original",
+      "price": 9.38,
+      "stock": 25,
+      "sku": "DARAZ-1755653880"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 28,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755661387",
+  "name": "OMS OM-425 25W Fast Charger - Dual Port (USB-C PD 3.0 + USB-A QC)",
+  "slug": "oms-om-425-25w-fast-charger---dual-port-usb-c-pd-3-1387",
+  "description": "Dual Port Fast Charger, Type-C PD 3.0 + USB-A QC 3.0, Smart Chip. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 6.61,
+  "salePrice": 5.75,
+  "images": [
+    {
+      "id": "img-1755661387-1",
+      "productId": "daraz-1755661387",
+      "url": "https://static-01.daraz.lk/p/9342316e4d305eb7806c8f6e8255c963.jpg",
+      "alt": "OMS OM-425 25W Fast Charger - Dual Port (USB-C PD 3.0 + USB-A QC)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755661387-1",
+      "productId": "daraz-1755661387",
+      "size": "Standard",
+      "color": "Original",
+      "price": 5.75,
+      "stock": 25,
+      "sku": "DARAZ-1755661387"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 31,
+  "isActive": true,
+  "isFeatured": true,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755669467",
+  "name": "OMS OM410 20W Compact Super Fast Charger (Mi Turbo / Flash Charge)",
+  "slug": "oms-om410-20w-compact-super-fast-charger-mi-turbo--9467",
+  "description": "20W Compact Adapter, Fire-proof material, Mi Turbo supported. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 5.91,
+  "salePrice": 5.14,
+  "images": [
+    {
+      "id": "img-1755669467-1",
+      "productId": "daraz-1755669467",
+      "url": "https://static-01.daraz.lk/p/c2253b94637952aed511227bf9173829.jpg",
+      "alt": "OMS OM410 20W Compact Super Fast Charger (Mi Turbo / Flash Charge)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755669467-1",
+      "productId": "daraz-1755669467",
+      "size": "Standard",
+      "color": "Original",
+      "price": 5.14,
+      "stock": 25,
+      "sku": "DARAZ-1755669467"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 34,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755835706",
+  "name": "X-PERT XPC28 2.4A Travel Fast Charger with Micro USB Cable",
+  "slug": "x-pert-xpc28-24a-travel-fast-charger-with-micro-us-5706",
+  "description": "Complete travel kit with 2.4A fast charging and included cable. Warranty: 6 Months Brand Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 1.74,
+  "salePrice": 1.51,
+  "images": [
+    {
+      "id": "img-1755835706-1",
+      "productId": "daraz-1755835706",
+      "url": "https://static-01.daraz.lk/p/044cd16b59d51a3a35296e82e8ac12f6.jpg",
+      "alt": "X-PERT XPC28 2.4A Travel Fast Charger with Micro USB Cable",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755835706-1",
+      "productId": "daraz-1755835706",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.51,
+      "stock": 25,
+      "sku": "DARAZ-1755835706"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 37,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Brand Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755839653",
+  "name": "X-PERT XPC26 2.4A Smart Travel Charger - Auto Power-Off (Black)",
+  "slug": "x-pert-xpc26-24a-smart-travel-charger---auto-power-9653",
+  "description": "Auto Power-Off overheat protection, 2.4A steady fast charge. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.09,
+  "salePrice": 1.81,
+  "images": [
+    {
+      "id": "img-1755839653-1",
+      "productId": "daraz-1755839653",
+      "url": "https://static-01.daraz.lk/p/27d42dd3f874c91ca5c7c2054225f063.jpg",
+      "alt": "X-PERT XPC26 2.4A Smart Travel Charger - Auto Power-Off (Black)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755839653-1",
+      "productId": "daraz-1755839653",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.81,
+      "stock": 25,
+      "sku": "DARAZ-1755839653"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 40,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755865172",
+  "name": "Samsung 20W Adaptive Fast Charger SFC 12 Wall Adapter",
+  "slug": "samsung-20w-adaptive-fast-charger-sfc-12-wall-adap-5172",
+  "description": "Samsung Adaptive Fast Charging, SFC 12 model, 3A high speed. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.78,
+  "salePrice": 2.42,
+  "images": [
+    {
+      "id": "img-1755865172-1",
+      "productId": "daraz-1755865172",
+      "url": "https://static-01.daraz.lk/p/ce16084c3eba39ae259c311d14540b7e.jpg",
+      "alt": "Samsung 20W Adaptive Fast Charger SFC 12 Wall Adapter",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755865172-1",
+      "productId": "daraz-1755865172",
+      "size": "Standard",
+      "color": "Original",
+      "price": 2.42,
+      "stock": 25,
+      "sku": "DARAZ-1755865172"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 43,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755932993",
+  "name": "OMS S4 2.4A Dual USB Fast Charger with Micro USB Cable",
+  "slug": "oms-s4-24a-dual-usb-fast-charger-with-micro-usb-ca-2993",
+  "description": "Dual USB ports, optimal safety circuitry, free Micro USB cable. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 5.22,
+  "salePrice": 4.54,
+  "images": [
+    {
+      "id": "img-1755932993-1",
+      "productId": "daraz-1755932993",
+      "url": "https://static-01.daraz.lk/p/ac7acdc1debcdabffd2faee327ed73e8.jpg",
+      "alt": "OMS S4 2.4A Dual USB Fast Charger with Micro USB Cable",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755932993-1",
+      "productId": "daraz-1755932993",
+      "size": "Standard",
+      "color": "Original",
+      "price": 4.54,
+      "stock": 25,
+      "sku": "DARAZ-1755932993"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 46,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755934995",
+  "name": "OMS OM423 45W Dual-Port Super Fast Charger (Type-C 25W + USB-A 20W)",
+  "slug": "oms-om423-45w-dual-port-super-fast-charger-type-c--4995",
+  "description": "Dual port 45W output, charge two devices at high speed simultaneously. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 8,
+  "salePrice": 6.96,
+  "images": [
+    {
+      "id": "img-1755934995-1",
+      "productId": "daraz-1755934995",
+      "url": "https://static-01.daraz.lk/p/63f39cc2a9a2005b511cd8d054972d60.jpg",
+      "alt": "OMS OM423 45W Dual-Port Super Fast Charger (Type-C 25W + USB-A 20W)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755934995-1",
+      "productId": "daraz-1755934995",
+      "size": "Standard",
+      "color": "Original",
+      "price": 6.96,
+      "stock": 25,
+      "sku": "DARAZ-1755934995"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 49,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1755978093",
+  "name": "OMS OM 190 2.4A Dual USB Fast Charger - Smart Temp Control",
+  "slug": "oms-om-190-24a-dual-usb-fast-charger---smart-temp--8093",
+  "description": "Dual USB ports, over-temperature & over-current protection. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 4.17,
+  "salePrice": 3.63,
+  "images": [
+    {
+      "id": "img-1755978093-1",
+      "productId": "daraz-1755978093",
+      "url": "https://static-01.daraz.lk/p/49e4afc54d1b3f8f625b44003ccf459a.jpg",
+      "alt": "OMS OM 190 2.4A Dual USB Fast Charger - Smart Temp Control",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1755978093-1",
+      "productId": "daraz-1755978093",
+      "size": "Standard",
+      "color": "Original",
+      "price": 3.63,
+      "stock": 25,
+      "sku": "DARAZ-1755978093"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 52,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1756098965",
+  "name": "OMS OM188 S4 2.4A Fast Charger Kit with Cable",
+  "slug": "oms-om188-s4-24a-fast-charger-kit-with-cable-8965",
+  "description": "Smart Chip technology, 2.4A fast output, includes high-speed cable. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.43,
+  "salePrice": 2.12,
+  "images": [
+    {
+      "id": "img-1756098965-1",
+      "productId": "daraz-1756098965",
+      "url": "https://static-01.daraz.lk/p/7b87defe38250798383cd70492d7fde9.jpg",
+      "alt": "OMS OM188 S4 2.4A Fast Charger Kit with Cable",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1756098965-1",
+      "productId": "daraz-1756098965",
+      "size": "Standard",
+      "color": "Original",
+      "price": 2.12,
+      "stock": 25,
+      "sku": "DARAZ-1756098965"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 55,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1756361808",
+  "name": "Samsung Galaxy A04 Luxury Signature Case - 9D Pro-Lens Guard",
+  "slug": "samsung-galaxy-a04-luxury-signature-case---9d-pro--1808",
+  "description": "Ultra-HD Original Print, 9D Raised Camera Border, Velvet Matte Texture. Warranty: Checking Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.26,
+  "salePrice": 1.97,
+  "images": [
+    {
+      "id": "img-1756361808-1",
+      "productId": "daraz-1756361808",
+      "url": "https://static-01.daraz.lk/p/c04e9d438ed20fd8e4f820f144f5a877.jpg",
+      "alt": "Samsung Galaxy A04 Luxury Signature Case - 9D Pro-Lens Guard",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1756361808-1",
+      "productId": "daraz-1756361808",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.97,
+      "stock": 25,
+      "sku": "DARAZ-1756361808"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 58,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ Checking Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1756622856",
+  "name": "Samsung Galaxy A06 Luxury Ladies Edition Floral Back Cover",
+  "slug": "samsung-galaxy-a06-luxury-ladies-edition-floral-ba-2856",
+  "description": "Floral HD Art Print, 9D Camera Shield, Silk-Matte Velvet Touch. Warranty: Checking Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.26,
+  "salePrice": 1.97,
+  "images": [
+    {
+      "id": "img-1756622856-1",
+      "productId": "daraz-1756622856",
+      "url": "https://static-01.daraz.lk/p/6b02437f627ade75ccc2eea3e3cc0f00.jpg",
+      "alt": "Samsung Galaxy A06 Luxury Ladies Edition Floral Back Cover",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1756622856-1",
+      "productId": "daraz-1756622856",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.97,
+      "stock": 25,
+      "sku": "DARAZ-1756622856"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 61,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ Checking Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1756674153",
+  "name": "Redmi Note 14 Luxury Ladies Edition Floral Back Cover",
+  "slug": "redmi-note-14-luxury-ladies-edition-floral-back-co-4153",
+  "description": "Elegant Floral Prints, 9D Pro Lens Guard, Silk-Matte Shockproof Soft Case. Warranty: Checking Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.26,
+  "salePrice": 1.97,
+  "images": [
+    {
+      "id": "img-1756674153-1",
+      "productId": "daraz-1756674153",
+      "url": "https://static-01.daraz.lk/p/927d59a6d2f3643a78867e9a879a2aae.jpg",
+      "alt": "Redmi Note 14 Luxury Ladies Edition Floral Back Cover",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1756674153-1",
+      "productId": "daraz-1756674153",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.97,
+      "stock": 25,
+      "sku": "DARAZ-1756674153"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 64,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ Checking Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1756692048",
+  "name": "Redmi 14C Luxury Signature Case - 9D Pro-Lens Guard",
+  "slug": "redmi-14c-luxury-signature-case---9d-pro-lens-guar-2048",
+  "description": "Original Prints, Raised Circular Camera Frame, Non-Slip Grip. Warranty: Checking Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.26,
+  "salePrice": 1.97,
+  "images": [
+    {
+      "id": "img-1756692048-1",
+      "productId": "daraz-1756692048",
+      "url": "https://static-01.daraz.lk/p/3c854f82e000223b7e1588cbabbc34de.jpg",
+      "alt": "Redmi 14C Luxury Signature Case - 9D Pro-Lens Guard",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1756692048-1",
+      "productId": "daraz-1756692048",
+      "size": "Standard",
+      "color": "Original",
+      "price": 1.97,
+      "stock": 25,
+      "sku": "DARAZ-1756692048"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 67,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ Checking Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1769039237",
+  "name": "OMS OM423 45W Dual-Port Fast Charger (UK 3-Pin)",
+  "slug": "oms-om423-45w-dual-port-fast-charger-uk-3-pin-9237",
+  "description": "Dual-Port 45W Max output, Type-C 25W + USB-A 20W, UK 3-Pin. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 11.03,
+  "salePrice": 9.59,
+  "images": [
+    {
+      "id": "img-1769039237-1",
+      "productId": "daraz-1769039237",
+      "url": "https://static-01.daraz.lk/p/f4e03f163ddf0576575f289eaa52a09a.jpg",
+      "alt": "OMS OM423 45W Dual-Port Fast Charger (UK 3-Pin)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1769039237-1",
+      "productId": "daraz-1769039237",
+      "size": "Standard",
+      "color": "Original",
+      "price": 9.59,
+      "stock": 25,
+      "sku": "DARAZ-1769039237"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 70,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1769187398",
+  "name": "OMS T32 Open Type Wireless Earbuds - Bluetooth V6.0 LED",
+  "slug": "oms-t32-open-type-wireless-earbuds---bluetooth-v60-7398",
+  "description": "Open Type Earbuds, Bluetooth 6.0, LED battery display, 24h playtime. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 20.88,
+  "salePrice": 18.16,
+  "images": [
+    {
+      "id": "img-1769187398-1",
+      "productId": "daraz-1769187398",
+      "url": "https://static-01.daraz.lk/p/91113914b32b7cc21cde5d772f8c490b.jpg",
+      "alt": "OMS T32 Open Type Wireless Earbuds - Bluetooth V6.0 LED",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1769187398-1",
+      "productId": "daraz-1769187398",
+      "size": "Standard",
+      "color": "Original",
+      "price": 18.16,
+      "stock": 25,
+      "sku": "DARAZ-1769187398"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 73,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1769524554",
+  "name": "Zigo L788 Nova Feature Keypad Phone - 1.77\" LCD, 1000mAh",
+  "slug": "zigo-l788-nova-feature-keypad-phone---177-lcd-1000-4554",
+  "description": "Dual SIM, 1.77\" Display, 1000mAh battery, Wireless FM, LED Torch. Warranty: 1 Year Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 15.66,
+  "salePrice": 13.62,
+  "images": [
+    {
+      "id": "img-1769524554-1",
+      "productId": "daraz-1769524554",
+      "url": "https://static-01.daraz.lk/p/d7f15c458b68e530cca869b0cba84c38.jpg",
+      "alt": "Zigo L788 Nova Feature Keypad Phone - 1.77\" LCD, 1000mAh",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "phones",
+  "variants": [
+    {
+      "id": "var-1769524554-1",
+      "productId": "daraz-1769524554",
+      "size": "Standard",
+      "color": "Original",
+      "price": 13.62,
+      "stock": 25,
+      "sku": "DARAZ-1769524554"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 76,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 1 Year Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1769568348",
+  "name": "VIDVIE CB4049C6I 30W PD Type-C to Lightning Fast Charging Cable",
+  "slug": "vidvie-cb4049c6i-30w-pd-type-c-to-lightning-fast-c-8348",
+  "description": "30W Power Delivery, Type-C to Lightning cable for iPhone. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 0.52,
+  "salePrice": 0.45,
+  "images": [
+    {
+      "id": "img-1769568348-1",
+      "productId": "daraz-1769568348",
+      "url": "https://static-01.daraz.lk/p/fab065d80c7e3f08b879437c551a4d48.jpg",
+      "alt": "VIDVIE CB4049C6I 30W PD Type-C to Lightning Fast Charging Cable",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1769568348-1",
+      "productId": "daraz-1769568348",
+      "size": "Standard",
+      "color": "Original",
+      "price": 0.45,
+      "stock": 25,
+      "sku": "DARAZ-1769568348"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 79,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770097646",
+  "name": "CORN 20W Fast Charger Hub - 4-Port Rack Charger & Universal Sockets",
+  "slug": "corn-20w-fast-charger-hub---4-port-rack-charger-un-7646",
+  "description": "Dual Type-C + Dual USB-A 20W fast charging hub and desktop organizer. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 3.48,
+  "salePrice": 3.03,
+  "images": [
+    {
+      "id": "img-1770097646-1",
+      "productId": "daraz-1770097646",
+      "url": "https://static-01.daraz.lk/p/db131b42e2377a52f32196a73e58b4f4.jpg",
+      "alt": "CORN 20W Fast Charger Hub - 4-Port Rack Charger & Universal Sockets",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770097646-1",
+      "productId": "daraz-1770097646",
+      "size": "Standard",
+      "color": "Original",
+      "price": 3.03,
+      "stock": 25,
+      "sku": "DARAZ-1770097646"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 82,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770207566",
+  "name": "OMS 25W Fast Charging Micro USB Cable | Tangle-Free OM118",
+  "slug": "oms-25w-fast-charging-micro-usb-cable-tangle-free--7566",
+  "description": "25W Rapid Charge, Braided fabric tangle-free, 1M length. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 3.48,
+  "salePrice": 3.03,
+  "images": [
+    {
+      "id": "img-1770207566-1",
+      "productId": "daraz-1770207566",
+      "url": "https://static-01.daraz.lk/p/21a0cdb53ad292ab5e502df67452141d.jpg",
+      "alt": "OMS 25W Fast Charging Micro USB Cable | Tangle-Free OM118",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770207566-1",
+      "productId": "daraz-1770207566",
+      "size": "Standard",
+      "color": "Original",
+      "price": 3.03,
+      "stock": 25,
+      "sku": "DARAZ-1770207566"
+    }
+  ],
+  "rating": 4.6,
+  "totalSold": 85,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770299608",
+  "name": "ONESAM OS-C27 Travel 2.4A Dual USB Charger with 1M Cable",
+  "slug": "onesam-os-c27-travel-24a-dual-usb-charger-with-1m--9608",
+  "description": "UK 3-pin plug, Dual USB output 2.4A, includes 1M data cable. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 5.88,
+  "salePrice": 5.11,
+  "images": [
+    {
+      "id": "img-1770299608-1",
+      "productId": "daraz-1770299608",
+      "url": "https://static-01.daraz.lk/p/21ff9b7c78b18cf7860dd800df7293ed.jpg",
+      "alt": "ONESAM OS-C27 Travel 2.4A Dual USB Charger with 1M Cable",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770299608-1",
+      "productId": "daraz-1770299608",
+      "size": "Standard",
+      "color": "Original",
+      "price": 5.11,
+      "stock": 25,
+      "sku": "DARAZ-1770299608"
+    }
+  ],
+  "rating": 4.7,
+  "totalSold": 88,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770328632",
+  "name": "HP39 Hi-Res Stereo Wired Earphones with HD Mic & 3.5mm Jack",
+  "slug": "hp39-hi-res-stereo-wired-earphones-with-hd-mic-35m-8632",
+  "description": "Deep Bass, In-line mic controls, universal gold-plated 3.5mm jack. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 2.44,
+  "salePrice": 2.12,
+  "images": [
+    {
+      "id": "img-1770328632-1",
+      "productId": "daraz-1770328632",
+      "url": "https://static-01.daraz.lk/p/0fb3da24ed4aa1f885e4d04378152464.jpg",
+      "alt": "HP39 Hi-Res Stereo Wired Earphones with HD Mic & 3.5mm Jack",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770328632-1",
+      "productId": "daraz-1770328632",
+      "size": "Standard",
+      "color": "Original",
+      "price": 2.12,
+      "stock": 25,
+      "sku": "DARAZ-1770328632"
+    }
+  ],
+  "rating": 4.8,
+  "totalSold": 91,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770355960",
+  "name": "OMS OM427 25W PD+USB Fast Charger - UK 3-Pin Adapter",
+  "slug": "oms-om427-25w-pdusb-fast-charger---uk-3-pin-adapte-5960",
+  "description": "25W PD + USB Dual Ports, Smart IC, Fire prevention materials. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 6.96,
+  "salePrice": 6.05,
+  "images": [
+    {
+      "id": "img-1770355960-1",
+      "productId": "daraz-1770355960",
+      "url": "https://static-01.daraz.lk/p/054b8f3e1c63e82db78e2fc28cb25c1b.jpg",
+      "alt": "OMS OM427 25W PD+USB Fast Charger - UK 3-Pin Adapter",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770355960-1",
+      "productId": "daraz-1770355960",
+      "size": "Standard",
+      "color": "Original",
+      "price": 6.05,
+      "stock": 25,
+      "sku": "DARAZ-1770355960"
+    }
+  ],
+  "rating": 4.9,
+  "totalSold": 94,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+},
+  {
+  "id": "daraz-1770942212",
+  "name": "Samsung 20W Adaptive Fast Charger with Type-C Cable (Black)",
+  "slug": "samsung-20w-adaptive-fast-charger-with-type-c-cabl-2212",
+  "description": "Adaptive fast charging, includes Type-C to Type-C cable, UK 3-pin. Warranty: 6 Months Seller Warranty. 100% Genuine product guaranteed by Methmi Mobile Pvt Ltd.",
+  "basePrice": 3.41,
+  "salePrice": 2.97,
+  "images": [
+    {
+      "id": "img-1770942212-1",
+      "productId": "daraz-1770942212",
+      "url": "https://static-01.daraz.lk/p/0270050556fd1b0847a5a1cd83ea1fe8.jpg",
+      "alt": "Samsung 20W Adaptive Fast Charger with Type-C Cable (Black)",
+      "isPrimary": true,
+      "sortOrder": 0
+    }
+  ],
+  "categoryId": "mobile",
+  "variants": [
+    {
+      "id": "var-1770942212-1",
+      "productId": "daraz-1770942212",
+      "size": "Standard",
+      "color": "Original",
+      "price": 2.97,
+      "stock": 25,
+      "sku": "DARAZ-1770942212"
+    }
+  ],
+  "rating": 5,
+  "totalSold": 97,
+  "isActive": true,
+  "isFeatured": false,
+  "specsHighlights": [
+    "🛡️ 6 Months Seller Warranty",
+    "⚡ 100% Original Brand Guaranteed",
+    "🚚 Islandwide Fast Delivery",
+    "💵 Cash on Delivery Available"
+  ],
+  "createdAt": "2026-11-22T00:00:00Z",
+  "updatedAt": "2026-11-22T00:00:00Z"
+}
 ];
 
 export const reviews: Review[] = [
