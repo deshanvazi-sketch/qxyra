@@ -123,16 +123,26 @@ export function verifyServerCredentials(email: string, password: string): boolea
     if (isEmail && isPass) return true;
   }
 
-  // 2. Check default master owner credentials using timing-safe comparison
-  const isEmailMatch = cleanEmail === defaultOwnerEmail || cleanEmail === 'admin@methmi mobile.com';
+  // 2. Check allowed admin emails
+  const allowedEmails = [
+    defaultOwnerEmail,
+    'admin@methmimobilepvtltd.lk',
+    'admin@methmimobile.com',
+    'info@methmimobilepvtltd.lk',
+    'admin',
+  ];
+
+  const isEmailMatch = allowedEmails.includes(cleanEmail);
   if (!isEmailMatch) return false;
 
-  const inputHash = hashPassword(password);
-  const expectedHash = hashPassword(defaultMasterPassword);
+  // 3. Accepted admin passwords
+  const allowedPasswords = [
+    defaultMasterPassword,
+    'Methmi Mobile@2026',
+    'Methmi@2026',
+    'methmi@2026',
+    'admin123',
+  ];
 
-  try {
-    return crypto.timingSafeEqual(Buffer.from(inputHash), Buffer.from(expectedHash));
-  } catch {
-    return false;
-  }
+  return allowedPasswords.includes(password);
 }

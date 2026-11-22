@@ -1,36 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { products } from '@/lib/mock-data';
-import { ProductCard } from '@/components/product/ProductCard';
-import { SubCategoryGrid } from '@/components/store/SubCategoryGrid';
+import { AccessoriesCatalog } from '@/components/store/AccessoriesCatalog';
 
 export const metadata: Metadata = {
-  title: 'Tech Accessories | Mobile & Computer Peripherals | Methmi Mobile Store',
-  description: 'Precision engineered MagSafe wireless stands, 65W GaN fast chargers, Kevlar cables, CNC aluminum laptop elevators and 4K USB-C docks.',
+  title: 'Tech & Mobile Accessories | Methmi Mobile Store',
+  description: 'Original GaN fast chargers, braided Type-C cables, earbuds, tempered glass, and phone accessories in Sri Lanka with official warranty.',
 };
 
 export default function AccessoriesCategoryPage() {
-  const accessoryProducts = products.filter((p) =>
-    ['mobile', 'computer'].includes(p.categoryId)
-  );
-
-  const subcategories = [
-    {
-      id: 'mobile',
-      name: 'Mobile Accessories',
-      slug: 'mobile',
-      href: '/store/accessories/mobile',
-      count: products.filter((p) => p.categoryId === 'mobile').length,
-    },
-    {
-      id: 'computer',
-      name: 'Computer Accessories',
-      slug: 'computer',
-      href: '/store/accessories/computer',
-      count: products.filter((p) => p.categoryId === 'computer').length,
-    },
-  ];
-
   return (
     <div className="bg-[#0A0A0A] text-white min-h-screen py-6 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-12">
@@ -52,43 +29,15 @@ export default function AccessoriesCategoryPage() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-5xl font-heading font-light text-white tracking-tight">
-            Tech <span className="text-brand-gold font-normal">Accessories</span>
+            Original Mobile &amp; Tech <span className="text-brand-gold font-normal">Accessories</span>
           </h1>
           <p className="text-gray-300 text-xs sm:text-sm max-w-2xl leading-relaxed font-light">
-            Minimalist workspace tools, high-speed GaN gallium nitride charging, Kevlar ballistic cables, and sandblasted aluminum ergonomics.
+            Genuine GaN high-speed chargers, Type-C braided cables, wireless earbuds, scratch-resistant tempered glass, and mobile gear with warranty.
           </p>
         </div>
 
-        {/* Sub-Category Navigation Bar */}
-        <SubCategoryGrid
-          parentName="Accessories"
-          parentHref="/store/accessories"
-          items={subcategories}
-        />
-
-        {/* Product Grid */}
-        <div className="space-y-4 sm:space-y-6">
-          <div className="flex items-center justify-between text-xs text-gray-400 border-b border-gray-800 pb-3">
-            <span>Showing All Tech Accessories</span>
-            <span className="font-mono text-brand-gold">{accessoryProducts.length} Items</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            {accessoryProducts.map((product) => {
-              let catLabel = 'Accessories';
-              if (product.categoryId === 'mobile') catLabel = 'Mobile Gear';
-              else if (product.categoryId === 'computer') catLabel = 'Computer Gear';
-
-              return (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  categoryName={catLabel}
-                />
-              );
-            })}
-          </div>
-        </div>
+        {/* Client-Connected Accessories Catalog */}
+        <AccessoriesCatalog />
       </div>
     </div>
   );

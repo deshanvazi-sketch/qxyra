@@ -29,13 +29,14 @@ const FASHION_CATEGORIES = [
 ];
 
 const TECH_CATEGORIES = [
-  { id: 'apple', label: 'Apple iPhone (TRCSL Approved Flagships)' },
-  { id: 'samsung', label: 'Samsung Galaxy (S24 Ultra / Z-Fold / A-Series)' },
-  { id: 'tecno-infinix', label: 'Tecno & Infinix (Camon 30 / Note 40 Series)' },
-  { id: 'redmi', label: 'Xiaomi Redmi (Note 13 Pro+ & Series)' },
-  { id: 'mobile', label: 'Mobile Gear (MagSafe Chargers, Braided Cables & Power)' },
-  { id: 'computer', label: 'Computer Gear (CNC Aluminum Stands, Docks & Desk Mats)' },
+  { id: 'vivo', label: 'Vivo Smartphones (Y05 / Y11D / Y31D Series)' },
+  { id: 'tecno-infinix', label: 'Tecno & Infinix (Camon 50 Pro / Note 60 Pro / Hot 70)' },
+  { id: 'mobile', label: 'Mobile Accessories (Chargers, Cables, Earbuds, Covers & Power Banks)' },
+  { id: 'computer', label: 'Computer Gear (Adapters, Stands & Docks)' },
   { id: 'audio-desk', label: 'Audio & Wireless Earbuds' },
+  { id: 'apple', label: 'Apple iPhone (TRCSL Approved Flagships)' },
+  { id: 'samsung', label: 'Samsung Galaxy Series' },
+  { id: 'redmi', label: 'Xiaomi Redmi Series' },
 ];
 
 const SOFTWARE_CATEGORIES = [
