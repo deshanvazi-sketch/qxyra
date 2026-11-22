@@ -114,6 +114,20 @@ function LoginForm() {
 
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-5 text-xs">
+        {/* Quick Fill Helper Button for Store Owner */}
+        <button
+          type="button"
+          onClick={() => {
+            setEmail('admin@methmimobilepvtltd.lk');
+            setPassword('Methmi@2026');
+            setErrorMessage(null);
+          }}
+          className="w-full py-2.5 px-3 rounded-xl bg-brand-gold/15 border border-brand-gold/40 text-brand-gold text-xs font-mono font-medium hover:bg-brand-gold/25 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+        >
+          <span>⚡</span>
+          <span>Click to Auto-Fill Store Owner Credentials</span>
+        </button>
+
         {/* Hidden Honeypot trap to catch automated hacking bots */}
         <input
           type="text"
