@@ -298,6 +298,158 @@ export const products: Product[] = [
     createdAt: '2026-11-21T00:00:00Z',
     updatedAt: '2026-11-21T00:00:00Z',
   },
+  // ─── 08. CORN XM530 45W TYPE-C CABLE (DARAZ IMPORT) ────────
+  {
+    id: 'daraz-1816799647',
+    name: 'CORN XM530 45W Type-C to Type-C Fast Charging Data Cable | 5A Super Fast Charge | Premium Braided | 100CM (1M)',
+    slug: 'corn-xm530-45w-type-c-fast-charging-cable',
+    description: '⚡ 45W Super Fast Charging: Delivers an impressive 45W output with 5A high current to power up your devices in no time. 🔌 Type-C to Type-C: The standard Type-C to Type-C interface ensures Super Compatibility with modern smartphones, tablets, and even laptops. 💻 Data Syncing: Supports rapid data transfer alongside fast charging. 🛡️ Premium Braided Design: Built with a highly durable braided nylon exterior to withstand daily bending and pulling, significantly extending its lifespan. 📏 Ideal Length: Comes in a standard 100cm (1M) length, perfect for home, office, or car use. At Methmi Mobile, we offer 100% authentic, CE, FC, and RoHS certified cables.',
+    basePrice: 3.33,
+    salePrice: 2.724,
+    images: [
+      {
+        id: 'img-corn-xm530',
+        productId: 'daraz-1816799647',
+        url: 'https://img.drz.lazcdn.com/static/lk/p/c4f23cdde802d43a53ed4ab4d162091b.jpg_720x720q80.jpg',
+        alt: 'CORN XM530 45W Type-C Fast Charging Cable',
+        isPrimary: true,
+        sortOrder: 0
+      }
+    ],
+    categoryId: 'mobile',
+    variants: [
+      {
+        id: 'var-corn-xm530',
+        productId: 'daraz-1816799647',
+        size: '100CM (1M)',
+        color: 'Braided Black',
+        price: 2.724,
+        stock: 20,
+        sku: '1816799647-1793859699417-0'
+      }
+    ],
+    rating: 4.9,
+    totalSold: 18,
+    isActive: true,
+    isFeatured: true,
+    specsHighlights: ['⚡ 45W / 5A Super Fast Charge', '🔌 Type-C to Type-C', '🛡️ Premium Braided Nylon', '💻 Data Sync & Charging'],
+    createdAt: '2026-11-22T00:00:00Z',
+    updatedAt: '2026-11-22T00:00:00Z',
+  },
+  // ─── 09. CORN XM600 4-IN-1 65W CABLE (DARAZ IMPORT) ─────────
+  {
+    id: 'daraz-1780025565',
+    name: 'CORN XM600 4-in-1 Super Fast Charging Cable | 65W & 27W PD | Type-C & Lightning | Premium Braided Mech Data Cable',
+    slug: 'corn-xm600-4-in-1-super-fast-charging-cable',
+    description: '⚡ Super Fast Charging: Supports 65W and 27W high-speed charging for your devices. 🔄 4-in-1 Versatility: Features multiple connection options in one cable: USB to Type-C, USB to Lightning, Type-C to Type-C, and Type-C to Lightning. Perfect for both Android and Apple devices. 💻 Charge & Data Sync: Supports fast data transfer alongside rapid charging. 🛡️ Premium Built: Engineered as a Mech Data Cable with a durable braided design to prevent tangling and breaking. 📏 Perfect Length: Comes in a standard 100CM (1 Meter) length for convenient everyday use. 100% authentic from Methmi Mobile.',
+    basePrice: 3.63,
+    salePrice: 3.023,
+    images: [
+      {
+        id: 'img-corn-xm600',
+        productId: 'daraz-1780025565',
+        url: 'https://img.drz.lazcdn.com/static/lk/p/e33ea331c01f13e5628069a7a6e09458.jpg_720x720q80.jpg',
+        alt: 'CORN XM600 4-in-1 Super Fast Charging Cable',
+        isPrimary: true,
+        sortOrder: 0
+      }
+    ],
+    categoryId: 'mobile',
+    variants: [
+      {
+        id: 'var-corn-xm600',
+        productId: 'daraz-1780025565',
+        size: '100CM (1M)',
+        color: 'Braided Mech',
+        price: 3.023,
+        stock: 10,
+        sku: '1780025565-1792741982591-0'
+      }
+    ],
+    rating: 5.0,
+    totalSold: 25,
+    isActive: true,
+    isFeatured: true,
+    specsHighlights: ['⚡ 65W & 27W PD Super Fast', '🔄 4-in-1 Android & Apple', '🛡️ Premium Mech Braided', '💻 High-Speed Data Sync'],
+    createdAt: '2026-11-22T00:00:00Z',
+    updatedAt: '2026-11-22T00:00:00Z',
+  },
+  // ─── 10. NOKIA 105 KEYPAD PHONE (DARAZ IMPORT) ─────────────
+  {
+    id: 'daraz-1780015988',
+    name: 'Nokia 105 Original Keypad Phone | TRCSL Approved | Official Softlogic Warranty | 1.77" Display',
+    slug: 'nokia-105-original-keypad-phone',
+    description: '100% Authentic Nokia 105 with Official Softlogic Warranty. TRCSL Approved, original Nokia 105 by HMD. At Methmi Mobile, we guarantee complete authenticity. Sealed pack with Official softlogic WARRANTY (Hotline: 0777 726 724). 🔋 Long-Lasting Battery: Up to 12 hours talk time or 18 days standby. 📻 Wireless FM Radio: Listen without headsets. 💾 2000 Contacts storage. 💡 Built-in LED Torch. 📱 1.77" sharp display.',
+    basePrice: 24.21,
+    salePrice: 22.998,
+    images: [
+      {
+        id: 'img-nokia-105',
+        productId: 'daraz-1780015988',
+        url: 'https://img.drz.lazcdn.com/static/lk/p/ba7cf390770bec675556ecd5758f805e.jpg_720x720q80.jpg',
+        alt: 'Nokia 105 Original Keypad Phone TRCSL Approved',
+        isPrimary: true,
+        sortOrder: 0
+      }
+    ],
+    categoryId: 'phones',
+    variants: [
+      {
+        id: 'var-nokia-105-black',
+        productId: 'daraz-1780015988',
+        size: '1.77"',
+        color: 'Charcoal Black',
+        price: 22.998,
+        stock: 10,
+        sku: '1780015988-1792739416912-0'
+      }
+    ],
+    rating: 5.0,
+    totalSold: 39,
+    isActive: true,
+    isFeatured: true,
+    specsHighlights: ['🛡️ TRCSL Approved & Softlogic Warranty', '🔋 18 Days Standby Battery', '📻 Wireless FM Radio', '💡 Powerful LED Torch'],
+    createdAt: '2026-11-22T00:00:00Z',
+    updatedAt: '2026-11-22T00:00:00Z',
+  },
+  // ─── 11. PLUZZ Z108 HERO KEYPAD PHONE (DARAZ IMPORT) ────────
+  {
+    id: 'daraz-1771206904',
+    name: 'PLUZZ Z108 Hero Original Keypad Mobile Phone | 1.77" QQVGA Display | Type-C Charging | 1000mAh Battery | Dual SIM',
+    slug: 'pluzz-z108-hero-keypad-mobile-phone',
+    description: 'PLUZZ Z108 Hero 100% Original Keypad Mobile Phone with Anti-Counterfeit Verification Scratch Code. Modern Type-C Charging port for convenient power-ups, long-lasting 1000mAh battery, Dual SIM Dual Standby, Wireless FM Radio, Camera, Video Recording, King Voice, Black List, and built-in LED Torch. Guaranteed original from Methmi Mobile.',
+    basePrice: 15.13,
+    salePrice: 14.224,
+    images: [
+      {
+        id: 'img-pluzz-z108',
+        productId: 'daraz-1771206904',
+        url: 'https://img.drz.lazcdn.com/static/lk/p/49b1b883720e02e8f62412f942ce1f6f.jpg_720x720q80.jpg',
+        alt: 'PLUZZ Z108 Hero Keypad Mobile Phone Type-C Charging',
+        isPrimary: true,
+        sortOrder: 0
+      }
+    ],
+    categoryId: 'phones',
+    variants: [
+      {
+        id: 'var-pluzz-z108',
+        productId: 'daraz-1771206904',
+        size: '1.77" QQVGA',
+        color: 'Titanium Grey',
+        price: 14.224,
+        stock: 10,
+        sku: '1771206904-1792739416912-0'
+      }
+    ],
+    rating: 4.8,
+    totalSold: 22,
+    isActive: true,
+    isFeatured: true,
+    specsHighlights: ['🔌 Modern Type-C Charging', '🔋 1000mAh Long Battery', '📶 Dual SIM Dual Standby', '🔒 Scratch to Verify Authenticity'],
+    createdAt: '2026-11-22T00:00:00Z',
+    updatedAt: '2026-11-22T00:00:00Z',
+  },
 ];
 
 export const reviews: Review[] = [

@@ -6,6 +6,7 @@ import { products as initialProducts } from '@/lib/mock-data';
 interface ProductState {
   products: Product[];
   addProduct: (product: Product) => void;
+  importProducts: (products: Product[]) => void;
   updateProduct: (id: string, updated: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   toggleProductStatus: (id: string) => void;
@@ -22,6 +23,15 @@ export const useProductStore = create<ProductState>()(
         set((state) => ({
           products: [newProduct, ...state.products],
         }));
+      },
+      importProducts: (newProducts) => {
+        set((state) => {
+          const existingIds = new Set(state.products.map(p => p.id));
+          const toAdd = newProducts.filter(p => !existingIds.has(p.id));
+          return {
+            products: [...toAdd, ...state.products],
+          };
+        });
       },
       updateProduct: (id, updated) => {
         set((state) => ({
@@ -53,7 +63,17 @@ export const useProductStore = create<ProductState>()(
       },
     }),
     {
-      name: 'methmi_products_list_v2',
+      name: 'methmi_products_list_v3',
+      merge: (persistedState: any, currentState) => {
+        const persistedProducts: Product[] = persistedState?.products || [];
+        const persistedIds = new Set(persistedProducts.map((p) => p.id));
+        const missingInitial = initialProducts.filter((p) => !persistedIds.has(p.id));
+        return {
+          ...currentState,
+          ...persistedState,
+          products: [...persistedProducts, ...missingInitial],
+        };
+      },
     }
   )
 );
