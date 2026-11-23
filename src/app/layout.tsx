@@ -20,6 +20,18 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://methmimobilepvtltd.
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  icons: {
+    icon: [
+      { url: "/methmi-emblem.png" },
+      { url: "/icon.png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/methmi-emblem.png",
+    apple: [
+      { url: "/methmi-emblem.png" },
+      { url: "/apple-icon.png" },
+    ],
+  },
   title: {
     default: "Methmi Mobile (Pvt) Ltd | Your Trusted Mobile Partner",
     template: "%s | Methmi Mobile",
